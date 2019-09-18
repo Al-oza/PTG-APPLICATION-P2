@@ -8,5 +8,6 @@ namespace PTGApplication.Models
     public class GetViewModel
     {
         public string Pharmacy { get; set; }
+        public string Username { get; set; }
     }
 }

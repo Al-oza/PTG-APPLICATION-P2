@@ -44,7 +44,7 @@ namespace PTGApplication.Controllers
         public GetViewModel Get()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            return new GetViewModel() { Pharmacy = user.HomePharmacy };
+            return new GetViewModel() { Pharmacy = user.HomePharmacy, Username = user.UserName };
         }
     }
 }
