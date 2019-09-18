@@ -10,6 +10,7 @@ namespace PTGApplication.Models
     public class ApplicationUser : IdentityUser
     {
         public string HomePharmacy { get; set; }
+        public string Username { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
