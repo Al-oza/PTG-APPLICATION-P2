@@ -426,3 +426,6 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+
+*Migrations/
+*Migration/
