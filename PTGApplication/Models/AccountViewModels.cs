@@ -11,8 +11,8 @@ namespace PTGApplication.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Hometown")]
-        public string Hometown { get; set; }
+        [Display(Name = "Pharmacy")]
+        public string HomePharmacy { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -85,8 +85,8 @@ namespace PTGApplication.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Hometown")]
-        public string Hometown { get; set; }
+        [Display(Name = "Home Pharmacy")]
+        public string Pharmacy { get; set; }
     }
 
     public class ResetPasswordViewModel
