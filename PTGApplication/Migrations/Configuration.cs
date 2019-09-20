@@ -9,7 +9,7 @@ namespace PTGApplication.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(PTGApplication.Models.ApplicationDbContext context)
@@ -18,6 +18,8 @@ namespace PTGApplication.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            context.Users.AddOrUpdate();
         }
     }
 }

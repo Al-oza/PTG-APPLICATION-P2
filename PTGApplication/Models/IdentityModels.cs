@@ -10,7 +10,6 @@ namespace PTGApplication.Models
     public class ApplicationUser : IdentityUser
     {
         public string HomePharmacy { get; set; }
-        public string Username { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -24,7 +23,7 @@ namespace PTGApplication.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(Properties.SharedResources.DbConnection, throwIfV1Schema: false)
         {
         }
 

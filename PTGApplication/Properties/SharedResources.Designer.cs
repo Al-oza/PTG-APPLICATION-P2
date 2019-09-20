@@ -68,5 +68,14 @@ namespace PTGApplication.Properties {
                 return ResourceManager.GetString("CompanyName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Source=DESKTOP-JA4BLI5;Initial Catalog=PilaneDB;Integrated Security=True.
+        /// </summary>
+        internal static string DbConnection {
+            get {
+                return ResourceManager.GetString("DbConnection", resourceCulture);
+            }
+        }
     }
 }
