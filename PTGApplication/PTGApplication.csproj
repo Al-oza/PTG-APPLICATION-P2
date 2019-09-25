@@ -332,6 +332,7 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Pharmacy\Home.cshtml" />
+    <Content Include="Views\Pharmacy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

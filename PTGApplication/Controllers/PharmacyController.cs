@@ -5,7 +5,7 @@ namespace PTGApplication.Controllers
     public class PharmacyController : Controller
     {
         // GET: Pharmacy
-        public ActionResult Home()
+        public ActionResult Index()
         { return View(); }
 
         // GET: Pharmacy/Details/5
