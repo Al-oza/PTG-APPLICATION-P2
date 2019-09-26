@@ -121,6 +121,6 @@
     <value>Tantalum Health</value>
   </data>
   <data name="DbConnection" xml:space="preserve">
-    <value>Data Source=DESKTOP-JA4BLI5;Initial Catalog=PilaneDB;Integrated Security=True</value>
+    <value />
   </data>
 </root>

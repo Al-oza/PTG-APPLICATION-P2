@@ -70,11 +70,13 @@ namespace PTGApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=DESKTOP-JA4BLI5;Initial Catalog=PilaneDB;Integrated Security=True.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string DbConnection {
             get {
-                return ResourceManager.GetString("DbConnection", resourceCulture);
+                var connStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder()
+                { DataSource = System.Environment.MachineName, InitialCatalog = "PilaneDB", IntegratedSecurity = true };
+                return connStringBuilder.ToString();
             }
         }
     }
