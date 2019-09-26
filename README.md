@@ -1,5 +1,6 @@
 # Uzima ℞
-Uzima ℞ is a Drug Inventory Tracking System Application for Pilane Pharmacy in Botswana, Africa. Owned by Rapula Otukile, it is a closed source, internal web app designed, and thusfar maintained by students at the University of Iowa's Tippie College of Business. ©2019 - Tantalum Health
+Uzima ℞ is a Drug Inventory Tracking System Application for Pilane Pharmacy in Botswana, Africa. Owned by Rapula Otukile, it is a closed source, internal web app designed, and thusfar produced and maintained by students at the University of Iowa's Tippie College of Business. 
+©2019 - Tantalum Health
 
 ## Getting Started
 Preform the following steps to setup your environment for development:
@@ -18,7 +19,7 @@ TBD :wink:
 * MSSQL Database
 
 # Contributing 
-Please refer to [CONTRIBUTING.md]() for more information
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more information
 
 # Versioning
 No form of versioning is currently enforced :woman_shrugging: but it should probably be [SemVer](http://semver.org) :man_shrugging:
