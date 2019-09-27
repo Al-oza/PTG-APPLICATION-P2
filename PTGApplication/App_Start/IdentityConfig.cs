@@ -8,6 +8,8 @@ using Microsoft.Owin.Security;
 using Newtonsoft.Json.Linq;
 using PTGApplication.Models;
 using System;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -15,35 +17,25 @@ namespace PTGApplication
 {
     public class EmailService : IIdentityMessageService
     {
-        private JArray BuildMessage(IdentityMessage message)
-        {
-            return new JArray{
-                new JObject {
-                    { "From", new JObject {
-                        { "Email", Properties.SharedResources.Email },
-                        { "Name", Properties.SharedResources.RegistrationSender }
-                    } },
-                    { "To", new JArray { new JObject { { "Email", message.Destination } } } },
-                    { "Subject", message.Subject },
-                    { "TextPart", message.Body },
-                    { "HTMLPart", message.Body },
-                    { "CustomID", "Registration Email" }
-                }
-            };
-        }
         private async Task ConfigureMailjet(IdentityMessage message)
         {
-            var client = new MailjetClient(
-                Environment.GetEnvironmentVariable(Properties.SharedResources.MailJetApiKey1),
-                Environment.GetEnvironmentVariable(Properties.SharedResources.MailJetApiKey2))
-            { Version = ApiVersion.V3_1 };
+            var msg = new MailMessage();
+            msg.From = new MailAddress(Properties.SharedResources.Email);
+            msg.To.Add(new MailAddress(message.Destination));
 
-            var request = new MailjetRequest { Resource = Send.Resource }
-            .Property(Send.Messages, BuildMessage(message));
-            var response = await client.PostAsync(request);
+            msg.Subject = message.Subject;
+            msg.Body = message.Body;
+            msg.IsBodyHtml = true;
 
-            if (!response.IsSuccessStatusCode)
-            { await Task.FromResult(0); }
+            var client = new SmtpClient("in.mailjet.com", 587);
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(
+                Properties.SharedResources.MailJetApiKey,
+                Properties.SharedResources.MailJetSecretKey);
+
+            await client.SendMailAsync(msg);
         }
         public Task SendAsync(IdentityMessage message)
         {

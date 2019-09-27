@@ -127,10 +127,10 @@
     <value>npgorden@uiowa.edu</value>
     <comment>Email from which registration alerts are sent</comment>
   </data>
-  <data name="MailJetApiKey1" xml:space="preserve">
+  <data name="MailJetApiKey" xml:space="preserve">
     <value>325dd5524469ce505fef71969ad0cde6</value>
   </data>
-  <data name="MailJetApiKey2" xml:space="preserve">
+  <data name="MailJetSecretKey" xml:space="preserve">
     <value>4841a50716aed14663c2f0fffdb6320c</value>
   </data>
   <data name="RegistrationSender" xml:space="preserve">

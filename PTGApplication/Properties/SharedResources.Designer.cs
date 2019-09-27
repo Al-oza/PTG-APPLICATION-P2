@@ -8,11 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PTGApplication.Properties
-{
+namespace PTGApplication.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,116 +22,94 @@ namespace PTGApplication.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SharedResources
-    {
-
+    internal class SharedResources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedResources()
-        {
+        internal SharedResources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PTGApplication.Properties.SharedResources", typeof(SharedResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Tantalum Health.
         /// </summary>
-        internal static string CompanyName
-        {
-            get
-            {
+        internal static string CompanyName {
+            get {
                 return ResourceManager.GetString("CompanyName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string DbConnection
-        {
-            get
-            {
-                var connStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder()
-                { DataSource = System.Environment.MachineName, InitialCatalog = "PilaneDB", IntegratedSecurity = true };
-                return connStringBuilder.ToString();
+        internal static string DbConnection {
+            get {
+                return ResourceManager.GetString("DbConnection", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to npgorden@uiowa.edu.
         /// </summary>
-        internal static string Email
-        {
-            get
-            {
+        internal static string Email {
+            get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 325dd5524469ce505fef71969ad0cde6.
         /// </summary>
-        internal static string MailJetApiKey1
-        {
-            get
-            {
-                return ResourceManager.GetString("MailJetApiKey1", resourceCulture);
+        internal static string MailJetApiKey {
+            get {
+                return ResourceManager.GetString("MailJetApiKey", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 4841a50716aed14663c2f0fffdb6320c.
         /// </summary>
-        internal static string MailJetApiKey2
-        {
-            get
-            {
-                return ResourceManager.GetString("MailJetApiKey2", resourceCulture);
+        internal static string MailJetSecretKey {
+            get {
+                return ResourceManager.GetString("MailJetSecretKey", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Nicholas Gorden.
         /// </summary>
-        internal static string RegistrationSender
-        {
-            get
-            {
+        internal static string RegistrationSender {
+            get {
                 return ResourceManager.GetString("RegistrationSender", resourceCulture);
             }
         }
