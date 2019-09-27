@@ -1,25 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using Mailjet.Client;
+using Mailjet.Client.Resources;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
 using PTGApplication.Models;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PTGApplication
 {
     public class EmailService : IIdentityMessageService
     {
+        private JArray BuildMessage(IdentityMessage message)
+        {
+            return new JArray{
+                new JObject {
+                    { "From", new JObject {
+                        { "Email", Properties.SharedResources.Email },
+                        { "Name", Properties.SharedResources.RegistrationSender }
+                    } },
+                    { "To", new JArray { new JObject { { "Email", message.Destination } } } },
+                    { "Subject", message.Subject },
+                    { "TextPart", message.Body },
+                    { "HTMLPart", message.Body },
+                    { "CustomID", "Registration Email" }
+                }
+            };
+        }
+        private async Task ConfigureMailjet(IdentityMessage message)
+        {
+            var client = new MailjetClient(
+                Environment.GetEnvironmentVariable(Properties.SharedResources.MailJetApiKey1),
+                Environment.GetEnvironmentVariable(Properties.SharedResources.MailJetApiKey2))
+            { Version = ApiVersion.V3_1 };
+
+            var request = new MailjetRequest { Resource = Send.Resource }
+            .Property(Send.Messages, BuildMessage(message));
+            var response = await client.PostAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            { await Task.FromResult(0); }
+        }
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            // return Task.FromResult(0);
+            return ConfigureMailjet(message);
         }
     }
 

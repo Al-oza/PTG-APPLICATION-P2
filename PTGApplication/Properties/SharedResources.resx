@@ -123,4 +123,18 @@
   <data name="DbConnection" xml:space="preserve">
     <value />
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>npgorden@uiowa.edu</value>
+    <comment>Email from which registration alerts are sent</comment>
+  </data>
+  <data name="MailJetApiKey1" xml:space="preserve">
+    <value>325dd5524469ce505fef71969ad0cde6</value>
+  </data>
+  <data name="MailJetApiKey2" xml:space="preserve">
+    <value>4841a50716aed14663c2f0fffdb6320c</value>
+  </data>
+  <data name="RegistrationSender" xml:space="preserve">
+    <value>Nicholas Gorden</value>
+    <comment>Who sends the registration email</comment>
+  </data>
 </root>
