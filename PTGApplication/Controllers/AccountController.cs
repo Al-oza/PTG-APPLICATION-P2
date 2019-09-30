@@ -1,14 +1,13 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using PTGApplication.Models;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using PTGApplication.Models;
 
 namespace PTGApplication.Controllers
 {
@@ -85,17 +84,20 @@ namespace PTGApplication.Controllers
                 return View(model);
             }
 
-            var user = await UserManager.FindByEmailAsync(model.Email);
-            if(user != null && !await UserManager.IsEmailConfirmedAsync(user.Id))
+            var user = await UserManager.FindByNameAsync(model.Username);
+            if (user != null)
             {
-                await SendEmailConfirmationTokenAsync(user.Id,"Confirm your account");
-                ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                return View("Error");
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
+                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    return View("Error");
+                }
             }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:

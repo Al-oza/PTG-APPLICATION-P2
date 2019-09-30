@@ -1,11 +1,8 @@
-﻿using Mailjet.Client;
-using Mailjet.Client.Resources;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Newtonsoft.Json.Linq;
 using PTGApplication.Models;
 using System;
 using System.Net;

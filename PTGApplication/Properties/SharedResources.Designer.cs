@@ -74,7 +74,9 @@ namespace PTGApplication.Properties {
         /// </summary>
         internal static string DbConnection {
             get {
-                return ResourceManager.GetString("DbConnection", resourceCulture);
+                var connStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder()
+                { DataSource = System.Environment.MachineName, InitialCatalog = "PilaneDB", IntegratedSecurity = true };
+                return connStringBuilder.ToString();
             }
         }
         
