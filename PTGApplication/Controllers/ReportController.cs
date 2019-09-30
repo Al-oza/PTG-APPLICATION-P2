@@ -1,14 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
-    [Authorize]
     public class ReportController : Controller
     {
-        public ActionResult About()
-        { return View(); }
-      
+        // GET: Report
         public ActionResult Index()
-        { return View(); }
+        {
+            return View();
+        }
     }
 }
