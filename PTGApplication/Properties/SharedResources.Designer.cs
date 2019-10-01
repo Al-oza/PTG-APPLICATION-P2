@@ -96,18 +96,44 @@ namespace PTGApplication.Properties
         /// <summary>
         ///   Looks up a localized string similar to npgorden@uiowa.edu.
         /// </summary>
-        internal static string Email
-        {
-            get
-            {
-                return ResourceManager.GetString("Email", resourceCulture);
-            }
-        }
         internal static string DefaultEmail
         {
             get
             {
                 return ResourceManager.GetString("DefaultEmail", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Capstone1!.
+        /// </summary>
+        internal static string DefaultPass
+        {
+            get
+            {
+                return ResourceManager.GetString("DefaultPass", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to rapula.
+        /// </summary>
+        internal static string DefaultUser
+        {
+            get
+            {
+                return ResourceManager.GetString("DefaultUser", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to npgorden@uiowa.edu.
+        /// </summary>
+        internal static string Email
+        {
+            get
+            {
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
 
@@ -119,16 +145,6 @@ namespace PTGApplication.Properties
             get
             {
                 return ResourceManager.GetString("MailJetApiKey", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Looks up a localized string similar to Capstone1!.
-        /// </summary>
-        internal static string DefaultPass
-        {
-            get
-            {
-                return ResourceManager.GetString("DefaultPass", resourceCulture);
             }
         }
 
@@ -151,16 +167,6 @@ namespace PTGApplication.Properties
             get
             {
                 return ResourceManager.GetString("RegistrationSender", resourceCulture);
-            }
-        }
-
-        ///   Looks up a localized string similar to rapula.
-        /// </summary>
-        internal static string DefaultUser
-        {
-            get
-            {
-                return ResourceManager.GetString("DefaultUser", resourceCulture);
             }
         }
     }
