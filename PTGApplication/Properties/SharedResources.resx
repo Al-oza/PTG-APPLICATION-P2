@@ -136,5 +136,13 @@
   <data name="RegistrationSender" xml:space="preserve">
     <value>Nicholas Gorden</value>
     <comment>Who sends the registration email</comment>
+  <data name="DefaultEmail" xml:space="preserve">
+    <value>npgorden@uiowa.edu</value>
+  </data>
+  <data name="DefaultPass" xml:space="preserve">
+    <value>Capstone1!</value>
+  </data>
+  <data name="DefaultUser" xml:space="preserve">
+    <value>rapula</value>
   </data>
 </root>
