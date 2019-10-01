@@ -181,6 +181,20 @@ namespace PTGApplication.Controllers
                     Name = model.Name
                 };
 
+                if(UserManager.FindByEmail(model.Email) != null)
+                {
+                    var callback = UserManager.GeneratePasswordResetToken(model.Username);
+                    ViewBag.errorMessage = "This email address is already associated with an account. " +
+                        $"Maybe you <a href=\"{callback}\">Forgot your password</a>?";
+                    return View("Error");
+                }
+                
+                if(UserManager.FindByName(model.Username) != null)
+                {
+                    ViewBag.errorMessage = "This username is already taken, please try again";
+                    return View("Error");
+                }
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
