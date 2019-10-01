@@ -196,7 +196,7 @@ namespace PTGApplication.Controllers
                     // Uncomment to debug locally
                     // TempData["ViewBagLink"] = callbackUrl;
 
-                    ViewBag.Message = "Confirm your account to log in.";
+                    ViewBag.Message = "Please check your inbox and confirm your email address to log in.";
                     return View("Info");
 
                     // return RedirectToAction("Index", "Home");
