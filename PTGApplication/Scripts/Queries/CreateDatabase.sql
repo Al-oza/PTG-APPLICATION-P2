@@ -1,12 +1,11 @@
-USE master
-DROP DATABASE IF EXISTS PilaneDB
-GO
-CREATE DATABASE PilaneDB
+USE master;
 GO
 
-USE PilaneDB
-
+DROP DATABASE IF EXISTS PilaneDB;
+CREATE DATABASE PilaneDB;
+USE PilaneDB;
 GO
+
 CREATE TABLE [dbo].[AspNetUsers] (
     [Id]                   NVARCHAR (128) NOT NULL,
     [HomePharmacy]         NVARCHAR (MAX) NULL,
@@ -29,8 +28,6 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
     ON [dbo].[AspNetUsers]([Id] ASC);
 
-GO
-
 CREATE TABLE [dbo].[__MigrationHistory] (
     [MigrationId]    NVARCHAR (150)  NOT NULL,
     [ContextKey]     NVARCHAR (300)  NOT NULL,
@@ -38,8 +35,6 @@ CREATE TABLE [dbo].[__MigrationHistory] (
     [ProductVersion] NVARCHAR (32)   NOT NULL,
     CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED ([MigrationId] ASC, [ContextKey] ASC)
 );
-
-GO
 
 CREATE TABLE [dbo].[AspNetRoles] (
     [Id]   NVARCHAR (128) NOT NULL,
@@ -51,8 +46,6 @@ CREATE TABLE [dbo].[AspNetRoles] (
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex]
     ON [dbo].[AspNetRoles]([Name] ASC);
-
-GO
 
 CREATE TABLE [dbo].[AspNetUserClaims] (
     [Id]         INT            IDENTITY (1, 1) NOT NULL,
@@ -68,7 +61,6 @@ GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserClaims]([UserId] ASC);
 
-GO
 CREATE TABLE [dbo].[AspNetUserLogins] (
     [LoginProvider] NVARCHAR (128) NOT NULL,
     [ProviderKey]   NVARCHAR (128) NOT NULL,
@@ -82,7 +74,6 @@ GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserLogins]([UserId] ASC);
 
-GO
 CREATE TABLE [dbo].[AspNetUserRoles] (
     [UserId] NVARCHAR (128) NOT NULL,
     [RoleId] NVARCHAR (128) NOT NULL,
@@ -95,11 +86,6 @@ CREATE TABLE [dbo].[AspNetUserRoles] (
 GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserRoles]([UserId] ASC);
-
-
 GO
 CREATE NONCLUSTERED INDEX [IX_RoleId]
     ON [dbo].[AspNetUserRoles]([RoleId] ASC);
-
-
-
