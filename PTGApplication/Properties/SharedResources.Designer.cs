@@ -88,7 +88,7 @@ namespace PTGApplication.Properties
             get
             {
                 var connStringBuilder = new System.Data.SqlClient.SqlConnectionStringBuilder()
-                { DataSource = System.Environment.MachineName, InitialCatalog = "PilaneDB", IntegratedSecurity = true };
+                { DataSource = System.Environment.MachineName, InitialCatalog = "UzimaRx", IntegratedSecurity = true };
                 return connStringBuilder.ToString();
             }
         }
