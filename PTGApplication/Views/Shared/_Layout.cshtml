@@ -25,13 +25,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Home", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Order", "Index", "Order", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Reports", "Index", "Report", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Inventory", "Index", "Pharmacy", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reports
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink("Pending Orders", "Index", "Report", null, new { @class = "dropdown-item" })<br />
+                            @Html.ActionLink("Expiring Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })<br />
+                            @Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
                 </ul>
+                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

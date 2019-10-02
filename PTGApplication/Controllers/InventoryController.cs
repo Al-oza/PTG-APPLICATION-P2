@@ -6,21 +6,17 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
-    public class ReportController : Controller
+    public class InventoryController : Controller
     {
-        // GET: Report
+        // GET: Inventory
         public ActionResult Index()
         {
             return View();
         }
+        public ActionResult Databaseexample()
 
-        public ActionResult ExpiredDrugs()
         {
-            return View();
-        }
 
-        public ActionResult Inventory()
-        {
             return View();
         }
     }

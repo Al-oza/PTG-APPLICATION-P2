@@ -121,7 +121,7 @@
     <value>Tantalum Health</value>
   </data>
   <data name="DbConnection" xml:space="preserve">
-    <value />
+    <value>Data Source=DESKTOP-R5BQFK0;Initial Catalog=UzimaRx;Integrated Security=True</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>npgorden@uiowa.edu</value>

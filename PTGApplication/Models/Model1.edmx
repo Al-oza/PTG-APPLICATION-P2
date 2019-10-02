@@ -1,0 +1,1092 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UzimaRxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HomePharmacy" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Permission" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthGroupPermissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="PermissionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="IsSuperUser" Type="bit" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="IsStaff" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateJoined" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DateOrdered" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="BarcodeId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="CurrentLocationId" Type="int" Nullable="false" />
+          <Property Name="FutureLocationId" Type="int" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyBatch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+          <Property Name="BatchSize" Type="int" Nullable="false" />
+          <Property Name="DrugBrandId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyBatchLocation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" />
+          <Property Name="BatchId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyDrugBrand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Barcode" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="License" Type="int" Nullable="false" />
+          <Property Name="Dose" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PackSize" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="GenericNameId" Type="int" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyDrugGeneric">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Schedule" Type="int" />
+        </EntityType>
+        <EntityType Name="PharmacyLocation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="UpstremSupplier" Type="int" />
+          <Property Name="IsHospital" Type="bit" Nullable="false" />
+          <Property Name="IsClinic" Type="bit" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyManufacturingCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PharmacyStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugBrand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatch">
+              <PropertyRef Name="DrugBrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
+          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyBatch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatchLocation">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatchLocation">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId">
+          <End Role="PharmacyDrugGeneric" Type="Self.PharmacyDrugGeneric" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugGeneric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyDrugBrand">
+              <PropertyRef Name="GenericNameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId">
+          <End Role="PharmacyManufacturingCompany" Type="Self.PharmacyManufacturingCompany" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyManufacturingCompany">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyDrugBrand">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugBrand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="BarcodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CurrentLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="FutureLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
+          <End Role="PharmacyStatus" Type="Self.PharmacyStatus" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UzimaRxModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthGroup" EntityType="Self.AuthGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthGroupPermissions" EntityType="Self.AuthGroupPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthUser" EntityType="Self.AuthUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyBatch" EntityType="Self.PharmacyBatch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyBatchLocation" EntityType="Self.PharmacyBatchLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyDrugBrand" EntityType="Self.PharmacyDrugBrand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyDrugGeneric" EntityType="Self.PharmacyDrugGeneric" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyLocation" EntityType="Self.PharmacyLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyManufacturingCompany" EntityType="Self.PharmacyManufacturingCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PharmacyStatus" EntityType="Self.PharmacyStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" Association="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrand" />
+            <End Role="PharmacyBatch" EntitySet="PharmacyBatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
+            <End Role="PharmacyBatch" EntitySet="PharmacyBatch" />
+            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
+            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId" Association="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId">
+            <End Role="PharmacyDrugGeneric" EntitySet="PharmacyDrugGeneric" />
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId" Association="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId">
+            <End Role="PharmacyManufacturingCompany" EntitySet="PharmacyManufacturingCompany" />
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrand" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
+            <End Role="PharmacyStatus" EntitySet="PharmacyStatus" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UzimaRxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HomePharmacy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="AuthGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Permission" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthGroupPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="PermissionId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="IsSuperUser" Type="Boolean" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsStaff" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateJoined" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="BarcodeId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLocationId" Type="Int32" Nullable="false" />
+          <Property Name="FutureLocationId" Type="Int32" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PharmacyDrugBrand" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" FromRole="Item" ToRole="PharmacyDrugBrand" />
+          <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" FromRole="Item" ToRole="PharmacyLocation" />
+          <NavigationProperty Name="PharmacyLocation1" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" FromRole="Item" ToRole="PharmacyLocation" />
+          <NavigationProperty Name="PharmacyStatu" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" FromRole="Item" ToRole="PharmacyStatus" />
+        </EntityType>
+        <EntityType Name="PharmacyBatch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BatchSize" Type="Int32" Nullable="false" />
+          <Property Name="DrugBrandId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PharmacyDrugBrand" Relationship="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" FromRole="PharmacyBatch" ToRole="PharmacyDrugBrand" />
+          <NavigationProperty Name="PharmacyBatchLocations" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" FromRole="PharmacyBatch" ToRole="PharmacyBatchLocation" />
+        </EntityType>
+        <EntityType Name="PharmacyBatchLocation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="BatchId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PharmacyBatch" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" FromRole="PharmacyBatchLocation" ToRole="PharmacyBatch" />
+          <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" FromRole="PharmacyBatchLocation" ToRole="PharmacyLocation" />
+        </EntityType>
+        <EntityType Name="PharmacyDrugBrand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Barcode" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="License" Type="Int32" Nullable="false" />
+          <Property Name="Dose" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PackSize" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GenericNameId" Type="Int32" Nullable="false" />
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" FromRole="PharmacyDrugBrand" ToRole="Item" />
+          <NavigationProperty Name="PharmacyBatches" Relationship="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" FromRole="PharmacyDrugBrand" ToRole="PharmacyBatch" />
+          <NavigationProperty Name="PharmacyDrugGeneric" Relationship="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId" FromRole="PharmacyDrugBrand" ToRole="PharmacyDrugGeneric" />
+          <NavigationProperty Name="PharmacyManufacturingCompany" Relationship="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId" FromRole="PharmacyDrugBrand" ToRole="PharmacyManufacturingCompany" />
+        </EntityType>
+        <EntityType Name="PharmacyDrugGeneric">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Schedule" Type="Int32" />
+          <NavigationProperty Name="PharmacyDrugBrands" Relationship="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId" FromRole="PharmacyDrugGeneric" ToRole="PharmacyDrugBrand" />
+        </EntityType>
+        <EntityType Name="PharmacyLocation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UpstremSupplier" Type="Int32" />
+          <Property Name="IsHospital" Type="Boolean" Nullable="false" />
+          <Property Name="IsClinic" Type="Boolean" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" FromRole="PharmacyLocation" ToRole="Item" />
+          <NavigationProperty Name="Items1" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" FromRole="PharmacyLocation" ToRole="Item" />
+          <NavigationProperty Name="PharmacyBatchLocations" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" FromRole="PharmacyLocation" ToRole="PharmacyBatchLocation" />
+        </EntityType>
+        <EntityType Name="PharmacyManufacturingCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PharmacyDrugBrands" Relationship="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId" FromRole="PharmacyManufacturingCompany" ToRole="PharmacyDrugBrand" />
+        </EntityType>
+        <EntityType Name="PharmacyStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" FromRole="PharmacyStatus" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugBrand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="BarcodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CurrentLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="FutureLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
+          <End Role="PharmacyStatus" Type="Self.PharmacyStatu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugBrand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatch">
+              <PropertyRef Name="DrugBrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
+          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyBatch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatchLocation">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
+          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyLocation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyBatchLocation">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId">
+          <End Role="PharmacyDrugGeneric" Type="Self.PharmacyDrugGeneric" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyDrugGeneric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyDrugBrand">
+              <PropertyRef Name="GenericNameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId">
+          <End Role="PharmacyManufacturingCompany" Type="Self.PharmacyManufacturingCompany" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyDrugBrand" Type="Self.PharmacyDrugBrand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PharmacyManufacturingCompany">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyDrugBrand">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="UzimaRxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="AuthGroups" EntityType="Self.AuthGroup" />
+          <EntitySet Name="AuthGroupPermissions" EntityType="Self.AuthGroupPermission" />
+          <EntitySet Name="AuthUsers" EntityType="Self.AuthUser" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="PharmacyBatches" EntityType="Self.PharmacyBatch" />
+          <EntitySet Name="PharmacyBatchLocations" EntityType="Self.PharmacyBatchLocation" />
+          <EntitySet Name="PharmacyDrugBrands" EntityType="Self.PharmacyDrugBrand" />
+          <EntitySet Name="PharmacyDrugGenerics" EntityType="Self.PharmacyDrugGeneric" />
+          <EntitySet Name="PharmacyLocations" EntityType="Self.PharmacyLocation" />
+          <EntitySet Name="PharmacyManufacturingCompanies" EntityType="Self.PharmacyManufacturingCompany" />
+          <EntitySet Name="PharmacyStatus" EntityType="Self.PharmacyStatu" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrands" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
+            <End Role="PharmacyStatus" EntitySet="PharmacyStatus" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" Association="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrands" />
+            <End Role="PharmacyBatch" EntitySet="PharmacyBatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
+            <End Role="PharmacyBatch" EntitySet="PharmacyBatches" />
+            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
+            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
+            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId" Association="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyDrugGeneric_GenericNameId">
+            <End Role="PharmacyDrugGeneric" EntitySet="PharmacyDrugGenerics" />
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId" Association="Self.FK_dbo_PharmacyDrugBrand_dbo_PharmacyManufacturingCompany_ManufacturerId">
+            <End Role="PharmacyManufacturingCompany" EntitySet="PharmacyManufacturingCompanies" />
+            <End Role="PharmacyDrugBrand" EntitySet="PharmacyDrugBrands" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UzimaRxModelStoreContainer" CdmEntityContainer="UzimaRxEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="UzimaRxModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="UzimaRxModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="UzimaRxModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="UzimaRxModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="UzimaRxModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HomePharmacy" ColumnName="HomePharmacy" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthGroups">
+            <EntityTypeMapping TypeName="UzimaRxModel.AuthGroup">
+              <MappingFragment StoreEntitySet="AuthGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthGroupPermissions">
+            <EntityTypeMapping TypeName="UzimaRxModel.AuthGroupPermission">
+              <MappingFragment StoreEntitySet="AuthGroupPermissions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthUsers">
+            <EntityTypeMapping TypeName="UzimaRxModel.AuthUser">
+              <MappingFragment StoreEntitySet="AuthUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="IsSuperUser" ColumnName="IsSuperUser" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsStaff" ColumnName="IsStaff" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="UzimaRxModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BarcodeId" ColumnName="BarcodeId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="CurrentLocationId" ColumnName="CurrentLocationId" />
+                <ScalarProperty Name="FutureLocationId" ColumnName="FutureLocationId" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyBatches">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyBatch">
+              <MappingFragment StoreEntitySet="PharmacyBatch">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BatchSize" ColumnName="BatchSize" />
+                <ScalarProperty Name="DrugBrandId" ColumnName="DrugBrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyBatchLocations">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyBatchLocation">
+              <MappingFragment StoreEntitySet="PharmacyBatchLocation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyDrugBrands">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyDrugBrand">
+              <MappingFragment StoreEntitySet="PharmacyDrugBrand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="License" ColumnName="License" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="PackSize" ColumnName="PackSize" />
+                <ScalarProperty Name="GenericNameId" ColumnName="GenericNameId" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyDrugGenerics">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyDrugGeneric">
+              <MappingFragment StoreEntitySet="PharmacyDrugGeneric">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyLocations">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyLocation">
+              <MappingFragment StoreEntitySet="PharmacyLocation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UpstremSupplier" ColumnName="UpstremSupplier" />
+                <ScalarProperty Name="IsHospital" ColumnName="IsHospital" />
+                <ScalarProperty Name="IsClinic" ColumnName="IsClinic" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyManufacturingCompanies">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyManufacturingCompany">
+              <MappingFragment StoreEntitySet="PharmacyManufacturingCompany">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PharmacyStatus">
+            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyStatu">
+              <MappingFragment StoreEntitySet="PharmacyStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="UzimaRxModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="UzimaRxModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

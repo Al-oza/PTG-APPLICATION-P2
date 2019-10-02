@@ -81,7 +81,7 @@ namespace PTGApplication.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=DESKTOP-R5BQFK0;Initial Catalog=PilaneDB;Integrated Security=True.
+        ///   Looks up a localized string similar to Data Source=DESKTOP-R5BQFK0;Initial Catalog=UzimaRx;Integrated Security=True.
         /// </summary>
         internal static string DbConnection
         {
