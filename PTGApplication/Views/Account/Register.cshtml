@@ -1,6 +1,9 @@
 ﻿@model PTGApplication.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+
+    if (!User.IsInRole("Admin"))
+    { Response.StatusCode = (int)HttpStatusCode.Unauthorized; }
 }
 
 <h2>@ViewBag.Title.</h2>

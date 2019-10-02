@@ -30,23 +30,34 @@ namespace PTGApplication
 
             if (!roleManager.RoleExists("Admin"))
             {
-                roleManager.Create(new IdentityRole() { Name = "Admin" });
+                await roleManager.CreateAsync(new IdentityRole() { Name = "Admin" });
 
-                var user = new ApplicationUser()
+                var usrRapula = new ApplicationUser()
                 {
                     EmailConfirmed = true,
                     Email = Properties.SharedResources.DefaultEmail,
                     UserName = Properties.SharedResources.DefaultUser
                 };
-                var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(user.Id, "Admin"); }
+                var chkUser = await userManager.CreateAsync(usrRapula, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrRapula.Id, "Admin"); }
             }
 
-            if(!await roleManager.RoleExistsAsync("Manager"))
+            if (!await roleManager.RoleExistsAsync("Manager"))
             { await roleManager.CreateAsync(new IdentityRole() { Name = "Manager" }); }
 
-            if(!await roleManager.RoleExistsAsync("Employee"))
-            { await roleManager.CreateAsync(new IdentityRole() { Name = "Employee" }); }
+            if (!await roleManager.RoleExistsAsync("Employee"))
+            {
+                await roleManager.CreateAsync(new IdentityRole() { Name = "Employee" });
+
+                var usrBob = new ApplicationUser()
+                {
+                    EmailConfirmed = true,
+                    Email = "bobhope@uzima.org",
+                    UserName = "bob"
+                };
+                var chkUser = await userManager.CreateAsync(usrBob, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, "Employee"); }
+            }
         }
     }
 }
