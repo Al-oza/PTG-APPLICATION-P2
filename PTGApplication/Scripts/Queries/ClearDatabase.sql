@@ -1,6 +1,6 @@
-USE PilaneDB;
-GO
+USE [UzimaRx];
 
+GO
 DELETE FROM [dbo].[__MigrationHistory];
 DELETE FROM [dbo].[AspNetRoles];
 DELETE FROM [dbo].[AspNetUserClaims];

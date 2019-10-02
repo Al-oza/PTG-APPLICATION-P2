@@ -1,11 +1,13 @@
-USE master;
-GO
+USE [master];
 
-DROP DATABASE IF EXISTS PilaneDB;
-CREATE DATABASE PilaneDB;
-USE PilaneDB;
 GO
+DROP DATABASE IF EXISTS [UzimaRx];
+CREATE DATABASE [UzimaRx];
 
+GO
+USE UzimaRx;
+
+GO
 CREATE TABLE [dbo].[AspNetUsers] (
     [Id]                   NVARCHAR (128) NOT NULL,
     [HomePharmacy]         NVARCHAR (MAX) NULL,
@@ -22,7 +24,6 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [AccessFailedCount]    INT            NOT NULL,
     CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
@@ -56,7 +57,6 @@ CREATE TABLE [dbo].[AspNetUserClaims] (
     CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
 
-
 GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserClaims]([UserId] ASC);
@@ -68,7 +68,6 @@ CREATE TABLE [dbo].[AspNetUserLogins] (
     CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED ([LoginProvider] ASC, [ProviderKey] ASC, [UserId] ASC),
     CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
-
 
 GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
@@ -82,10 +81,10 @@ CREATE TABLE [dbo].[AspNetUserRoles] (
     CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
 
-
 GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserRoles]([UserId] ASC);
+
 GO
 CREATE NONCLUSTERED INDEX [IX_RoleId]
     ON [dbo].[AspNetUserRoles]([RoleId] ASC);

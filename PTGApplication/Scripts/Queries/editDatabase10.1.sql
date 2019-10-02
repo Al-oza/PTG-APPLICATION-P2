@@ -1,7 +1,6 @@
 Use [UzimaRx]
 
-Go
-
+GO
 CREATE TABLE [dbo].[AuthGroupPermissions] (
     [Id]  INT  NOT NULL,
     [GroupId]    INT  NOT NULL,
@@ -9,16 +8,14 @@ CREATE TABLE [dbo].[AuthGroupPermissions] (
     CONSTRAINT [PK_dbo.AuthGroupPermissions] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[AuthGroup] (
     [Id]   INT   NOT NULL,
     [Permission] INT   NOT NULL,
     CONSTRAINT [PK_dbo.AuthGroup] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[AuthUser] (
     [Id]  INT  NOT NULL,
     [Password]  NVARCHAR (256)  NOT NULL,
@@ -34,8 +31,7 @@ CREATE TABLE [dbo].[AuthUser] (
     CONSTRAINT [PK_dbo.AuthUser] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyDrugGeneric] (
     [Id]   INT  NOT NULL,
     [Name]   NVARCHAR (256)  NOT NULL,
@@ -43,8 +39,7 @@ CREATE TABLE [dbo].[PharmacyDrugGeneric] (
     CONSTRAINT [PK_dbo.PharmacyDrugGeneric] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyManufacturingCompany] (
     [Id]   INT   NOT NULL,
     [Name]   NVARCHAR (256)  NOT NULL,
@@ -53,8 +48,7 @@ CREATE TABLE [dbo].[PharmacyManufacturingCompany] (
     CONSTRAINT [PK_dbo.PharmacyManufacturingCompany] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyDrugBrand] (
     [Id]   INT   NOT NULL,
     [Barcode]  INT  NOT NULL,
@@ -69,8 +63,7 @@ CREATE TABLE [dbo].[PharmacyDrugBrand] (
     CONSTRAINT [FK_dbo.PharmacyDrugBrand_dbo.PharmacyManufacturingCompany_ManufacturerId] FOREIGN KEY ([ManufacturerId]) REFERENCES [dbo].[PharmacyManufacturingCompany] ([Id]) ON DELETE CASCADE
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyBatch] (
     [Id]  INT   NOT NULL,
     [ExpirationDate] DATETIME NOT NULL,
@@ -80,8 +73,7 @@ CREATE TABLE [dbo].[PharmacyBatch] (
     CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrugBrand] ([Id]) ON DELETE CASCADE
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyLocation] (
     [Id]   INT   NOT NULL,
     [Name]  NVARCHAR (256)  NOT NULL,
@@ -94,8 +86,7 @@ CREATE TABLE [dbo].[PharmacyLocation] (
     --add FK for upstream supplier?
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyBatchLocation] (
     [Id]  INT  NOT NULL,
     [Count]  INT  NULL,
@@ -106,16 +97,14 @@ CREATE TABLE [dbo].[PharmacyBatchLocation] (
     CONSTRAINT [FK_dbo.PharmacyBatchLocation_dbo.PharmacyLocation_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE CASCADE
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[PharmacyStatus] (
     [Id]  INT  NOT NULL,
     [Status]  NVARCHAR (256)  NOT NULL,
     CONSTRAINT [PK_dbo.PharmacyStatus] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-Go
-
+GO
 CREATE TABLE [dbo].[Item] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
