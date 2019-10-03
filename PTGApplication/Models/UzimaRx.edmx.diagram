@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5868f148c2c54aeb937945ebb129df6e" Name="Diagram1">
+      <Diagram DiagramId="edd079067e0145f09b74ac960ec87d83" Name="Diagram1">
         <EntityTypeShape EntityType="UzimaRxModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="UzimaRxModel.AspNetRole" Width="1.5" PointX="7.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="UzimaRxModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="3.125" IsExpanded="true" />
@@ -21,7 +21,6 @@
         <EntityTypeShape EntityType="UzimaRxModel.PharmacyLocation" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UzimaRxModel.PharmacyManufacturingCompany" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="UzimaRxModel.PharmacyStatu" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.sysdiagram" Width="1.5" PointX="4.75" PointY="12.875" IsExpanded="true" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" ManuallyRouted="false" />

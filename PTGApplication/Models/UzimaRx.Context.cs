@@ -13,10 +13,10 @@ namespace PTGApplication.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class UzimaRxEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public UzimaRxEntities()
-            : base("name=UzimaRxEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -41,6 +41,5 @@ namespace PTGApplication.Models
         public virtual DbSet<PharmacyLocation> PharmacyLocations { get; set; }
         public virtual DbSet<PharmacyManufacturingCompany> PharmacyManufacturingCompanies { get; set; }
         public virtual DbSet<PharmacyStatu> PharmacyStatus { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
