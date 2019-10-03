@@ -28,35 +28,79 @@ namespace PTGApplication
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            if (!roleManager.RoleExists("Admin"))
+            var admin = Properties.UserRoles.PharmacyManager;
+            if (!roleManager.RoleExists(admin))
             {
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Admin" });
+                await roleManager.CreateAsync(new IdentityRole() { Name = admin });
 
                 var usrRapula = new ApplicationUser()
                 {
                     EmailConfirmed = true,
-                    Email = Properties.SharedResources.DefaultEmail,
-                    UserName = Properties.SharedResources.DefaultUser
+                    Email = "rapula@uzima.org",
+                    UserName = "rapula"
                 };
+
+                var usrBatman = new ApplicationUser()
+                {
+                    EmailConfirmed = true,
+                    Email = "brucewayne@gothem.net",
+                    UserName = "batman"
+                };
+
                 var chkUser = await userManager.CreateAsync(usrRapula, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrRapula.Id, "Admin"); }
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrRapula.Id, admin); }
+                chkUser = await userManager.CreateAsync(usrBatman, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBatman.Id, admin); }
             }
 
-            if (!await roleManager.RoleExistsAsync("Manager"))
-            { await roleManager.CreateAsync(new IdentityRole() { Name = "Manager" }); }
-
-            if (!await roleManager.RoleExistsAsync("Employee"))
+            var manager = Properties.UserRoles.CareSiteInventoryManager;
+            if (!await roleManager.RoleExistsAsync(manager))
             {
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Employee" });
+                await roleManager.CreateAsync(new IdentityRole() { Name = manager });
+
+                var usrLuke = new ApplicationUser()
+                {
+                    EmailConfirmed = true,
+                    Email = "lskywalker@rebels.com",
+                    UserName = "notVadersSon"
+                };
+
+                var usrJohn = new ApplicationUser()
+                {
+                    EmailConfirmed = true,
+                    Email = "jdoe1@mail.com",
+                    UserName = "john-doe"
+                };
+
+                var chkUser = await userManager.CreateAsync(usrLuke, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrLuke.Id, manager); }
+                chkUser = await userManager.CreateAsync(usrJohn, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrLuke.Id, manager); }
+            }
+
+            var employee = Properties.UserRoles.CareSiteStaff;
+            if (!await roleManager.RoleExistsAsync(employee))
+            {
+                await roleManager.CreateAsync(new IdentityRole() { Name = employee });
 
                 var usrBob = new ApplicationUser()
                 {
                     EmailConfirmed = true,
-                    Email = "bobhope@uzima.org",
-                    UserName = "bob"
+                    Email = "bobross@uzima.org",
+                    UserName = "rOssB0Bboss"
                 };
+
+                var usrChavo = new ApplicationUser()
+                {
+                    EmailConfirmed = true,
+                    Email = "chavo@delocho.net",
+                    UserName = "chavo"
+                };
+
                 var chkUser = await userManager.CreateAsync(usrBob, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, "Employee"); }
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, employee); }
+                chkUser = await userManager.CreateAsync(usrChavo, Properties.SharedResources.DefaultPass);
+                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, employee); }
             }
         }
     }
