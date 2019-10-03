@@ -27,7 +27,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Order", "Index", "Order", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Reports", "Index", "Report", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Inventory", "Index", "Pharmacy", new { area = "" }, null)</li>
                     
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
@@ -43,6 +42,15 @@
                                 <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })</li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Locations
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @Html.ActionLink("Add Location", "AddLocation", "Location", null, new { @class = "dropdown-item" })<br />
+                        
+                    </div>
                     </li>
                 </ul>
 

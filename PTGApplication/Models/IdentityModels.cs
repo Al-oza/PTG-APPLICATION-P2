@@ -35,5 +35,7 @@ namespace PTGApplication.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<PTGApplication.Models.PharmacyLocation> PharmacyLocations { get; set; }
     }
 }
