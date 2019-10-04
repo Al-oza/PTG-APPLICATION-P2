@@ -301,7 +301,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UzimaRx.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\ApiKeys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApiKeys.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Database.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Database.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -470,6 +480,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909181618448_Init.resx">
       <DependentUpon>201909181618448_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ApiKeys.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApiKeys.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Database.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\SharedResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

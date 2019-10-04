@@ -117,18 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CompanyName" xml:space="preserve">
-    <value>Tantalum Health</value>
+  <data name="ConnectionString" xml:space="preserve">
+    <value>Data Source=[Source];Initial Catalog=[Catalog];Integrated Security=True</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>npgorden@uiowa.edu</value>
-    <comment>Email from which registration alerts are sent</comment>
-  </data>
-  <data name="RegistrationSender" xml:space="preserve">
-    <value>Nicholas Gorden</value>
-    <comment>Who sends the registration email</comment>
-  </data>
-  <data name="DefaultPass" xml:space="preserve">
-    <value>Capstone1!</value>
+  <data name="DatabaseName" xml:space="preserve">
+    <value>UzimaRx</value>
   </data>
 </root>

@@ -29,8 +29,8 @@ namespace PTGApplication
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(
-                Properties.SharedResources.MailJetApiKey,
-                Properties.SharedResources.MailJetSecretKey);
+                Properties.ApiKeys.MailjetPublicKey,
+                Properties.ApiKeys.MailjetPrivateKey);
 
             await client.SendMailAsync(msg);
         }

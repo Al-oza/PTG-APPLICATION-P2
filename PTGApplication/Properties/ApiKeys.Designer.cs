@@ -22,14 +22,14 @@ namespace PTGApplication.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SharedResources {
+    internal class ApiKeys {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SharedResources() {
+        internal ApiKeys() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace PTGApplication.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PTGApplication.Properties.SharedResources", typeof(SharedResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PTGApplication.Properties.ApiKeys", typeof(ApiKeys).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,20 @@ namespace PTGApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tantalum Health.
+        ///   Looks up a localized string similar to 4841a50716aed14663c2f0fffdb6320c.
         /// </summary>
-        internal static string CompanyName {
+        internal static string MailjetPrivateKey {
             get {
-                return ResourceManager.GetString("CompanyName", resourceCulture);
+                return ResourceManager.GetString("MailjetPrivateKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Capstone1!.
+        ///   Looks up a localized string similar to 325dd5524469ce505fef71969ad0cde6.
         /// </summary>
-        internal static string DefaultPass {
+        internal static string MailjetPublicKey {
             get {
-                return ResourceManager.GetString("DefaultPass", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to npgorden@uiowa.edu.
-        /// </summary>
-        internal static string Email {
-            get {
-                return ResourceManager.GetString("Email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nicholas Gorden.
-        /// </summary>
-        internal static string RegistrationSender {
-            get {
-                return ResourceManager.GetString("RegistrationSender", resourceCulture);
+                return ResourceManager.GetString("MailjetPublicKey", resourceCulture);
             }
         }
     }

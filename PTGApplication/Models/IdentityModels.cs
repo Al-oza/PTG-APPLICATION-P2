@@ -23,7 +23,10 @@ namespace PTGApplication.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(Properties.SharedResources.DbConnection, throwIfV1Schema: false)
+            : base(Properties.Database.ConnectionString
+                  .Replace("[Catalog]", Properties.Database.DatabaseName)
+                  .Replace("[Source]", System.Environment.MachineName), 
+                  throwIfV1Schema: false)
         {
         }
 

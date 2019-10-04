@@ -3,7 +3,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using PTGApplication.Models;
+using System;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 
@@ -15,12 +17,88 @@ namespace PTGApplication
     {
         public void Configuration(IAppBuilder app)
         {
-            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-            var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
-            section.ConnectionStrings["DefaultConnection"].ConnectionString = Properties.SharedResources.DbConnection;
-
+            ConfigureDatabase();
             ConfigureAuth(app);
             CreateRolesAndUsers().Wait();
+        }
+
+        #region Configure Database and Default Users
+        private void ConfigureDatabase()
+        {
+            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+            var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+
+            var connectionString = Properties.Database.ConnectionString
+                .Replace("[Catalog]", Properties.Database.DatabaseName)
+                .Replace("[Source]", Environment.MachineName);
+
+            section.ConnectionStrings["DefaultConnection"].ConnectionString = connectionString;
+        }
+        private async Task ConfigureAdmins(String admin, UserManager<ApplicationUser> userManager)
+        {
+            var user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "rapula@uzima.org",
+                UserName = "rapula"
+            };
+
+            var chkUser = await userManager.CreateAsync(user);
+            if (chkUser.Succeeded) { userManager.AddToRole(user.Id, admin); }
+
+            user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "brucewayne@gothem.net",
+                UserName = "batman"
+            };
+
+            chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
+            if (chkUser.Succeeded) { userManager.AddToRole(user.Id, admin); }
+        }
+        private async Task ConfigureEmployees(String employee, UserManager<ApplicationUser> userManager)
+        {
+            var user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "bobross@uzima.org",
+                UserName = "rOssBoBbOss"
+            };
+
+            var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
+            if (chkUser.Succeeded) { await userManager.AddToRoleAsync(user.Id, employee); }
+
+            user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "chavo@delocho.net",
+                UserName = "chavo"
+            };
+
+            chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
+            if (chkUser.Succeeded) { await userManager.AddToRoleAsync(user.Id, employee); }
+        }
+        private async Task ConfigureManagers(String manager, UserManager<ApplicationUser> userManager)
+        {
+            var user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "lskywalker@rebels.com",
+                UserName = "notVadersSon"
+            };
+
+            var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
+            if (chkUser.Succeeded) { await userManager.AddToRoleAsync(user.Id, manager); }
+
+            user = new ApplicationUser()
+            {
+                EmailConfirmed = true,
+                Email = "jdoe1@mail.com",
+                UserName = "johndoe"
+            };
+
+            chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
+            if (chkUser.Succeeded) { await userManager.AddToRoleAsync(user.Id, manager); }
         }
         private async Task CreateRolesAndUsers()
         {
@@ -32,76 +110,25 @@ namespace PTGApplication
             if (!roleManager.RoleExists(admin))
             {
                 await roleManager.CreateAsync(new IdentityRole() { Name = admin });
-
-                var usrRapula = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "rapula@uzima.org",
-                    UserName = "rapula"
-                };
-
-                var usrBatman = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "brucewayne@gothem.net",
-                    UserName = "batman"
-                };
-
-                var chkUser = await userManager.CreateAsync(usrRapula, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrRapula.Id, admin); }
-                chkUser = await userManager.CreateAsync(usrBatman, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBatman.Id, admin); }
+                await ConfigureAdmins(admin, userManager);
             }
 
             var manager = Properties.UserRoles.CareSiteInventoryManager;
             if (!await roleManager.RoleExistsAsync(manager))
             {
                 await roleManager.CreateAsync(new IdentityRole() { Name = manager });
-
-                var usrLuke = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "lskywalker@rebels.com",
-                    UserName = "notVadersSon"
-                };
-
-                var usrJohn = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "jdoe1@mail.com",
-                    UserName = "john-doe"
-                };
-
-                var chkUser = await userManager.CreateAsync(usrLuke, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrLuke.Id, manager); }
-                chkUser = await userManager.CreateAsync(usrJohn, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrLuke.Id, manager); }
+                await ConfigureManagers(manager, userManager);
             }
 
             var employee = Properties.UserRoles.CareSiteStaff;
             if (!await roleManager.RoleExistsAsync(employee))
             {
                 await roleManager.CreateAsync(new IdentityRole() { Name = employee });
-
-                var usrBob = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "bobross@uzima.org",
-                    UserName = "rOssB0Bboss"
-                };
-
-                var usrChavo = new ApplicationUser()
-                {
-                    EmailConfirmed = true,
-                    Email = "chavo@delocho.net",
-                    UserName = "chavo"
-                };
-
-                var chkUser = await userManager.CreateAsync(usrBob, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, employee); }
-                chkUser = await userManager.CreateAsync(usrChavo, Properties.SharedResources.DefaultPass);
-                if (chkUser.Succeeded) { await userManager.AddToRoleAsync(usrBob.Id, employee); }
+                await ConfigureEmployees(employee, userManager);
             }
+
+            userManager.Dispose();
         }
+        #endregion
     }
 }
