@@ -36,8 +36,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Reports
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <ul class="nav navbar-nav">
+                        <div class="dropdown-menu navbar-collapse navbar-inverse" aria-labelledby="navbarDropdown">
+                            <ul class="nav navbar-nav nav-stacked">
                                 <li>@Html.ActionLink("Pending Orders", "Index", "Report", null, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Expiring Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })</li>
