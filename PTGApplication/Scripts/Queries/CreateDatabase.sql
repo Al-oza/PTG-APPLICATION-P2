@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [Id]                   NVARCHAR (128) NOT NULL,
     [HomePharmacy]         NVARCHAR (MAX) NULL,
     [Username]             NVARCHAR (MAX) NULL,
+	[Name]				   NVARCHAR (MAX) NOT NULL,
     [Email]                NVARCHAR (256) NULL,
     [EmailConfirmed]       BIT            NOT NULL,
     [PasswordHash]         NVARCHAR (MAX) NULL,

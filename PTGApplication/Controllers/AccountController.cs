@@ -177,7 +177,8 @@ namespace PTGApplication.Controllers
                 {
                     UserName = model.Username,
                     Email = model.Email,
-                    HomePharmacy = model.Pharmacy
+                    HomePharmacy = model.Pharmacy,
+                    Name = model.Name
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -189,9 +190,9 @@ namespace PTGApplication.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = await SendEmailConfirmationTokenAsync(user.Id,
-                        "Confirm your account");
+                        "Confirm Your Uzima Rx Account");
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", 
-                        "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        $"Dear {user.Name},\nPlease confirm your Uzima Rx account by clicking <a href=\"{callbackUrl}\">here</a>");
 
                     // Uncomment to debug locally
                     // TempData["ViewBagLink"] = callbackUrl;

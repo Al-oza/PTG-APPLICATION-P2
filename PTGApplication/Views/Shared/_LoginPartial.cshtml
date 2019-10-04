@@ -1,4 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
+@{ 
+    var now = DateTime.Now;
+    ViewBag.Greeting = (now.Hour < 12) ? "Good Morning" : (now.Hour < 18) ? "Good Afternoon" : "Good Evening";
+}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -7,7 +11,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink($"{ViewBag.Greeting} {User.Identity.GetUserName()}!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
     </ul>

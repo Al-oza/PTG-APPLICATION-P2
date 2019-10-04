@@ -40,16 +40,18 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "rapula@uzima.org",
+                Name = "Rapula Otukile",
                 UserName = "rapula"
             };
 
-            var chkUser = await userManager.CreateAsync(user);
+            var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
             if (chkUser.Succeeded) { userManager.AddToRole(user.Id, admin); }
 
             user = new ApplicationUser()
             {
                 EmailConfirmed = true,
                 Email = "brucewayne@gothem.net",
+                Name = "Bruce Wayne",
                 UserName = "batman"
             };
 
@@ -62,6 +64,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "bobross@uzima.org",
+                Name = "Bob Ross",
                 UserName = "rOssBoBbOss"
             };
 
@@ -71,8 +74,9 @@ namespace PTGApplication
             user = new ApplicationUser()
             {
                 EmailConfirmed = true,
-                Email = "chavo@delocho.net",
-                UserName = "chavo"
+                Email = "joey@hotail.com",
+                Name = "Joey Tribiani",
+                UserName = "joeyt"
             };
 
             chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -84,6 +88,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "lskywalker@rebels.com",
+                Name = "Luke Skywalker",
                 UserName = "notVadersSon"
             };
 
@@ -94,6 +99,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "jdoe1@mail.com",
+                Name = "John Doe",
                 UserName = "johndoe"
             };
 
