@@ -19,7 +19,7 @@ namespace PTGApplication.Controllers
 
         public ActionResult AddLocation()
         {
-            Entities cs = new Entities();
+            var cs = new UzimaRxEntities();
             var locations = cs.PharmacyLocations.ToList();
             if (locations != null)
             {
@@ -33,7 +33,7 @@ namespace PTGApplication.Controllers
         {
             try
             {
-                Entities cs = new Entities();
+                var cs = new UzimaRxEntities();
 
                 PharmacyLocation location = new PharmacyLocation();
  
@@ -48,7 +48,6 @@ namespace PTGApplication.Controllers
 
                 cs.SaveChanges();
 
-                int latestId = location.Id;
             }
             catch (Exception ex)
             {

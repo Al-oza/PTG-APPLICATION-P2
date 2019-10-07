@@ -13,10 +13,10 @@ namespace PTGApplication.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class UzimaRxEntities : DbContext
     {
-        public Entities()
-            : base("name=DefaultConnection")
+        public UzimaRxEntities()
+            : base("name=UzimaRxEntities")
         {
         }
     
