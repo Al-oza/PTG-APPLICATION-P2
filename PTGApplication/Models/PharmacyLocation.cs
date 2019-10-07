@@ -11,7 +11,8 @@ namespace PTGApplication.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class PharmacyLocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,7 @@ namespace PTGApplication.Models
             this.PharmacyBatchLocations = new HashSet<PharmacyBatchLocation>();
         }
     
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> UpstremSupplier { get; set; }

@@ -10,7 +10,7 @@ namespace PTGApplication.Controllers
     public class LocationController : Controller
     {
 
-       
+
         // GET: Location
         public ActionResult Index()
         {
@@ -35,26 +35,34 @@ namespace PTGApplication.Controllers
             {
                 var cs = new UzimaRxEntities();
 
-                PharmacyLocation location = new PharmacyLocation();
- 
-                location.Name = model.Name;
-                location.UpstremSupplier = model.UpstremSupplier;
-                location.IsHospital = model.IsHospital;
-                location.IsClinic = model.IsClinic;
-                location.Address = model.Address;
-                location.Phone = model.Phone;
+                var location = new PharmacyLocation()
+                {
+                    Id = cs.PharmacyLocations.Count(),
+                    Name = model.Name,
+                    UpstremSupplier = model.UpstremSupplier,
+                    IsHospital = model.IsHospital,
+                    IsClinic = model.IsClinic,
+                    Address = model.Address,
+                    Phone = model.Phone
+                };
 
                 cs.PharmacyLocations.Add(location);
 
                 cs.SaveChanges();
-
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.errorMessage = ex.Message;
+                return View("Error");
             }
 
-            return RedirectToAction("AddLocation");
+            return RedirectToAction("LocationAdded");
+        }
+
+        // GET: LocationAdded
+        public ActionResult LocationAdded()
+        {
+            return View();
         }
     }
 }
