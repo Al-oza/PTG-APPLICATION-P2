@@ -4,14 +4,13 @@
     ViewBag.Title = "AddLocation";
 }
 
-<h2>AddLocation</h2>
+<h2>Add a Location</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("InsertLocation","Location",FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PharmacyLocation</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -19,7 +18,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                @Html.DropDownList("Location", new SelectList(ViewBag.Data,"Location"),"Please Select")
             </div>
         </div>
 
@@ -75,6 +73,4 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
