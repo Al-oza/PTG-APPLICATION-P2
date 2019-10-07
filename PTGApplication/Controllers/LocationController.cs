@@ -20,10 +20,10 @@ namespace PTGApplication.Controllers
         public ActionResult AddLocation()
         {
             Entities cs = new Entities();
-            //var locations = cs.PharmacyLocations.ToList();
-            //if (locations != null)
+            var locations = cs.PharmacyLocations.ToList();
+            if (locations != null)
             {
-                //ViewBag.data = locations;
+                ViewBag.data = locations;
             }
 
             return View();
@@ -36,7 +36,7 @@ namespace PTGApplication.Controllers
                 Entities cs = new Entities();
 
                 PharmacyLocation location = new PharmacyLocation();
-                location.Id = model.Id;
+ 
                 location.Name = model.Name;
                 location.UpstremSupplier = model.UpstremSupplier;
                 location.IsHospital = model.IsHospital;
@@ -47,6 +47,8 @@ namespace PTGApplication.Controllers
                 cs.PharmacyLocations.Add(location);
 
                 cs.SaveChanges();
+
+                int latestId = location.Id;
             }
             catch (Exception ex)
             {
