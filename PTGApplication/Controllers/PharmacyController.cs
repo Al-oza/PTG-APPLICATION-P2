@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using PTGApplication.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
@@ -12,24 +16,29 @@ namespace PTGApplication.Controllers
         public ActionResult Details(int id)
         { return View(); }
 
-        // GET: Pharmacy/Create
-        public ActionResult Create()
+        // GET: Pharmacy/AddInventory
+        public ActionResult AddInventory()
         { return View(); }
 
-        // POST: Pharmacy/Create
+        // POST: Pharmacy/AddInventory
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> AddInventory(PharmacyDrugBrand model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                var uzima = new UzimaRxEntities();
+                uzima.PharmacyDrugBrands.Add(model);
+                await uzima.SaveChangesAsync();
+                ViewBag.successMessage = "Inventory Added";
+                uzima.Dispose();
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                ViewBag.errorMessage = ex.Message;
+                return View("Error");
             }
+
+            return View("AddInventory");
         }
 
         // GET: Pharmacy/Edit/5
