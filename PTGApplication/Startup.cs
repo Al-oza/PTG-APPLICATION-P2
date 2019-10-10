@@ -54,12 +54,35 @@ namespace PTGApplication
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
 
-            var connectionString = Properties.Database.ConnectionString
-                .Replace("[Catalog]", Properties.Database.DatabaseName)
-                .Replace("[Source]", Environment.MachineName);
+            if (section.ConnectionStrings["DefaultConnection"] == null)
+            {
+                section.ConnectionStrings.Add(new ConnectionStringSettings(
+                    "DefaultConnection", Properties.Database.DefaultConnectionString
+                    .Replace("[Source]", Environment.MachineName).Replace("[Catalog]",
+                    Properties.Database.DatabaseName), "System.Data.SqlClient"));
+            }
+            else
+            {
+                section.ConnectionStrings["DefaultConnection"].ConnectionString =
+                    Properties.Database.DefaultConnectionString
+                    .Replace("[Source]", Environment.MachineName)
+                    .Replace("[Catalog]", Properties.Database.DatabaseName);
+            }
 
-            section.ConnectionStrings["DefaultConnection"].ConnectionString = connectionString;
-            section.ConnectionStrings["UzimaRxEntities"].ConnectionString = connectionString;
+            if (section.ConnectionStrings["UzimaRxEntities"] == null)
+            {
+                section.ConnectionStrings.Add(new ConnectionStringSettings(
+                    "UzimaRxEntities", Properties.Database.EntityConnectionString, "System.Data.EntityClient"));
+            }
+            else
+            {
+                section.ConnectionStrings["UzimaRxEntities"].ConnectionString =
+                    Properties.Database.EntityConnectionString
+                    .Replace("[Source]", Environment.MachineName)
+                    .Replace("[Catalog]", Properties.Database.DatabaseName);
+            }
+
+            configuration.Save();
         }
         private async Task ConfigureEmployees(String employee, UserManager<ApplicationUser> userManager)
         {

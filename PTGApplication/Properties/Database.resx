@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConnectionString" xml:space="preserve">
-    <value>Data Source=[Source];Initial Catalog=[Catalog];Integrated Security=True</value>
-  </data>
   <data name="DatabaseName" xml:space="preserve">
     <value>UzimaRx</value>
+  </data>
+  <data name="DefaultConnectionString" xml:space="preserve">
+    <value>Data Source=[Source];Initial Catalog=[Catalog];Integrated Security=True</value>
+  </data>
+  <data name="EntityConnectionString" xml:space="preserve">
+    <value>metadata=res://*/Models.UzimaRx.csdl|res://*/Models.[Catalog].ssdl|res://*/Models.[Catalog].msl;provider=System.Data.SqlClient;provider connection string='data source=[Source];initial catalog=[Catalog];integrated security=True;MultipleActiveResultSets=True;App=EntityFramework';</value>
   </data>
 </root>

@@ -61,20 +61,29 @@ namespace PTGApplication.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=[Source];Initial Catalog=[Catalog];Integrated Security=True.
-        /// </summary>
-        internal static string ConnectionString {
-            get {
-                return ResourceManager.GetString("ConnectionString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to UzimaRx.
         /// </summary>
         internal static string DatabaseName {
             get {
                 return ResourceManager.GetString("DatabaseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Source=[Source];Initial Catalog=[Catalog];Integrated Security=True.
+        /// </summary>
+        internal static string DefaultConnectionString {
+            get {
+                return ResourceManager.GetString("DefaultConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to metadata=res://*/Models.UzimaRx.csdl|res://*/Models.[Catalog].ssdl|res://*/Models.[Catalog].msl;provider=System.Data.SqlClient;provider connection string=&apos;data source=[Source];initial catalog=[Catalog];integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&apos;;.
+        /// </summary>
+        internal static string EntityConnectionString {
+            get {
+                return ResourceManager.GetString("EntityConnectionString", resourceCulture);
             }
         }
     }
