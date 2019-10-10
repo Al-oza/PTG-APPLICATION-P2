@@ -23,17 +23,6 @@ namespace PTGApplication
         }
 
         #region Configure Database and Default Users
-        private void ConfigureDatabase()
-        {
-            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-            var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
-
-            var connectionString = Properties.Database.ConnectionString
-                .Replace("[Catalog]", Properties.Database.DatabaseName)
-                .Replace("[Source]", Environment.MachineName);
-
-            section.ConnectionStrings["DefaultConnection"].ConnectionString = connectionString;
-        }
         private async Task ConfigureAdmins(String admin, UserManager<ApplicationUser> userManager)
         {
             var user = new ApplicationUser()
@@ -59,6 +48,18 @@ namespace PTGApplication
 
             chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
             if (chkUser.Succeeded) { userManager.AddToRole(user.Id, admin); }
+        }
+        private void ConfigureDatabase()
+        {
+            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+            var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+
+            var connectionString = Properties.Database.ConnectionString
+                .Replace("[Catalog]", Properties.Database.DatabaseName)
+                .Replace("[Source]", Environment.MachineName);
+
+            section.ConnectionStrings["DefaultConnection"].ConnectionString = connectionString;
+            section.ConnectionStrings["UzimaRxEntities"].ConnectionString = connectionString;
         }
         private async Task ConfigureEmployees(String employee, UserManager<ApplicationUser> userManager)
         {

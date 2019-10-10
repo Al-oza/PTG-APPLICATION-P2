@@ -1,17 +1,17 @@
 ﻿@model PTGApplication.Models.PharmacyDrugBrand
 
 @{
-    ViewBag.Title = "AddInventory";
+    ViewBag.Title = "Add New Inventory";
 }
 
-<h2>AddInventory</h2>
+<h2>Add New Inventory</h2>
 <p class="alert-info">@ViewBag.successMessage</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>PharmacyDrugBrand</h4>
+        <h4>Add Drugs</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PackSize, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PackSize, "Pack Size", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PackSize, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PackSize, "", new { @class = "text-danger" })
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GenericNameId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GenericNameId, "Generic Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*Html.EditorFor(model => model.GenericNameId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.GenericNameId, new SelectList(ViewBag.genericsList, "Id", "Name"), new { @class = "form-control" })
@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ManufacturerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ManufacturerId, "Manufacturer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*Html.EditorFor(model => model.ManufacturerId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.ManufacturerId, new SelectList(ViewBag.manufacturers, "Id", "Name"), new { @class = "form-control" })
