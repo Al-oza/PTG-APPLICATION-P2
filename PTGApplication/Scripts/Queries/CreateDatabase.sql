@@ -114,7 +114,7 @@ CREATE TABLE [dbo].[PharmacyBatch] (
     [BatchSize]  INT  NOT NULL,
     [DrugBrandId] INT  NOT NULL,
     CONSTRAINT [PK_dbo.PharmacyBatch] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrugBrand] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -159,7 +159,7 @@ CREATE TABLE [dbo].[Item] (
     [FutureLocationId] INT ,
     [ExpirationDate] DATETIME NOT NULL,--is this a FK to PharmacyBatch Table?
     CONSTRAINT [PK_dbo.PharmacyOrder] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([BarcodeId]) REFERENCES [dbo].[PharmacyDrugBrand] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([BarcodeId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyStatus_StatusId] FOREIGN KEY ([StatusId]) REFERENCES [dbo].[PharmacyStatus] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_CurrentLocationId] FOREIGN KEY ([CurrentLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION, --may cause cycles or multiple paths
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_FutureLocationId] FOREIGN KEY ([FutureLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION --may cause cycles or multiple paths
