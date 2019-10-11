@@ -116,19 +116,29 @@ CREATE TABLE [dbo].[PharmacyBatch] (
     CONSTRAINT [PK_dbo.PharmacyBatch] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE
 );
+GO
+CREATE TABLE [dbo].[PharmacySupplier] (
+    [Id]   INT   NOT NULL,
+    [Name]  NVARCHAR (256)  NOT NULL,
+    [Address]  NVARCHAR (256)  NOT NULL,
+    [Phone]  NVARCHAR (256)  NOT NULL,
+    CONSTRAINT [PK_dbo.PharmacySupplier] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
 
 GO
 CREATE TABLE [dbo].[PharmacyLocation] (
     [Id]   INT   NOT NULL,
     [Name]  NVARCHAR (256)  NOT NULL,
-    [UpstremSupplier] INT  NULL,
+    [UpstreamSupplier] INT  NULL,
     [IsHospital] BIT  NOT NULL,
     [IsClinic]  BIT  NOT NULL,
     [Address]  NVARCHAR (256)  NOT NULL,
     [Phone]  NVARCHAR (256)  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacyLocation] PRIMARY KEY CLUSTERED ([Id] ASC)
-    --add FK for upstream supplier?
+    CONSTRAINT [PK_dbo.PharmacyLocation] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.PharmacyLocation] FOREIGN KEY ([UpstreamSupplier]) REFERENCES [dbo].[PharmacySupplier] ([Id]) ON DELETE CASCADE
 );
+
+
 
 GO
 CREATE TABLE [dbo].[PharmacyBatchLocation] (
