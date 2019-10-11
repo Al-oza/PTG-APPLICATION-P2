@@ -17,13 +17,13 @@ namespace PTGApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PharmacyStatu()
         {
-            this.Items = new HashSet<Item>();
+            this.PharmacyInventories = new HashSet<PharmacyInventory>();
         }
     
         public int Id { get; set; }
         public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace PTGApplication.Models
         public int BatchSize { get; set; }
         public int DrugBrandId { get; set; }
     
-        public virtual PharmacyDrugBrand PharmacyDrugBrand { get; set; }
+        public virtual PharmacyDrug PharmacyDrug { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyBatchLocation> PharmacyBatchLocations { get; set; }
     }

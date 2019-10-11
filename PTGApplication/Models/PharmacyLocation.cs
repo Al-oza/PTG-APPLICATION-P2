@@ -11,32 +11,31 @@ namespace PTGApplication.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PharmacyLocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PharmacyLocation()
         {
-            this.Items = new HashSet<Item>();
-            this.Items1 = new HashSet<Item>();
             this.PharmacyBatchLocations = new HashSet<PharmacyBatchLocation>();
+            this.PharmacyInventories = new HashSet<PharmacyInventory>();
+            this.PharmacyInventories1 = new HashSet<PharmacyInventory>();
         }
     
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> UpstremSupplier { get; set; }
+        public Nullable<int> UpstreamSupplier { get; set; }
         public bool IsHospital { get; set; }
         public bool IsClinic { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyBatchLocation> PharmacyBatchLocations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyInventory> PharmacyInventories1 { get; set; }
+        public virtual PharmacySupplier PharmacySupplier { get; set; }
     }
 }

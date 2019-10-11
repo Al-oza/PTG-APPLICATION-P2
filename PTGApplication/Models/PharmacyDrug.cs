@@ -12,29 +12,31 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyDrugBrand
+    public partial class PharmacyDrug
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PharmacyDrugBrand()
+        public PharmacyDrug()
         {
-            this.Items = new HashSet<Item>();
             this.PharmacyBatches = new HashSet<PharmacyBatch>();
+            this.PharmacyInventories = new HashSet<PharmacyInventory>();
         }
     
         public int Id { get; set; }
-        public int Barcode { get; set; }
+        public string Barcode { get; set; }
         public string Name { get; set; }
-        public int License { get; set; }
-        public string Dose { get; set; }
+        public string BrandName { get; set; }
+        public string ApplicationNumber { get; set; }
+        public string Manufacturer { get; set; }
+        public string ManufacturerLocation { get; set; }
+        public string ApprovalNumber { get; set; }
+        public string Schedule { get; set; }
+        public string License { get; set; }
+        public string Ingredients { get; set; }
         public string PackSize { get; set; }
-        public int GenericNameId { get; set; }
-        public int ManufacturerId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyBatch> PharmacyBatches { get; set; }
-        public virtual PharmacyDrugGeneric PharmacyDrugGeneric { get; set; }
-        public virtual PharmacyManufacturingCompany PharmacyManufacturingCompany { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
     }
 }

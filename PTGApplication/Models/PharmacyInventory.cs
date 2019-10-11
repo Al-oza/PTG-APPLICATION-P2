@@ -12,7 +12,7 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class PharmacyInventory
     {
         public int Id { get; set; }
         public System.DateTime DateOrdered { get; set; }
@@ -23,7 +23,7 @@ namespace PTGApplication.Models
         public Nullable<int> FutureLocationId { get; set; }
         public System.DateTime ExpirationDate { get; set; }
     
-        public virtual PharmacyDrugBrand PharmacyDrugBrand { get; set; }
+        public virtual PharmacyDrug PharmacyDrug { get; set; }
         public virtual PharmacyLocation PharmacyLocation { get; set; }
         public virtual PharmacyLocation PharmacyLocation1 { get; set; }
         public virtual PharmacyStatu PharmacyStatu { get; set; }

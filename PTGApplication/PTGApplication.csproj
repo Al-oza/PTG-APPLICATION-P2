@@ -248,22 +248,10 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthGroup.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AuthGroupPermission.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AuthUser.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Item.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
     <Compile Include="Models\PharmacyBatch.cs">
@@ -272,19 +260,19 @@
     <Compile Include="Models\PharmacyBatchLocation.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyDrugBrand.cs">
+    <Compile Include="Models\PharmacyDrug.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyDrugGeneric.cs">
+    <Compile Include="Models\PharmacyInventory.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PharmacyLocation.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyManufacturingCompany.cs">
+    <Compile Include="Models\PharmacyStatu.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyStatu.cs">
+    <Compile Include="Models\PharmacySupplier.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UzimaRx.Context.cs">
@@ -445,8 +433,10 @@
     <Content Include="Views\Order\_Home.cshtml" />
     <Content Include="Views\Report\ExpiredDrugs.cshtml" />
     <Content Include="Views\Report\Inventory.cshtml" />
-    <Content Include="Views\Location\AddLocation.cshtml" />
     <Content Include="Views\Location\LocationAdded.cshtml" />
+    <Content Include="Views\Location\AddHospitalLocation.cshtml" />
+    <Content Include="Views\Location\AddClinicLocation.cshtml" />
+    <Content Include="Views\Location\AddSupplierLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

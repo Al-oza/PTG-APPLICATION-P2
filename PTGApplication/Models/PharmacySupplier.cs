@@ -12,12 +12,12 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyManufacturingCompany
+    public partial class PharmacySupplier
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PharmacyManufacturingCompany()
+        public PharmacySupplier()
         {
-            this.PharmacyDrugBrands = new HashSet<PharmacyDrugBrand>();
+            this.PharmacyLocations = new HashSet<PharmacyLocation>();
         }
     
         public int Id { get; set; }
@@ -26,6 +26,6 @@ namespace PTGApplication.Models
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyDrugBrand> PharmacyDrugBrands { get; set; }
+        public virtual ICollection<PharmacyLocation> PharmacyLocations { get; set; }
     }
 }
