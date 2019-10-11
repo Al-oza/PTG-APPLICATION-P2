@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[PharmacyDrug] (
 	[BrandName]   NVARCHAR (256)  NULL,
 	[ApplicationNumber] NVARCHAR (256) NULL,
 	[Manufacturer] NVARCHAR(256)   NOT NULL,
-	[Manufacturer Location] NVARCHAR(256) NULL,
+	[ManufacturerLocation] NVARCHAR(256) NULL,
 	[ApprovalNumber] NVARChar (256) NULL,
 	[Schedule]   NVARCHAR(256)  NULL,
     [License]  NVARCHAR (256) NULL,
@@ -159,7 +159,7 @@ CREATE TABLE [dbo].[PharmacyStatus] (
 );
 
 GO
-CREATE TABLE [dbo].[Item] (
+CREATE TABLE [dbo].[PharmacyInventory] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
     [UserId]  INT   NOT NULL, --use this as user or do the PK or AuthUser Table?
