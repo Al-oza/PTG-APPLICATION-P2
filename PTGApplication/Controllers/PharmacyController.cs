@@ -21,8 +21,12 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
+                var drugs = uzima.PharmacyDrugs.ToList();
+                if (drugs != null) { ViewBag.drugs = drugs; }
                 var locations = uzima.PharmacyLocations.ToList();
                 if (locations != null) { ViewBag.locations = locations; }
+                var statuses = uzima.PharmacyStatus.ToList();
+                if (statuses != null) { ViewBag.statuses = statuses; }
                 return View();
             }
         }
@@ -33,17 +37,29 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
+                var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
                 try
                 {
-                    model.Id = uzima.PharmacyInventories.Count();
-                    uzima.PharmacyInventories.Add(model);
+                    var inventory = new PharmacyInventory();
+                    inventory.BarcodeId = model.BarcodeId;
+                    inventory.CurrentLocationId = model.CurrentLocationId;
+                    inventory.DateOrdered = model.DateOrdered;
+                    inventory.ExpirationDate = model.ExpirationDate;
+                    inventory.FutureLocationId = model.FutureLocationId;
+                    inventory.Id = uzima.PharmacyInventories.Count();
+                    inventory.StatusId = model.StatusId;
+                    inventory.UserId = user.Id;
+
+
+                    uzima.PharmacyInventories.Add(inventory);
                     await uzima.SaveChangesAsync();
                     ViewBag.successMessage = "Inventory Added";
-                    uzima.Dispose();
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.errorMessage = ex.Message;
+                    if (ex.InnerException != null)
+                    { ViewBag.errorMessage = ex.InnerException.Message; }
+                    else { ViewBag.errorMessage = ex.Message; }
                     return View("Error");
                 }
 

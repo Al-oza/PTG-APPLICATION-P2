@@ -4,21 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="426df21198b1421f9770ae3dfbd35059" Name="Diagram1">
-        <EntityTypeShape EntityType="UzimaRxModel.C__MigrationHistory" Width="1.5" PointX="10.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetRole" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUser" Width="1.5" PointX="8" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyBatch" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyBatchLocation" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyDrug" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyInventory" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyLocation" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacyStatu" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.PharmacySupplier" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+      <Diagram DiagramId="6030735765274599837bb2a71eab5b4b" Name="Diagram1">
+        <EntityTypeShape EntityType="UzimaRxModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.AspNetRole" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.AspNetUser" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyBatch" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyBatchLocation" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyDrug" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyInventory" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyLocation" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacyStatu" Width="1.5" PointX="0.75" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UzimaRxModel.PharmacySupplier" Width="1.5" PointX="1.5" PointY="22.5" IsExpanded="true" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="UzimaRxModel.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" ManuallyRouted="false" />
         <AssociationConnector Association="UzimaRxModel.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" ManuallyRouted="false" />

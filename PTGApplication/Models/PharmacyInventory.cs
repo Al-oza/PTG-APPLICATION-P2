@@ -16,13 +16,14 @@ namespace PTGApplication.Models
     {
         public int Id { get; set; }
         public System.DateTime DateOrdered { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int BarcodeId { get; set; }
         public int StatusId { get; set; }
         public int CurrentLocationId { get; set; }
         public Nullable<int> FutureLocationId { get; set; }
         public System.DateTime ExpirationDate { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual PharmacyDrug PharmacyDrug { get; set; }
         public virtual PharmacyLocation PharmacyLocation { get; set; }
         public virtual PharmacyLocation PharmacyLocation1 { get; set; }

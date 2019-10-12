@@ -162,13 +162,14 @@ GO
 CREATE TABLE [dbo].[PharmacyInventory] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
-    [UserId]  INT   NOT NULL, --use this as user or do the PK or AuthUser Table?
+    [UserId]  NVARCHAR(128) NOT NULL, --use this as user or do the PK or AuthUser Table?
     [BarcodeId]  INT  NOT NULL,
     [StatusId]  INT  NOT NULL,
     [CurrentLocationId] INT   NOT NULL,
     [FutureLocationId] INT ,
     [ExpirationDate] DATETIME NOT NULL,--is this a FK to PharmacyBatch Table?
     CONSTRAINT [PK_dbo.PharmacyOrder] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.PharmacyInventory_dbo.AspNetUser_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([BarcodeId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyStatus_StatusId] FOREIGN KEY ([StatusId]) REFERENCES [dbo].[PharmacyStatus] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_CurrentLocationId] FOREIGN KEY ([CurrentLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION, --may cause cycles or multiple paths

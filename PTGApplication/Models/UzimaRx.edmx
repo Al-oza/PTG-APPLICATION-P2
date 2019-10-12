@@ -109,7 +109,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="DateOrdered" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="BarcodeId" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CurrentLocationId" Type="int" Nullable="false" />
@@ -242,6 +242,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyInventory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_PharmacyLocation">
           <End Role="PharmacySupplier" Type="Self.PharmacySupplier" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -350,6 +364,10 @@
             <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
             <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocation" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_PharmacyLocation" Association="Self.FK_dbo_PharmacyLocation">
             <End Role="PharmacySupplier" EntitySet="PharmacySupplier" />
             <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
@@ -435,6 +453,7 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="PharmacyInventories" Relationship="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" FromRole="AspNetUsers" ToRole="PharmacyInventory" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="PharmacyBatch">
@@ -484,12 +503,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BarcodeId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CurrentLocationId" Type="Int32" Nullable="false" />
           <Property Name="FutureLocationId" Type="Int32" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" FromRole="PharmacyInventory" ToRole="AspNetUsers" />
           <NavigationProperty Name="PharmacyDrug" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" FromRole="PharmacyInventory" ToRole="PharmacyDrug" />
           <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" FromRole="PharmacyInventory" ToRole="PharmacyLocation" />
           <NavigationProperty Name="PharmacyLocation1" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" FromRole="PharmacyInventory" ToRole="PharmacyLocation" />
@@ -553,6 +573,20 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PharmacyInventory">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -689,6 +723,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" Association="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
             <End Role="PharmacyDrug" EntitySet="PharmacyDrugs" />
