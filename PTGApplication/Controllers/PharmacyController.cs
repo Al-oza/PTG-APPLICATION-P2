@@ -19,34 +19,36 @@ namespace PTGApplication.Controllers
         // GET: Pharmacy/AddInventory
         public ActionResult AddInventory()
         {
-            var entities = new UzimaRxEntities();
-            var generics = entities.PharmacyDrugGenerics.ToList();
-            if(generics != null) { ViewBag.genericsList = generics; }
-            var manufacturers = entities.PharmacyManufacturingCompanies.ToList();
-            if(manufacturers != null) { ViewBag.manufacturers = manufacturers; }
-            return View(); 
+            using (var uzima = new UzimaRxEntities())
+            {
+                var locations = uzima.PharmacyLocations.ToList();
+                if (locations != null) { ViewBag.locations = locations; }
+                return View();
+            }
         }
 
         // POST: Pharmacy/AddInventory
         [HttpPost]
-        public async Task<ActionResult> AddInventory(PharmacyDrugBrand model)
+        public async Task<ActionResult> AddInventory(PharmacyInventory model)
         {
-            try
+            using (var uzima = new UzimaRxEntities())
             {
-                var uzima = new UzimaRxEntities();
-                model.Barcode = uzima.PharmacyDrugBrands.Count();
-                uzima.PharmacyDrugBrands.Add(model);
-                await uzima.SaveChangesAsync();
-                ViewBag.successMessage = "Inventory Added";
-                uzima.Dispose();
-            }
-            catch(Exception ex)
-            {
-                ViewBag.errorMessage = ex.Message;
-                return View("Error");
-            }
+                try
+                {
+                    model.Id = uzima.PharmacyInventories.Count();
+                    uzima.PharmacyInventories.Add(model);
+                    await uzima.SaveChangesAsync();
+                    ViewBag.successMessage = "Inventory Added";
+                    uzima.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.errorMessage = ex.Message;
+                    return View("Error");
+                }
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Pharmacy/Edit/5
