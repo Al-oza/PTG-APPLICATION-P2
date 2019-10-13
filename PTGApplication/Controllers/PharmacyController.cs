@@ -33,26 +33,32 @@ namespace PTGApplication.Controllers
 
         // POST: Pharmacy/AddInventory
         [HttpPost]
-        public async Task<ActionResult> AddInventory(PharmacyInventory model)
+        public async Task<ActionResult> AddInventory(string txtQuantity, PharmacyInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
                 try
                 {
-                    var inventory = new PharmacyInventory();
-                    inventory.BarcodeId = model.BarcodeId;
-                    inventory.CurrentLocationId = model.CurrentLocationId;
-                    inventory.DateOrdered = model.DateOrdered;
-                    inventory.ExpirationDate = model.ExpirationDate;
-                    inventory.FutureLocationId = model.FutureLocationId;
-                    inventory.Id = uzima.PharmacyInventories.Count();
-                    inventory.StatusId = model.StatusId;
-                    inventory.UserId = user.Id;
+                    var inventory = new PharmacyInventory()
+                    {
+                        BarcodeId = model.BarcodeId,
+                        CurrentLocationId = model.CurrentLocationId,
+                        DateOrdered = model.DateOrdered,
+                        ExpirationDate = model.ExpirationDate,
+                        FutureLocationId = model.FutureLocationId,
+                        Id = uzima.PharmacyInventories.Count(),
+                        StatusId = model.StatusId,
+                        UserId = user.Id
+                    };
 
 
-                    uzima.PharmacyInventories.Add(inventory);
-                    await uzima.SaveChangesAsync();
+                    for (int i = 0; i < Convert.ToInt32(txtQuantity); i++)
+                    {
+                        uzima.PharmacyInventories.Add(inventory);
+                        inventory.Id++;
+                        await uzima.SaveChangesAsync();
+                    }
                     ViewBag.successMessage = "Inventory Added";
                 }
                 catch (Exception ex)
