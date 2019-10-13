@@ -423,7 +423,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\knockout.validation.min.js.map" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Pharmacy\Index.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Order\_Home.cshtml" />
