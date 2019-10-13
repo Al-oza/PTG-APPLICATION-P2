@@ -4,15 +4,14 @@
     ViewBag.Title = "Add Inventory";
 }
 
-<h2>Add New Inventory</h2>
+<h2>Add Inventory</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Pharmacy Inventory</h4>
-        <hr />
+        
         <div class="form-group">
             @Html.LabelFor(model => model.BarcodeId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -79,6 +78,3 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
