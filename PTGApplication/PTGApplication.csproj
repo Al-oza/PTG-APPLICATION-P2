@@ -381,7 +381,15 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Queries\ClearDatabase.sql" />
     <Content Include="Scripts\Queries\CreateDatabase.sql" />
-    <Content Include="Scripts\Queries\DrugData.sql" />
+    <Content Include="Scripts\Queries\DrugData_A.sql" />
+    <Content Include="Scripts\Queries\DrugData_B.sql" />
+    <Content Include="Scripts\Queries\DrugData_C.sql" />
+    <Content Include="Scripts\Queries\DrugData_D.sql" />
+    <Content Include="Scripts\Queries\DrugData_E.sql" />
+    <Content Include="Scripts\Queries\DrugData_F.sql" />
+    <Content Include="Scripts\Queries\DrugData_G.sql" />
+    <Content Include="Scripts\Queries\DrugData_H.sql" />
+    <Content Include="Scripts\Queries\DrugData_I.sql" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
     <Content Include="Views\Pharmacy\_Home.cshtml" />
