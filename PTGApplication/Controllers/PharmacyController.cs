@@ -73,43 +73,72 @@ namespace PTGApplication.Controllers
             }
         }
 
-        // GET: Pharmacy/Edit/5
-        public ActionResult Edit(int id)
-        { return View(); }
-
-        // POST: Pharmacy/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: Pharmacy/MoveInventory
+        public ActionResult MoveInventory(int id)
         {
-            try
+            using (var uzima = new UzimaRxEntities())
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                /*
+                    var drugs = uzima.PharmacyDrugs.ToList();
+                    if (drugs != null) { ViewBag.drugs = drugs; }
+                    var locations = uzima.PharmacyLocations.ToList();
+                    if (locations != null) { ViewBag.locations = locations; }
+                    var statuses = uzima.PharmacyStatus.ToList();
+                    if (statuses != null) { ViewBag.statuses = statuses; }*/
+                return View(uzima.PharmacyInventories.Single(m => m.Id == id));
             }
         }
 
-        // GET: Pharmacy/Delete/5
-        public ActionResult Delete(int id)
-        { return View(); }
-
-        // POST: Pharmacy/Delete/5
+        // POST: Pharmacy/MoveInventory
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> MoveInventory(PharmacyInventory model)
         {
-            try
+            /*using (var uzima = new UzimaRxEntities())
             {
-                // TODO: Add delete logic here
+                var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
+                try
+                {
+                    var inventory = new PharmacyInventory()
+                    {
+                        BarcodeId = model.BarcodeId,
+                        CurrentLocationId = model.CurrentLocationId,
+                        DateOrdered = model.DateOrdered,
+                        ExpirationDate = model.ExpirationDate,
+                        FutureLocationId = model.FutureLocationId,
+                        Id = uzima.PharmacyInventories.Count(),
+                        StatusId = model.StatusId,
+                        UserId = user.Id
+                    };
 
-                return RedirectToAction("Index");
-            }
-            catch
+
+                    for (int i = 0; i < Convert.ToInt32(txtQuantity); i++)
+                    {
+                        uzima.PharmacyInventories.Add(inventory);
+                        inventory.Id++;
+                        await uzima.SaveChangesAsync();
+                    }
+                    ViewBag.successMessage = "Inventory Added";
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null)
+                    { ViewBag.errorMessage = ex.InnerException.Message; }
+                    else { ViewBag.errorMessage = ex.Message; }
+                    return View("Error");
+                }
+                */
+            return RedirectToAction("Index");
+            // }
+        }
+
+        // GET: Pharmacy/Select
+        public ActionResult SelectInventory()
+        {
+            using (var uzima = new UzimaRxEntities())
             {
-                return View();
+                var locations = uzima.PharmacyLocations.ToList();
+                if (locations != null) { ViewBag.locations = locations; }
+                return View(uzima.PharmacyInventories.ToList());
             }
         }
     }

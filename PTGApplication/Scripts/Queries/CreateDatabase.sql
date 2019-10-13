@@ -163,7 +163,7 @@ CREATE TABLE [dbo].[PharmacyInventory] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
     [UserId]  NVARCHAR(128) NOT NULL, --use this as user or do the PK or AuthUser Table?
-    [BarcodeId]  INT  NOT NULL,
+    [BarcodeId]  NVARCHAR(256)  NOT NULL,
     [StatusId]  INT  NOT NULL,
     [CurrentLocationId] INT   NOT NULL,
     [FutureLocationId] INT ,
