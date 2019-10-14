@@ -78,13 +78,14 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                /*
-                    var drugs = uzima.PharmacyDrugs.ToList();
-                    if (drugs != null) { ViewBag.drugs = drugs; }
-                    var locations = uzima.PharmacyLocations.ToList();
-                    if (locations != null) { ViewBag.locations = locations; }
-                    var statuses = uzima.PharmacyStatus.ToList();
-                    if (statuses != null) { ViewBag.statuses = statuses; }*/
+                var drugs = uzima.PharmacyDrugs.ToList();
+                if (drugs != null) { ViewBag.drugs = drugs; }
+                var users = uzima.AspNetUsers.ToList();
+                if (users != null) { ViewBag.users = users; }
+                var statuses = uzima.PharmacyStatus.ToList();
+                if (statuses != null) { ViewBag.statuses = statuses; }
+                var locations = uzima.PharmacyLocations.ToList();
+                if (locations != null) { ViewBag.locations = locations; }
                 return View(uzima.PharmacyInventories.Single(m => m.Id == id));
             }
         }
@@ -93,30 +94,11 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> MoveInventory(PharmacyInventory model)
         {
-            /*using (var uzima = new UzimaRxEntities())
+            using (var uzima = new UzimaRxEntities())
             {
                 var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
                 try
                 {
-                    var inventory = new PharmacyInventory()
-                    {
-                        BarcodeId = model.BarcodeId,
-                        CurrentLocationId = model.CurrentLocationId,
-                        DateOrdered = model.DateOrdered,
-                        ExpirationDate = model.ExpirationDate,
-                        FutureLocationId = model.FutureLocationId,
-                        Id = uzima.PharmacyInventories.Count(),
-                        StatusId = model.StatusId,
-                        UserId = user.Id
-                    };
-
-
-                    for (int i = 0; i < Convert.ToInt32(txtQuantity); i++)
-                    {
-                        uzima.PharmacyInventories.Add(inventory);
-                        inventory.Id++;
-                        await uzima.SaveChangesAsync();
-                    }
                     ViewBag.successMessage = "Inventory Added";
                 }
                 catch (Exception ex)
@@ -126,9 +108,8 @@ namespace PTGApplication.Controllers
                     else { ViewBag.errorMessage = ex.Message; }
                     return View("Error");
                 }
-                */
-            return RedirectToAction("Index");
-            // }
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Pharmacy/Select
