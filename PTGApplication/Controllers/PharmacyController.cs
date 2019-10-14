@@ -86,6 +86,10 @@ namespace PTGApplication.Controllers
                 if (statuses != null) { ViewBag.statuses = statuses; }
                 var locations = uzima.PharmacyLocations.ToList();
                 if (locations != null) { ViewBag.locations = locations; }
+                var orderDate = uzima.PharmacyInventories.Where(i => i.Id == id).SingleOrDefault().DateOrdered;
+                if (orderDate != null) { ViewBag.orderDate = orderDate; }
+                var expirationDate = uzima.PharmacyInventories.Where(i => i.Id == id).SingleOrDefault().ExpirationDate;
+                if (expirationDate != null) { ViewBag.expirationDate = expirationDate; }
                 return View(uzima.PharmacyInventories.Single(m => m.Id == id));
             }
         }
@@ -96,10 +100,14 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
                 try
                 {
-                    ViewBag.successMessage = "Inventory Added";
+                    uzima.PharmacyInventories.Remove(
+                        uzima.PharmacyInventories.Where(i => i.Id == model.Id).SingleOrDefault());
+                    uzima.PharmacyInventories.Add(model);
+
+                    await uzima.SaveChangesAsync();
+                    ViewBag.successMessage = "Inventory Moved";
                 }
                 catch (Exception ex)
                 {
