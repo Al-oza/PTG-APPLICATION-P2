@@ -73,8 +73,8 @@ namespace PTGApplication.Controllers
             }
         }
 
-        // GET: Pharmacy/MoveInventory
-        public ActionResult MoveInventory(int id)
+        // GET: Pharmacy/ModifyInventory
+        public ActionResult ModifyInventory(int id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -94,9 +94,9 @@ namespace PTGApplication.Controllers
             }
         }
 
-        // POST: Pharmacy/MoveInventory
+        // POST: Pharmacy/ModifyInventory
         [HttpPost]
-        public async Task<ActionResult> MoveInventory(PharmacyInventory model)
+        public async Task<ActionResult> ModifyInventory(PharmacyInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -107,7 +107,7 @@ namespace PTGApplication.Controllers
                     uzima.PharmacyInventories.Add(model);
 
                     await uzima.SaveChangesAsync();
-                    ViewBag.successMessage = "Inventory Moved";
+                    ViewBag.successMessage = "Inventory Modified";
                 }
                 catch (Exception ex)
                 {

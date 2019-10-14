@@ -437,7 +437,7 @@
     <Content Include="Views\Location\AddClinicLocation.cshtml" />
     <Content Include="Views\Location\AddSupplierLocation.cshtml" />
     <Content Include="Views\Pharmacy\AddInventory.cshtml" />
-    <Content Include="Views\Pharmacy\MoveInventory.cshtml" />
+    <Content Include="Views\Pharmacy\ModifyInventory.cshtml" />
     <Content Include="Views\Pharmacy\SelectInventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
