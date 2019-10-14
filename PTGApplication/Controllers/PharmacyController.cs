@@ -122,22 +122,35 @@ namespace PTGApplication.Controllers
 
         // GET: Pharmacy/RemoveInventory/5
         public ActionResult RemoveInventory(int id)
-        { return View(); }
+        {
+            using (var uzima = new UzimaRxEntities())
+            { return View(uzima.PharmacyInventories.SingleOrDefault(inv => inv.Id == id)); }
+        }
 
         // POST: Pharmacy/RemoveInventory
         [HttpPost]
-        public ActionResult RemoveInventory(PharmacyInventory model)
+        public async Task<ActionResult> RemoveInventory(int id, PharmacyInventory model)
         {
-            try { }
-            catch (Exception ex)
+            using (var uzima = new UzimaRxEntities())
             {
-                if (ex.InnerException!=null)
-                { ViewBag.errorMessage = ex.InnerException.Message; }
-                else { ViewBag.errorMessage = ex.Message; }
-                return View("Error");
-            }
+                try
+                {
+                    var inventory = (from inv in uzima.PharmacyInventories
+                                     where inv.Id == id
+                                     select inv).SingleOrDefault();
+                    uzima.PharmacyInventories.Remove(inventory);
+                    await uzima.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null)
+                    { ViewBag.errorMessage = ex.InnerException.Message; }
+                    else { ViewBag.errorMessage = ex.Message; }
+                    return View("Error");
+                }
 
-            return View();
+                return View("Index");
+            }
         }
 
         // GET: Pharmacy/Select
