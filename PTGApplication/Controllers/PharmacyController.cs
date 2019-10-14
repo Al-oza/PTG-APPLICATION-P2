@@ -120,6 +120,26 @@ namespace PTGApplication.Controllers
             }
         }
 
+        // GET: Pharmacy/RemoveInventory/5
+        public ActionResult RemoveInventory(int id)
+        { return View(); }
+
+        // POST: Pharmacy/RemoveInventory
+        [HttpPost]
+        public ActionResult RemoveInventory(PharmacyInventory model)
+        {
+            try { }
+            catch (Exception ex)
+            {
+                if (ex.InnerException!=null)
+                { ViewBag.errorMessage = ex.InnerException.Message; }
+                else { ViewBag.errorMessage = ex.Message; }
+                return View("Error");
+            }
+
+            return View();
+        }
+
         // GET: Pharmacy/Select
         public ActionResult SelectInventory()
         {

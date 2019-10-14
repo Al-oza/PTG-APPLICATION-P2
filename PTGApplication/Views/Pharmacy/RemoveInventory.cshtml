@@ -1,66 +1,80 @@
-﻿@model IEnumerable<PTGApplication.Models.PharmacyDrugBrand>
+﻿@model PTGApplication.Models.PharmacyInventory
 
 @{
-    ViewBag.Title = "RemoveInventory";
+    ViewBag.Title = "Remove Inventory";
 }
 
 <h2>RemoveInventory</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Barcode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.License)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dose)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PackSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GenericNameId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ManufacturerId)
-        </th>
-        <th></th>
-    </tr>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pharmacy Inventory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOrdered)
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Barcode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.License)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dose)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PackSize)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GenericNameId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ManufacturerId)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-            @Html.ActionLink("Delete", "Remove", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.DateOrdered)
+        </dd>
 
-</table>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BarcodeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BarcodeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentLocationId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentLocationId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FutureLocationId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FutureLocationId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpirationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpirationDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -31,7 +31,8 @@
             @Html.DisplayFor(modelItem => item.BarcodeId)
         </td>
         <td>
-            @Html.ActionLink("Modify", "ModifyInventory", new { id=item.Id }) 
+            @Html.ActionLink("Modify", "ModifyInventory", new { id=item.Id }) |
+            @Html.ActionLink("Remove", "RemoveInventory", new { id=item.Id })
         </td>
     </tr>
 }

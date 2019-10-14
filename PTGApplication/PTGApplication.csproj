@@ -447,6 +447,7 @@
     <Content Include="Views\Pharmacy\AddInventory.cshtml" />
     <Content Include="Views\Pharmacy\ModifyInventory.cshtml" />
     <Content Include="Views\Pharmacy\SelectInventory.cshtml" />
+    <Content Include="Views\Pharmacy\RemoveInventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
