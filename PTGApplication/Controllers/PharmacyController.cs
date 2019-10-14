@@ -112,7 +112,11 @@ namespace PTGApplication.Controllers
                 catch (Exception ex)
                 {
                     if (ex.InnerException != null)
-                    { ViewBag.errorMessage = ex.InnerException.Message; }
+                    {
+                        if (ex.InnerException.InnerException != null)
+                        { ViewBag.errorMessage = ex.InnerException.InnerException.Message; }
+                        else { ViewBag.errorMessage = ex.InnerException.Message; }
+                    }
                     else { ViewBag.errorMessage = ex.Message; }
                     return View("Error");
                 }
@@ -163,5 +167,56 @@ namespace PTGApplication.Controllers
                 return View(uzima.PharmacyInventories.ToList());
             }
         }
+
+        public ActionResult AddtoDrugList()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddtoDrugList(PharmacyDrug model)
+        {
+
+            using (var cs = new UzimaRxEntities())
+            {
+                try
+                {
+                    var drug = new PharmacyDrug()
+                    {
+
+                        Id = cs.PharmacyDrugs.Count()+1,
+                        Barcode = model.Barcode,
+                        Name = model.Name,
+                        BrandName = model.BrandName,
+                        ApplicationNumber = model.ApplicationNumber,
+                        Manufacturer = model.Manufacturer,
+                        ManufacturerLocation = model.ManufacturerLocation,
+                        ApprovalNumber = model.ApprovalNumber,
+                        Schedule = model.Schedule,
+                        License = model.License,
+                        Ingredients = model.Ingredients,
+                        PackSize = model.PackSize
+                    };
+
+                    cs.PharmacyDrugs.Add(drug);
+
+                    cs.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.errorMessage = ex.Message;
+                    return View("Error");
+                }
+
+                return RedirectToAction("DrugAdded");
+            }
+        }
+
+        // GET: DrugAdded
+        public ActionResult DrugAdded()
+        {
+            return View();
+        }
+
     }
 }

@@ -9,9 +9,14 @@
         <li><a href="~/Pharmacy/AddInventory">Add Inventory</a></li>
         <li><a href="~/Pharmacy/SelectInventory">Modify Inventory</a></li>
         <li><a>Lookup</a></li>
-        <li><a>Inventory Reports</a></li>
+        @if (User.IsInRole("PharmaAdmin"))
+        {
+            <li><a href="~/Pharmacy/AddtoDrugList">Add Drug to Drug List</a></li>
+            <li><a>Remove Drug from Drug List</a></li>
+        }
     </ul>
 </div>
+
 <br />
 <br />
 <div class="panel-info" style="clear: both;">

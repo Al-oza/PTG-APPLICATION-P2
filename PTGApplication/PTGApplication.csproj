@@ -447,11 +447,15 @@
     <Content Include="Views\Pharmacy\AddInventory.cshtml" />
     <Content Include="Views\Pharmacy\ModifyInventory.cshtml" />
     <Content Include="Views\Pharmacy\SelectInventory.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Pharmacy\RemoveInventory.cshtml" />
+=======
+    <Content Include="Views\Pharmacy\DrugAdded.cshtml" />
+    <Content Include="Views\Pharmacy\AddtoDrugList.cshtml" />
+>>>>>>> Add drug is successful
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
