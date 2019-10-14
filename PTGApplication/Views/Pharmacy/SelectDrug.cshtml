@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PTGApplication.Models.PharmacyDrug>
+
+@{
+    ViewBag.Title = "Select Drug";
+}
+
+<h2>Remove From Drug List</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Barcode</th>
+        <th>Brand Name</th>
+        <th>Application Number</th>
+        <th>Manufacturer</th>
+        <th>Manufacturer Location</th>
+        <th>Approval Number</th>
+        <th>Schedule</th>
+        <th>License</th>
+        <th>Ingredients</th>
+        <th>Pack Size</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Barcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrandName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manufacturer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufacturerLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApprovalNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.License)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ingredients)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PackSize)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "RemoveFromDrugList", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

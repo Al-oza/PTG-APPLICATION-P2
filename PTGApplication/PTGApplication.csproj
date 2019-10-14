@@ -452,7 +452,12 @@
 =======
     <Content Include="Views\Pharmacy\DrugAdded.cshtml" />
     <Content Include="Views\Pharmacy\AddtoDrugList.cshtml" />
+<<<<<<< HEAD
 >>>>>>> Add drug is successful
+=======
+    <Content Include="Views\Pharmacy\DrugRemoved.cshtml" />
+    <Content Include="Views\Pharmacy\SelectDrug.cshtml" />
+>>>>>>> WIP - remove drug
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
