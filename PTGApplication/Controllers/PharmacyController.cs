@@ -170,21 +170,18 @@ namespace PTGApplication.Controllers
 
         public ActionResult AddtoDrugList()
         {
-
             return View();
         }
         [HttpPost]
         public ActionResult AddtoDrugList(PharmacyDrug model)
         {
-
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
                     var drug = new PharmacyDrug()
-                    {
-
-                        Id = cs.PharmacyDrugs.Count()+1,
+                    { 
+                        Id = cs.PharmacyDrugs.Count() + 1,
                         Barcode = model.Barcode,
                         Name = model.Name,
                         BrandName = model.BrandName,
@@ -197,9 +194,7 @@ namespace PTGApplication.Controllers
                         Ingredients = model.Ingredients,
                         PackSize = model.PackSize
                     };
-
                     cs.PharmacyDrugs.Add(drug);
-
                     cs.SaveChanges();
                 }
                 catch (Exception ex)
@@ -207,7 +202,6 @@ namespace PTGApplication.Controllers
                     ViewBag.errorMessage = ex.Message;
                     return View("Error");
                 }
-
                 return RedirectToAction("DrugAdded");
             }
         }
@@ -221,7 +215,7 @@ namespace PTGApplication.Controllers
         public ActionResult RemoveFromDrugList()
         {
             return View();
-        } 
+        }
 
         [HttpPost]
         public ActionResult RemoveFromDrugList(PharmacyDrug model)
@@ -233,7 +227,6 @@ namespace PTGApplication.Controllers
                 {
                     var drug = new PharmacyDrug()
                     {
-
                         Id = model.Id,
                         Barcode = model.Barcode,
                         Name = model.Name,
@@ -247,9 +240,7 @@ namespace PTGApplication.Controllers
                         Ingredients = model.Ingredients,
                         PackSize = model.PackSize
                     };
-
                     cs.PharmacyDrugs.Remove(drug);
-
                     cs.SaveChanges();
                 }
                 catch (Exception ex)
@@ -257,7 +248,6 @@ namespace PTGApplication.Controllers
                     ViewBag.errorMessage = ex.Message;
                     return View("Error");
                 }
-
                 return RedirectToAction("DrugRemoved");
             }
         }
@@ -268,13 +258,8 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 return View(uzima.PharmacyDrugs.Where(m => m.Name.Contains(SearchString) || SearchString == null).ToList());
-                /*var drugs = uzima.PharmacyDrugs.ToList();
-                if (drugs != null) { ViewBag.locations = drugs; }
-                return View(uzima.PharmacyDrugs.ToList());*/
             }
-         
-
-            }
+        }
 
         // GET: DrugRemoved
         public ActionResult DrugRemoved()
