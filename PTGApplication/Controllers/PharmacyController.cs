@@ -221,7 +221,8 @@ namespace PTGApplication.Controllers
         public ActionResult RemoveFromDrugList()
         {
             return View();
-        }
+        } 
+
         [HttpPost]
         public ActionResult RemoveFromDrugList(PharmacyDrug model)
         {
@@ -262,15 +263,18 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Select Drug
-        public ActionResult SelectDrug()
+        public ActionResult SelectDrug(String SearchString)
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var drugs = uzima.PharmacyDrugs.ToList();
+                return View(uzima.PharmacyDrugs.Where(m => m.Name.Contains(SearchString) || SearchString == null).ToList());
+                /*var drugs = uzima.PharmacyDrugs.ToList();
                 if (drugs != null) { ViewBag.locations = drugs; }
-                return View(uzima.PharmacyDrugs.ToList());
+                return View(uzima.PharmacyDrugs.ToList());*/
             }
-        }
+         
+
+            }
 
         // GET: DrugRemoved
         public ActionResult DrugRemoved()
