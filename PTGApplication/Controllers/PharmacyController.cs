@@ -212,45 +212,39 @@ namespace PTGApplication.Controllers
             return View();
         }
 
-        public ActionResult RemoveFromDrugList()
+        // GET: Pharmacy/RemoveDrugFromDrugList/5
+        public ActionResult RemoveDrugFromList(int id)
         {
-            return View();
+            using (var uzima = new UzimaRxEntities())
+            { return View(uzima.PharmacyDrugs.SingleOrDefault(inv => inv.Id == id)); }
         }
 
+        // POST: Pharmacy/RemoveDrug
         [HttpPost]
-        public ActionResult RemoveFromDrugList(PharmacyDrug model)
+        public async Task<ActionResult> RemoveDrugFromList(int id, PharmacyDrug model)
         {
-
-            using (var cs = new UzimaRxEntities())
+            using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
-                    var drug = new PharmacyDrug()
-                    {
-                        Id = model.Id,
-                        Barcode = model.Barcode,
-                        Name = model.Name,
-                        BrandName = model.BrandName,
-                        ApplicationNumber = model.ApplicationNumber,
-                        Manufacturer = model.Manufacturer,
-                        ManufacturerLocation = model.ManufacturerLocation,
-                        ApprovalNumber = model.ApprovalNumber,
-                        Schedule = model.Schedule,
-                        License = model.License,
-                        Ingredients = model.Ingredients,
-                        PackSize = model.PackSize
-                    };
-                    cs.PharmacyDrugs.Remove(drug);
-                    cs.SaveChanges();
+                    var drug = (from dr in uzima.PharmacyDrugs
+                                     where dr.Id == id
+                                     select dr).SingleOrDefault();
+                    uzima.PharmacyDrugs.Remove(drug);
+                    await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.errorMessage = ex.Message;
+                    if (ex.InnerException != null)
+                    { ViewBag.errorMessage = ex.InnerException.Message; }
+                    else { ViewBag.errorMessage = ex.Message; }
                     return View("Error");
                 }
-                return RedirectToAction("DrugRemoved");
+
+                return View("Index");
             }
         }
+
 
         // GET: Select Drug
         public ActionResult SelectDrug(String SearchString)

@@ -457,7 +457,11 @@
 =======
     <Content Include="Views\Pharmacy\DrugRemoved.cshtml" />
     <Content Include="Views\Pharmacy\SelectDrug.cshtml" />
+<<<<<<< HEAD
 >>>>>>> WIP - remove drug
+=======
+    <Content Include="Views\Pharmacy\RemoveDrugFromList.cshtml" />
+>>>>>>> remove drug from list now works.
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
