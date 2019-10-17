@@ -20,8 +20,13 @@ namespace PTGApplication.Controllers
         public ActionResult AddHospitalLocation()
         {
             using (var cs = new UzimaRxEntities())
-            {
-                var suppliers = cs.PharmacySuppliers.ToList();
+            { 
+                var type = cs.PharmacyLocationTypes.Where(t => t.Supplier == null);
+                var suppliers = new List<PharmacyLocation>();
+
+                foreach (var supplier in type)
+                { suppliers.Add(cs.PharmacyLocations.Find(supplier.Id)); }
+
                 if (suppliers != null)
                 {
                     ViewBag.suppliers = suppliers;
@@ -43,14 +48,20 @@ namespace PTGApplication.Controllers
 
                         Id = cs.PharmacyLocations.Count(),
                         Name = model.Name,
-                        UpstreamSupplier = model.UpstreamSupplier,
-                        IsHospital = true,
-                        IsClinic = false,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
+                    var type = new PharmacyLocationType()
+                    {
+                        Id = cs.PharmacyLocationTypes.Count(),
+                        LocationType = "Hospital",
+                        LocationId = location.Id,
+                        Supplier = Convert.ToInt32(Request.Form["Supplier"])
+                    };
+
                     cs.PharmacyLocations.Add(location);
+                    cs.PharmacyLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }
@@ -68,7 +79,12 @@ namespace PTGApplication.Controllers
         {
             using (var cs = new UzimaRxEntities())
             {
-                var suppliers = cs.PharmacySuppliers.ToList();
+                var type = cs.PharmacyLocationTypes.Where(t => t.Supplier == null);
+                var suppliers = new List<PharmacyLocation>();
+
+                foreach (var supplier in type)
+                { suppliers.Add(cs.PharmacyLocations.Find(supplier.Id)); }
+
                 if (suppliers != null)
                 {
                     ViewBag.suppliers = suppliers;
@@ -90,14 +106,20 @@ namespace PTGApplication.Controllers
 
                         Id = cs.PharmacyLocations.Count(),
                         Name = model.Name,
-                        UpstreamSupplier = model.UpstreamSupplier,
-                        IsHospital = false,
-                        IsClinic = true,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
+                    var type = new PharmacyLocationType()
+                    {
+                        Id = cs.PharmacyLocationTypes.Count(),
+                        LocationType = "Clinic",
+                        LocationId = location.Id,
+                        Supplier = Convert.ToInt32(Request.Form["Supplier"])
+                    };
+
                     cs.PharmacyLocations.Add(location);
+                    cs.PharmacyLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }
@@ -116,54 +138,32 @@ namespace PTGApplication.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddSupplierLocation(PharmacySupplier model)
+        public ActionResult AddSupplierLocation(PharmacyLocation model)
         {
 
-            using (var cs = new UzimaRxEntities())
-            {
-                try
-                {
-                    var supplier = new PharmacySupplier()
-                    {
-
-                        Id = cs.PharmacySuppliers.Count(),
-                        Name = model.Name,
-                        Address = model.Address,
-                        Phone = model.Phone
-                    };
-
-                    cs.PharmacySuppliers.Add(supplier);
-
-                    cs.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.errorMessage = ex.Message;
-                    return View("Error");
-                }
-
-                return RedirectToAction("LocationAdded");
-            }
-        }
-
-        public ActionResult InsertLocation(PharmacyLocation model)
-        {
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
                     var location = new PharmacyLocation()
                     {
+
                         Id = cs.PharmacyLocations.Count(),
                         Name = model.Name,
-                        UpstreamSupplier = model.UpstreamSupplier,
-                        IsHospital = model.IsHospital,
-                        IsClinic = model.IsClinic,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
+                    var type = new PharmacyLocationType()
+                    {
+                        Id = cs.PharmacyLocationTypes.Count(),
+                        LocationType = "Supplier",
+                        LocationId = location.Id,
+                        Supplier = null
+                    };
+
                     cs.PharmacyLocations.Add(location);
+                    cs.PharmacyLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }

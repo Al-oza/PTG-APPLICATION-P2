@@ -269,10 +269,10 @@
     <Compile Include="Models\PharmacyLocation.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyStatu.cs">
+    <Compile Include="Models\PharmacyLocationType.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacySupplier.cs">
+    <Compile Include="Models\PharmacyStatu.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UzimaRx.Context.cs">
@@ -447,21 +447,12 @@
     <Content Include="Views\Pharmacy\AddInventory.cshtml" />
     <Content Include="Views\Pharmacy\ModifyInventory.cshtml" />
     <Content Include="Views\Pharmacy\SelectInventory.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Pharmacy\RemoveInventory.cshtml" />
-=======
     <Content Include="Views\Pharmacy\DrugAdded.cshtml" />
     <Content Include="Views\Pharmacy\AddtoDrugList.cshtml" />
-<<<<<<< HEAD
->>>>>>> Add drug is successful
-=======
     <Content Include="Views\Pharmacy\DrugRemoved.cshtml" />
     <Content Include="Views\Pharmacy\SelectDrug.cshtml" />
-<<<<<<< HEAD
->>>>>>> WIP - remove drug
-=======
     <Content Include="Views\Pharmacy\RemoveDrugFromList.cshtml" />
->>>>>>> remove drug from list now works.
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

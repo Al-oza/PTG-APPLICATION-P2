@@ -117,7 +117,7 @@ CREATE TABLE [dbo].[PharmacyBatch] (
     CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE
 );
 GO
-CREATE TABLE [dbo].[PharmacySupplier] (
+CREATE TABLE [dbo].[PharmacyLocation] (
     [Id]   INT   NOT NULL,
     [Name]  NVARCHAR (256)  NOT NULL,
     [Address]  NVARCHAR (256)  NOT NULL,
@@ -126,16 +126,14 @@ CREATE TABLE [dbo].[PharmacySupplier] (
 );
 
 GO
-CREATE TABLE [dbo].[PharmacyLocation] (
+CREATE TABLE [dbo].[PharmacyLocationType] (
     [Id]   INT   NOT NULL,
-    [Name]  NVARCHAR (256)  NOT NULL,
-    [UpstreamSupplier] INT  NULL,
-    [IsHospital] BIT  NOT NULL,
-    [IsClinic]  BIT  NOT NULL,
-    [Address]  NVARCHAR (256)  NOT NULL,
-    [Phone]  NVARCHAR (256)  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacyLocation] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [FK_dbo.PharmacyLocation] FOREIGN KEY ([UpstreamSupplier]) REFERENCES [dbo].[PharmacySupplier] ([Id]) ON DELETE CASCADE
+    [LocationId] INT NOT NULL,
+	[LocationType] NVARCHAR(MAX),
+	[Supplier] INT NULL,
+    CONSTRAINT [PK_dbo.PharmacyLocationType] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.PharmacyLocationType] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE CASCADE,
+	CONSTRAINT [FK_dbo.PharmacyLocationType_Supplier] FOREIGN KEY ([Supplier]) REFERENCES [dbo].[PharmacyLocation] ([Id]) 
 );
 
 
@@ -163,14 +161,14 @@ CREATE TABLE [dbo].[PharmacyInventory] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
     [UserId]  NVARCHAR(128) NOT NULL, --use this as user or do the PK or AuthUser Table?
-    [BarcodeId]  NVARCHAR(256)  NOT NULL,
+    [DrugId]  INT  NOT NULL,
     [StatusId]  INT  NOT NULL,
     [CurrentLocationId] INT   NOT NULL,
     [FutureLocationId] INT ,
     [ExpirationDate] DATETIME NOT NULL,--is this a FK to PharmacyBatch Table?
     CONSTRAINT [PK_dbo.PharmacyOrder] PRIMARY KEY CLUSTERED ([Id] ASC),
 	CONSTRAINT [FK_dbo.PharmacyInventory_dbo.AspNetUser_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([BarcodeId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([DrugId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyStatus_StatusId] FOREIGN KEY ([StatusId]) REFERENCES [dbo].[PharmacyStatus] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_CurrentLocationId] FOREIGN KEY ([CurrentLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION, --may cause cycles or multiple paths
     CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_FutureLocationId] FOREIGN KEY ([FutureLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION --may cause cycles or multiple paths

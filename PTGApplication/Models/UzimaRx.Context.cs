@@ -35,7 +35,7 @@ namespace PTGApplication.Models
         public virtual DbSet<PharmacyDrug> PharmacyDrugs { get; set; }
         public virtual DbSet<PharmacyInventory> PharmacyInventories { get; set; }
         public virtual DbSet<PharmacyLocation> PharmacyLocations { get; set; }
+        public virtual DbSet<PharmacyLocationType> PharmacyLocationTypes { get; set; }
         public virtual DbSet<PharmacyStatu> PharmacyStatus { get; set; }
-        public virtual DbSet<PharmacySupplier> PharmacySuppliers { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PTGApplication.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -23,8 +24,16 @@ namespace PTGApplication.Controllers
             {
                 var drugs = uzima.PharmacyDrugs.ToList();
                 if (drugs != null) { ViewBag.drugs = drugs; }
-                var locations = uzima.PharmacyLocations.ToList();
-                if (locations != null) { ViewBag.locations = locations; }
+                var type = uzima.PharmacyLocationTypes.Where(t => t.Supplier == null);
+                var suppliers = new List<PharmacyLocation>();
+
+                foreach (var supplier in type)
+                { suppliers.Add(uzima.PharmacyLocations.Find(supplier.Id)); }
+                if (suppliers != null)
+                {
+                    ViewBag.suppliers = suppliers;
+                }
+                { ViewBag.suppliers = suppliers;}
                 var statuses = uzima.PharmacyStatus.ToList();
                 if (statuses != null) { ViewBag.statuses = statuses; }
                 return View();
@@ -42,11 +51,11 @@ namespace PTGApplication.Controllers
                 {
                     var inventory = new PharmacyInventory()
                     {
-                        BarcodeId = model.BarcodeId,
+                        DrugId = model.DrugId,
                         CurrentLocationId = model.CurrentLocationId,
                         DateOrdered = model.DateOrdered,
                         ExpirationDate = model.ExpirationDate,
-                        FutureLocationId = model.FutureLocationId,
+                        FutureLocationId = null,
                         Id = uzima.PharmacyInventories.Count(),
                         StatusId = model.StatusId,
                         UserId = user.Id
@@ -180,7 +189,7 @@ namespace PTGApplication.Controllers
                 try
                 {
                     var drug = new PharmacyDrug()
-                    { 
+                    {
                         Id = cs.PharmacyDrugs.Count() + 1,
                         Barcode = model.Barcode,
                         Name = model.Name,
@@ -228,8 +237,8 @@ namespace PTGApplication.Controllers
                 try
                 {
                     var drug = (from dr in uzima.PharmacyDrugs
-                                     where dr.Id == id
-                                     select dr).SingleOrDefault();
+                                where dr.Id == id
+                                select dr).SingleOrDefault();
                     uzima.PharmacyDrugs.Remove(drug);
                     await uzima.SaveChangesAsync();
                 }

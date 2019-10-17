@@ -20,13 +20,12 @@ namespace PTGApplication.Models
             this.PharmacyBatchLocations = new HashSet<PharmacyBatchLocation>();
             this.PharmacyInventories = new HashSet<PharmacyInventory>();
             this.PharmacyInventories1 = new HashSet<PharmacyInventory>();
+            this.PharmacyLocationTypes = new HashSet<PharmacyLocationType>();
+            this.PharmacyLocationTypes1 = new HashSet<PharmacyLocationType>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> UpstreamSupplier { get; set; }
-        public bool IsHospital { get; set; }
-        public bool IsClinic { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
     
@@ -36,6 +35,9 @@ namespace PTGApplication.Models
         public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyInventory> PharmacyInventories1 { get; set; }
-        public virtual PharmacySupplier PharmacySupplier { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyLocationType> PharmacyLocationTypes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyLocationType> PharmacyLocationTypes1 { get; set; }
     }
 }

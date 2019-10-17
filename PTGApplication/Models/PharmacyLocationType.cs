@@ -12,21 +12,14 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyInventory
+    public partial class PharmacyLocationType
     {
         public int Id { get; set; }
-        public System.DateTime DateOrdered { get; set; }
-        public string UserId { get; set; }
-        public int DrugId { get; set; }
-        public int StatusId { get; set; }
-        public int CurrentLocationId { get; set; }
-        public Nullable<int> FutureLocationId { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+        public int LocationId { get; set; }
+        public string LocationType { get; set; }
+        public Nullable<int> Supplier { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual PharmacyDrug PharmacyDrug { get; set; }
         public virtual PharmacyLocation PharmacyLocation { get; set; }
         public virtual PharmacyLocation PharmacyLocation1 { get; set; }
-        public virtual PharmacyStatu PharmacyStatu { get; set; }
     }
 }
