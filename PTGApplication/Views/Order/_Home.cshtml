@@ -2,61 +2,25 @@
     ViewBag.Title = "Order";
 }
 
-<h2>Place an Order</h2>
+<h2>Order Home</h2>
+
+<div class="navbar navbar-left nav-stacked">
+    <ul class="nav navbar-nav navbar-link">
+        <li><a>Place an Order</a></li>
+        <li><a>Send an Order</a></li>
+        <li><a>Receive an Order</a></li>
+        <li><a>Dispense a Drug</a></li>
+        <li><a>Destroy a Drug</a></li>
+    </ul>
+</div>
 <br />
 <br />
-<table class="spacing">
-    <tr>
-        <td class="space"><label for="=lbDrug">Drug:</label> </td>
-        &nbsp;
-        <td><input id="drug" type="text" /><br /></td>
-    </tr>
-    <tr>
-        <td class="space"><label for="lbAmountNeeded">Amount Needed:</label></td>
-        &nbsp;
-        <td><input id="AmountNeeded" type="text" /><br /></td>
-    </tr>
-    <tr>
-        <td class="space"><label for="lbfuturelocation">Location Needed:</label> </td>
-        &nbsp;
-        <td><input id="locationneeded" type="text" /></td>
-    </tr>
-</table>
-
-<br />
-<input id="placeOrder" type="submit" value="SUBMIT ORDER" />
+<div class="panel-info" style="clear: both;">
+    <h3>Place Documentation Here</h3>
+    <br>
+    <p><em>Maybe put a message around here</em></p>
+    <br>
+    <p>This area is to show the users how to operate the system</p>
+</div>
 
 
-
-
-
-<style>
-    table {
-        border-collapse: collapse;
-    }
-
-    th {
-        background-color: green;
-        Color: white;
-    }
-
-    th, td {
-        width: 150px;
-        text-align: center;
-        #border: 1px solid black;
-        padding: 5px
-    }
-
-    .space {
-        border-right: hidden;
-    }
-
-    .spacing {
-        border-collapse: separate;
-        border-spacing: 0 15px;
-    }
-
-    h1 {
-        color: green;
-    }
-</style>
