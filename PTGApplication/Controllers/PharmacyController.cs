@@ -11,11 +11,15 @@ namespace PTGApplication.Controllers
     {
         // GET: Pharmacy
         public ActionResult Index()
-        { return View(); }
+        {
+            return View();
+        }
 
         // GET: Pharmacy/Details/5
         public ActionResult Details(int id)
-        { return View(); }
+        {
+            return View();
+        }
 
         // GET: Pharmacy/AddInventory
         public ActionResult AddInventory()
@@ -23,19 +27,28 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var drugs = uzima.PharmacyDrugs.ToList();
-                if (drugs != null) { ViewBag.drugs = drugs; }
-                var type = uzima.PharmacyLocationTypes.Where(t => t.Supplier == null);
-                var suppliers = new List<PharmacyLocation>();
+                if (!(drugs is null))
+                {
+                    ViewBag.drugs = drugs;
+                }
 
-                foreach (var supplier in type)
-                { suppliers.Add(uzima.PharmacyLocations.Find(supplier.Id)); }
-                if (suppliers != null)
+                var suppliers =
+                    (from location in uzima.PharmacyLocations
+                     join type in uzima.PharmacyLocationTypes on location.Id equals type.LocationId
+                     where type.Supplier == null
+                     select location);
+
+                if (!(suppliers is null))
                 {
                     ViewBag.suppliers = suppliers;
                 }
-                { ViewBag.suppliers = suppliers;}
+
                 var statuses = uzima.PharmacyStatus.ToList();
-                if (statuses != null) { ViewBag.statuses = statuses; }
+                if (!(statuses is null))
+                {
+                    ViewBag.statuses = statuses;
+                }
+
                 return View();
             }
         }
@@ -46,7 +59,9 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var user = uzima.AspNetUsers.SingleOrDefault(u => u.Username == User.Identity.Name);
+                var user = uzima.AspNetUsers.
+                    SingleOrDefault(u => u.Username == User.Identity.Name);
+
                 try
                 {
                     var inventory = new PharmacyInventory()
@@ -68,13 +83,20 @@ namespace PTGApplication.Controllers
                         inventory.Id++;
                         await uzima.SaveChangesAsync();
                     }
+
                     ViewBag.successMessage = "Inventory Added";
                 }
                 catch (Exception ex)
                 {
                     if (ex.InnerException != null)
-                    { ViewBag.errorMessage = ex.InnerException.Message; }
-                    else { ViewBag.errorMessage = ex.Message; }
+                    {
+                        ViewBag.errorMessage = ex.InnerException.Message;
+                    }
+                    else
+                    {
+                        ViewBag.errorMessage = ex.Message;
+                    }
+
                     return View("Error");
                 }
 
@@ -88,18 +110,46 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var drugs = uzima.PharmacyDrugs.ToList();
-                if (drugs != null) { ViewBag.drugs = drugs; }
+                if (!(drugs is null))
+                {
+                    ViewBag.drugs = drugs;
+                }
+
                 var users = uzima.AspNetUsers.ToList();
-                if (users != null) { ViewBag.users = users; }
+                if (!(users is null))
+                {
+                    ViewBag.users = users;
+                }
+
                 var statuses = uzima.PharmacyStatus.ToList();
-                if (statuses != null) { ViewBag.statuses = statuses; }
+                if (!(statuses is null))
+                {
+                    ViewBag.statuses = statuses;
+                }
+
                 var locations = uzima.PharmacyLocations.ToList();
-                if (locations != null) { ViewBag.locations = locations; }
-                var orderDate = uzima.PharmacyInventories.Where(i => i.Id == id).SingleOrDefault().DateOrdered;
-                if (orderDate != null) { ViewBag.orderDate = orderDate; }
-                var expirationDate = uzima.PharmacyInventories.Where(i => i.Id == id).SingleOrDefault().ExpirationDate;
-                if (expirationDate != null) { ViewBag.expirationDate = expirationDate; }
-                return View(uzima.PharmacyInventories.Single(m => m.Id == id));
+                if (!(locations is null))
+                {
+                    ViewBag.locations = locations;
+                }
+
+                DateTime? orderDate = (from inventory in uzima.PharmacyInventories
+                                 where inventory.Id == id
+                                 select inventory.DateOrdered).SingleOrDefault();
+                if (!(orderDate is null))
+                {
+                    ViewBag.orderDate = orderDate;
+                }
+
+                DateTime? expirationDate = (from inventory in uzima.PharmacyInventories
+                                      where inventory.Id == id
+                                      select inventory.ExpirationDate).SingleOrDefault();
+                if (!(expirationDate is null))
+                {
+                    ViewBag.expirationDate = expirationDate;
+                }
+
+                return View(uzima.PharmacyInventories.SingleOrDefault(model => model.Id == id));
             }
         }
 
@@ -112,7 +162,9 @@ namespace PTGApplication.Controllers
                 try
                 {
                     uzima.PharmacyInventories.Remove(
-                        uzima.PharmacyInventories.Where(i => i.Id == model.Id).SingleOrDefault());
+                        (from inventory in uzima.PharmacyInventories
+                         where inventory.Id == model.Id
+                         select inventory).SingleOrDefault());
                     uzima.PharmacyInventories.Add(model);
 
                     await uzima.SaveChangesAsync();
@@ -120,15 +172,18 @@ namespace PTGApplication.Controllers
                 }
                 catch (Exception ex)
                 {
-                    if (ex.InnerException != null)
+                    if (ex.InnerException is null)
                     {
-                        if (ex.InnerException.InnerException != null)
-                        { ViewBag.errorMessage = ex.InnerException.InnerException.Message; }
-                        else { ViewBag.errorMessage = ex.InnerException.Message; }
+                        ViewBag.errorMessage = ex.Message;
                     }
-                    else { ViewBag.errorMessage = ex.Message; }
+                    else
+                    {
+                        ViewBag.errorMessage = "Something went wrong internally";
+                    }
+
                     return View("Error");
                 }
+
                 return RedirectToAction("Index");
             }
         }
@@ -137,7 +192,9 @@ namespace PTGApplication.Controllers
         public ActionResult RemoveInventory(int id)
         {
             using (var uzima = new UzimaRxEntities())
-            { return View(uzima.PharmacyInventories.SingleOrDefault(inv => inv.Id == id)); }
+            {
+                return View(uzima.PharmacyInventories.SingleOrDefault(inv => inv.Id == id));
+            }
         }
 
         // POST: Pharmacy/RemoveInventory
@@ -156,9 +213,15 @@ namespace PTGApplication.Controllers
                 }
                 catch (Exception ex)
                 {
-                    if (ex.InnerException != null)
-                    { ViewBag.errorMessage = ex.InnerException.Message; }
-                    else { ViewBag.errorMessage = ex.Message; }
+                    if (ex.InnerException is null)
+                    {
+                        ViewBag.errorMessage = ex.Message;
+                    }
+                    else
+                    {
+                        ViewBag.errorMessage = "Something went wrong internally";
+                    }
+
                     return View("Error");
                 }
 
@@ -172,7 +235,12 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var locations = uzima.PharmacyLocations.ToList();
-                if (locations != null) { ViewBag.locations = locations; }
+
+                if (!(locations is null))
+                {
+                    ViewBag.locations = locations;
+                }
+
                 return View(uzima.PharmacyInventories.ToList());
             }
         }
@@ -181,6 +249,7 @@ namespace PTGApplication.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult AddtoDrugList(PharmacyDrug model)
         {
@@ -188,7 +257,7 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    var drug = new PharmacyDrug()
+                    cs.PharmacyDrugs.Add(new PharmacyDrug()
                     {
                         Id = cs.PharmacyDrugs.Count() + 1,
                         Barcode = model.Barcode,
@@ -202,8 +271,8 @@ namespace PTGApplication.Controllers
                         License = model.License,
                         Ingredients = model.Ingredients,
                         PackSize = model.PackSize
-                    };
-                    cs.PharmacyDrugs.Add(drug);
+                    });
+
                     cs.SaveChanges();
                 }
                 catch (Exception ex)
@@ -211,6 +280,7 @@ namespace PTGApplication.Controllers
                     ViewBag.errorMessage = ex.Message;
                     return View("Error");
                 }
+
                 return RedirectToAction("DrugAdded");
             }
         }
@@ -225,7 +295,9 @@ namespace PTGApplication.Controllers
         public ActionResult RemoveDrugFromList(int id)
         {
             using (var uzima = new UzimaRxEntities())
-            { return View(uzima.PharmacyDrugs.SingleOrDefault(inv => inv.Id == id)); }
+            {
+                return View(uzima.PharmacyDrugs.SingleOrDefault(inv => inv.Id == id));
+            }
         }
 
         // POST: Pharmacy/RemoveDrug
@@ -244,9 +316,15 @@ namespace PTGApplication.Controllers
                 }
                 catch (Exception ex)
                 {
-                    if (ex.InnerException != null)
-                    { ViewBag.errorMessage = ex.InnerException.Message; }
-                    else { ViewBag.errorMessage = ex.Message; }
+                    if (ex.InnerException is null)
+                    {
+                        ViewBag.errorMessage = ex.Message;
+                    }
+                    else
+                    {
+                        ViewBag.errorMessage = "Something went wrong internally";
+                    }
+
                     return View("Error");
                 }
 
@@ -256,11 +334,24 @@ namespace PTGApplication.Controllers
 
 
         // GET: Select Drug
-        public ActionResult SelectDrug(String SearchString)
+        public ActionResult SelectDrug(String searchString)
         {
             using (var uzima = new UzimaRxEntities())
             {
-                return View(uzima.PharmacyDrugs.Where(m => m.Name.Contains(SearchString) || SearchString == null).ToList());
+                var model = new List<PharmacyDrug>();
+
+                if (searchString is null)
+                {
+                    model = uzima.PharmacyDrugs.ToList();
+                }
+                else
+                {
+                    model = (from drug in uzima.PharmacyDrugs
+                             where drug.Name.Contains(searchString)
+                             select drug).ToList();
+                }
+
+                return View(model);
             }
         }
 
