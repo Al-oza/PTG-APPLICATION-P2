@@ -16,10 +16,10 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BarcodeId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DrugId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.BarcodeId, new SelectList(ViewBag.drugs, "Id", "Name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BarcodeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.DrugId, new SelectList(ViewBag.drugs, "Id", "Name"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DrugId, "", new { @class = "text-danger" })
             </div>
         </div>
 

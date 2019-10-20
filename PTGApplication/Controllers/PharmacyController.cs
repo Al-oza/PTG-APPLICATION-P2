@@ -36,17 +36,17 @@ namespace PTGApplication.Controllers
                     (from location in uzima.PharmacyLocations
                      join type in uzima.PharmacyLocationTypes on location.Id equals type.LocationId
                      where type.Supplier == null
-                     select location);
+                     select location).ToList();
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.suppliers = suppliers;
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
                 }
 
                 var statuses = uzima.PharmacyStatus.ToList();
                 if (!(statuses is null))
                 {
-                    ViewBag.statuses = statuses;
+                    ViewBag.Statuses = new SelectList(statuses, "Id", "Status");
                 }
 
                 return View();

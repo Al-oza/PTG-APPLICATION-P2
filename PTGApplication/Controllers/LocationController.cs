@@ -22,11 +22,11 @@ namespace PTGApplication.Controllers
                     (from location in uzima.PharmacyLocations
                      join types in uzima.PharmacyLocationTypes on location.Id equals types.Id
                      where types.Supplier == null
-                     select location);
+                     select location).ToList();
 
-                if (suppliers != null)
+                if (!(suppliers is null))
                 {
-                    ViewBag.suppliers = suppliers;
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
                 }
 
                 return View();
@@ -82,17 +82,17 @@ namespace PTGApplication.Controllers
                     (from location in uzima.PharmacyLocations
                      join types in uzima.PharmacyLocationTypes on location.Id equals types.Id
                      where types.Supplier == null
-                     select location);
+                     select location).ToList();
 
-                if (suppliers != null)
+                if (!(suppliers is null))
                 {
-                    ViewBag.suppliers = suppliers;
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
                 }
 
                 return View();
             }
         }
-        
+
         // POST: Location/AddClinicLocation
         [HttpPost]
         public ActionResult AddClinicLocation(PharmacyLocation model)
@@ -138,7 +138,7 @@ namespace PTGApplication.Controllers
         {
             return View();
         }
-        
+
         // POST: Location/AddSupplierLocation
         [HttpPost]
         public ActionResult AddSupplierLocation(PharmacyLocation model)

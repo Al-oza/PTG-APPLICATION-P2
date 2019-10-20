@@ -31,7 +31,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StatusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.statuses, "Id", "Status"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.StatusId, ViewBag.Statuses as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,7 +40,7 @@
             @Html.LabelFor(model => model.CurrentLocationId, "Current Location", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*Html.EditorFor(model => model.CurrentLocationId, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.DropDownListFor(model => model.CurrentLocationId, new SelectList(ViewBag.suppliers, "Id", "Name"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CurrentLocationId, ViewBag.Suppliers as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CurrentLocationId, "", new { @class = "text-danger" })
             </div>
         </div>
