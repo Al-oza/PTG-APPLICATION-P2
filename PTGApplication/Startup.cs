@@ -5,7 +5,6 @@ using Owin;
 using PTGApplication.Models;
 using System;
 using System.Configuration;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 
@@ -138,32 +137,32 @@ namespace PTGApplication
         }
         private async Task CreateRolesAndUsers()
         {
-            var context = new ApplicationDbContext();
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-            var admin = Properties.UserRoles.PharmacyManager;
-            if (!roleManager.RoleExists(admin))
+            using (var context = new ApplicationDbContext())
+            using (var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
+            using (var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
             {
-                await roleManager.CreateAsync(new IdentityRole() { Name = admin });
-                await ConfigureAdmins(admin, userManager);
-            }
+                var admin = Properties.UserRoles.PharmacyManager;
+                if (!roleManager.RoleExists(admin))
+                {
+                    await roleManager.CreateAsync(new IdentityRole() { Name = admin });
+                    await ConfigureAdmins(admin, userManager);
+                }
 
-            var manager = Properties.UserRoles.CareSiteInventoryManager;
-            if (!await roleManager.RoleExistsAsync(manager))
-            {
-                await roleManager.CreateAsync(new IdentityRole() { Name = manager });
-                await ConfigureManagers(manager, userManager);
-            }
+                var manager = Properties.UserRoles.CareSiteInventoryManager;
+                if (!await roleManager.RoleExistsAsync(manager))
+                {
+                    await roleManager.CreateAsync(new IdentityRole() { Name = manager });
+                    await ConfigureManagers(manager, userManager);
+                }
 
-            var employee = Properties.UserRoles.CareSiteStaff;
-            if (!await roleManager.RoleExistsAsync(employee))
-            {
-                await roleManager.CreateAsync(new IdentityRole() { Name = employee });
-                await ConfigureEmployees(employee, userManager);
-            }
+                var employee = Properties.UserRoles.CareSiteStaff;
+                if (!await roleManager.RoleExistsAsync(employee))
+                {
+                    await roleManager.CreateAsync(new IdentityRole() { Name = employee });
+                    await ConfigureEmployees(employee, userManager);
+                }
 
-            userManager.Dispose();
+            }
         }
         #endregion
     }
