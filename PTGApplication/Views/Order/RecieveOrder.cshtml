@@ -1,0 +1,49 @@
+﻿@model PTGApplication.Models.PharmacyInventory
+
+
+@{
+    ViewBag.Title = "Place Order";
+}
+
+
+<h2>Place an Order</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DrugId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DrugId, ViewBag.Drugs as SelectList, "--Select One--", new { @id = "ddldrug", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DrugId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("txtQty", null, new { @class = "form-control" })
+                @Html.ValidationMessage("", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FutureLocationId, "Location Needed", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FutureLocationId, ViewBag.LocationNeeded as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FutureLocationId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
