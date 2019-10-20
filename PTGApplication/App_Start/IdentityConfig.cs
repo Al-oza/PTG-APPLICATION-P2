@@ -24,15 +24,19 @@ namespace PTGApplication
             msg.Body = message.Body;
             msg.IsBodyHtml = true;
 
-            var client = new SmtpClient("in.mailjet.com", 587);
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(
+            var client = new SmtpClient("in.mailjet.com", 587)
+            {
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(
                 Properties.ApiKeys.MailjetPublicKey,
-                Properties.ApiKeys.MailjetPrivateKey);
+                Properties.ApiKeys.MailjetPrivateKey)
+            };
 
             await client.SendMailAsync(msg);
+            client.Dispose();
+            msg.Dispose();
         }
         public Task SendAsync(IdentityMessage message)
         {

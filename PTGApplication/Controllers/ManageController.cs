@@ -244,7 +244,7 @@ namespace PTGApplication.Controllers
         }
 
         //
-        // GET: /Manage/SetPassword
+        // GET: /Manage/SetPassword/rapula
         public ActionResult SetPassword()
         {
             return View();

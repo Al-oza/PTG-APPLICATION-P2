@@ -460,6 +460,7 @@
     <Content Include="Views\Order\SendOrder.cshtml" />
     <Content Include="Views\Administration\Index.cshtml" />
     <Content Include="Views\Administration\_Home.cshtml" />
+    <Content Include="Views\Administration\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
