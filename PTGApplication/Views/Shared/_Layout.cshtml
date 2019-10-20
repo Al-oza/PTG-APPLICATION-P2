@@ -26,6 +26,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
+                    <li>@Html.ActionLink("Administration", "Index", "Administration", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Order", "Index", "Order", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Inventory", "Index", "Pharmacy", new { area = "" }, null)</li>
 
@@ -51,7 +52,6 @@
                                 <li>@Html.ActionLink("Add Hospital", "AddHospitalLocation", "Location", null, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Add Supplier", "AddSupplierLocation", "Location", null, new { @class = "dropdown-item" })</li>
                             </ul>
-
                         </div>
                     </li>
                 </ul>
