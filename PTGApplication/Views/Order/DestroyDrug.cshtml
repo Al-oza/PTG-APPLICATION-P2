@@ -2,11 +2,11 @@
 
 
 @{
-    ViewBag.Title = "Place Order";
+    ViewBag.Title = "Destroy Drug";
 }
 
 
-<h2>Place an Order</h2>
+<h2>Destroy a Drug</h2>
 
 @using (Html.BeginForm())
 {
@@ -31,9 +31,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FutureLocationId, "Location Needed", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FutureLocationId, "Destroyed From", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.FutureLocationId, ViewBag.LocationNeeded as SelectList, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.FutureLocationId, ViewBag.LocationDestroyed as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FutureLocationId, "", new { @class = "text-danger" })
             </div>
         </div>

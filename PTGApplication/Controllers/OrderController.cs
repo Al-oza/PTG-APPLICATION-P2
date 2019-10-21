@@ -23,16 +23,19 @@ namespace PTGApplication.Controllers
             IEnumerable<PharmacyLocation> locations;
             IEnumerable<PharmacyInventory> inventories;
             IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<AspNetUser> users;
             using (var uzima = new UzimaRxEntities())
             {
                 drugs = uzima.PharmacyDrugs.ToList();
                 locations = uzima.PharmacyLocations.ToList();
                 inventories = uzima.PharmacyInventories.ToList();
                 locationTypes = uzima.PharmacyLocationTypes.ToList();
+                users = uzima.AspNetUsers.ToList();
             }
 
             if (!(drugs is null) && !(inventories is null))
             {
+
                 var inventorydrugs =
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
@@ -41,17 +44,20 @@ namespace PTGApplication.Controllers
                      );
 
                 ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+
             }
+
+            
 
             if (!(locations is null) && !(locationTypes is null))
             {
-                var clinics =
-                    (from location in locations
-                     join type in locationTypes on location.Id equals type.LocationId
-                     where type.Supplier != null
-                     select location);
+                var userhomelocation =
+                   (from location in locations
+                    join user in users on location.Name equals user.HomePharmacy
+                    where user.Username == User.Identity.Name
+                    select location);
 
-                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "Name");
+                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
@@ -154,6 +160,13 @@ namespace PTGApplication.Controllers
                      );
 
                 ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+
+                if (inventorydrugs.Count() == 0)
+                {
+
+                    ViewBag.errorMessage = "There are currently no orders to be sent.";
+                    return View("Error");
+                }
             }
 
             if (!(locations is null) && !(locationTypes is null))
@@ -237,8 +250,6 @@ namespace PTGApplication.Controllers
             IEnumerable<PharmacyLocationType> locationTypes;
             IEnumerable<AspNetUser> users;
 
-            var strCurrentUserId = User.Identity.GetUserId();
-
             using (var uzima = new UzimaRxEntities())
             {
                 drugs = uzima.PharmacyDrugs.ToList();
@@ -252,31 +263,38 @@ namespace PTGApplication.Controllers
             {
 
                 var userhomelocation =
-                    (from 
+                    (from location in locations
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
                     
-                    
-                    )
                 var inventorydrugs =
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
                      join location in locations on inventory.FutureLocationId equals location.Id
                      join user in users on location.Name equals user.HomePharmacy
-                     where drug.Id == inventory.DrugId && inventory.StatusId == 2 
+                     where drug.Id == inventory.DrugId && inventory.StatusId == 2 && inventory.FutureLocationId == userhomelocation
                      select drug
                      );
 
                 ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+
+                if (inventorydrugs.Count() == 0) { 
+
+                    ViewBag.errorMessage = "You have no drugs on order to be recieved.";
+                    return View("Error");
+                }
             }
 
             if (!(locations is null) && !(locationTypes is null))
             {
-                var clinics =
+                var userhomelocation =
                     (from location in locations
-                     join type in locationTypes on location.Id equals type.LocationId
-                     where type.Supplier != null
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "Name");
+                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
@@ -294,6 +312,13 @@ namespace PTGApplication.Controllers
             {
                 using (var uzima = new UzimaRxEntities())
                 {
+
+                    var userhomelocation =
+                    (from location in uzima.PharmacyLocations
+                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+
                     userid =
                         (from user in uzima.AspNetUsers
                          where user.Username == User.Identity.Name
@@ -304,7 +329,7 @@ namespace PTGApplication.Controllers
                         id =
                             (from drug in uzima.PharmacyInventories
                              join location in uzima.PharmacyLocationTypes on drug.CurrentLocationId equals location.LocationId
-                             where location.Supplier == null && drug.StatusId == 2 && model.DrugId == drug.DrugId
+                             where drug.StatusId == 2 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
@@ -313,6 +338,7 @@ namespace PTGApplication.Controllers
                         await uzima.SaveChangesAsync();
 
                         entryToEdit.FutureLocationId = model.FutureLocationId;
+                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.UserId = userid;
                         entryToEdit.StatusId = 0;
@@ -337,11 +363,259 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("SendOrder");
+            return RedirectToAction("RecieveOrder");
+        }
+
+        // GET: Order/DispenseDrug
+        public ActionResult DispenseDrug()
+        {
+            IEnumerable<PharmacyDrug> drugs;
+            IEnumerable<PharmacyLocation> locations;
+            IEnumerable<PharmacyInventory> inventories;
+            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<AspNetUser> users;
+
+            using (var uzima = new UzimaRxEntities())
+            {
+                drugs = uzima.PharmacyDrugs.ToList();
+                locations = uzima.PharmacyLocations.ToList();
+                inventories = uzima.PharmacyInventories.ToList();
+                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                users = uzima.AspNetUsers.ToList();
+            }
+
+            if (!(drugs is null) && !(inventories is null))
+            {
+
+                var userhomelocation =
+                    (from location in locations
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+
+                var inventorydrugs =
+                    (from drug in drugs
+                     join inventory in inventories on drug.Id equals inventory.DrugId
+                     join location in locations on inventory.FutureLocationId equals location.Id
+                     join user in users on location.Name equals user.HomePharmacy
+                     where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
+                     select drug
+                     );
+
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+
+                if (inventorydrugs.Count() == 0)
+                {
+
+                    ViewBag.errorMessage = "You have no drugs in inventory to dispense. (Please input drug as recieved before dispensing.)";
+                    return View("Error");
+                }
+            }
+
+            if (!(locations is null) && !(locationTypes is null))
+            {
+                var userhomelocation =
+                    (from location in locations
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location);
+
+                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "Name");
+            }
+            return View();
         }
 
 
+        // POST: Order/DispenseDrug
+        [HttpPost]
+        public async Task<ActionResult> DispenseDrug(String txtQty, PharmacyInventory model)
+        {
 
+            int id;
+            string userid;
+
+            try
+            {
+                using (var uzima = new UzimaRxEntities())
+                {
+
+                    var userhomelocation =
+                    (from location in uzima.PharmacyLocations
+                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+
+                    userid =
+                        (from user in uzima.AspNetUsers
+                         where user.Username == User.Identity.Name
+                         select user.Id).SingleOrDefault();
+                    for (int i = 0; i < Convert.ToInt32(txtQty); i++)
+                    {
+
+                        id =
+                            (from drug in uzima.PharmacyInventories
+                             where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
+                             select drug.Id).FirstOrDefault();
+
+
+                        var entryToEdit = uzima.PharmacyInventories.Find(id);
+                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        await uzima.SaveChangesAsync();
+
+                        entryToEdit.FutureLocationId = model.FutureLocationId;
+                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
+                        entryToEdit.DateOrdered = DateTime.Now;
+                        entryToEdit.UserId = userid;
+                        entryToEdit.StatusId = 3;
+
+
+                        uzima.PharmacyInventories.Add(entryToEdit);
+                        await uzima.SaveChangesAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                {
+                    ViewBag.errorMessage = ex.Message;
+                }
+                else
+                {
+                    ViewBag.errorMessage = "Something went wrong internally.";
+                }
+
+                return View("Error");
+            }
+
+            return RedirectToAction("DispenseDrug");
+        }
+
+
+        // GET: Order/DestroyDrug
+        public ActionResult DestroyDrug()
+        {
+            IEnumerable<PharmacyDrug> drugs;
+            IEnumerable<PharmacyLocation> locations;
+            IEnumerable<PharmacyInventory> inventories;
+            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<AspNetUser> users;
+
+            using (var uzima = new UzimaRxEntities())
+            {
+                drugs = uzima.PharmacyDrugs.ToList();
+                locations = uzima.PharmacyLocations.ToList();
+                inventories = uzima.PharmacyInventories.ToList();
+                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                users = uzima.AspNetUsers.ToList();
+            }
+
+            if (!(drugs is null) && !(inventories is null))
+            {
+
+                var userhomelocation =
+                    (from location in locations
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+
+                var inventorydrugs =
+                    (from drug in drugs
+                     join inventory in inventories on drug.Id equals inventory.DrugId
+                     join location in locations on inventory.FutureLocationId equals location.Id
+                     join user in users on location.Name equals user.HomePharmacy
+                     where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
+                     select drug
+                     );
+
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+
+                if (inventorydrugs.Count() == 0)
+                {
+
+                    ViewBag.errorMessage = "You have no drugs in inventory to destroy. (If drugs were destroyed in transit, please input as recieved and then destroy.)";
+                    return View("Error");
+                }
+            }
+
+            if (!(locations is null) && !(locationTypes is null))
+            {
+                var userhomelocation =
+                    (from location in locations
+                     join user in users on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location);
+
+                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "Name");
+            }
+            return View();
+        }
+
+
+        // POST: Order/DestroyOrder
+        [HttpPost]
+        public async Task<ActionResult> DestroyDrug(String txtQty, PharmacyInventory model)
+        {
+
+            int id;
+            string userid;
+
+            try
+            {
+                using (var uzima = new UzimaRxEntities())
+                {
+
+                    var userhomelocation =
+                    (from location in uzima.PharmacyLocations
+                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+
+                    userid =
+                        (from user in uzima.AspNetUsers
+                         where user.Username == User.Identity.Name
+                         select user.Id).SingleOrDefault();
+                    for (int i = 0; i < Convert.ToInt32(txtQty); i++)
+                    {
+
+                        id =
+                            (from drug in uzima.PharmacyInventories
+                             where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
+                             select drug.Id).FirstOrDefault();
+
+
+                        var entryToEdit = uzima.PharmacyInventories.Find(id);
+                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        await uzima.SaveChangesAsync();
+
+                        entryToEdit.FutureLocationId = model.FutureLocationId;
+                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
+                        entryToEdit.DateOrdered = DateTime.Now;
+                        entryToEdit.UserId = userid;
+                        entryToEdit.StatusId = 4;
+
+
+                        uzima.PharmacyInventories.Add(entryToEdit);
+                        await uzima.SaveChangesAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                {
+                    ViewBag.errorMessage = ex.Message;
+                }
+                else
+                {
+                    ViewBag.errorMessage = "Something went wrong internally.";
+                }
+
+                return View("Error");
+            }
+
+            return RedirectToAction("DestroyDrug");
+        }
 
     }
 }
