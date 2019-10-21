@@ -4,6 +4,7 @@ using PTGApplication.Models;
 using System;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -88,7 +89,12 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            var password = Membership.GeneratePassword(12, 1);
+            string password;
+            do
+            {
+                password = Membership.GeneratePassword(20, 5);
+            } while (!Regex.IsMatch(password, "\\d"));
+
             var result = await UserManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
@@ -101,14 +107,14 @@ namespace PTGApplication.Controllers
 
                 var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callback = Url.Action("ConfirmEmail", "Account",
-                    new { user.Id, code }, protocol: Request.Url.Scheme);
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 var msgBody = $"Dear {user.Name},<br /><br />" +
                     $"Account Information:<br />   Username: {user.UserName}<br />   Password: {password}<br />" +
                     $"Please confirm your account by clicking <a href=\"{callback}\">here</a>.";
                 await UserManager.SendEmailAsync(user.Id, "Confirm Your UzimaRx Account", msgBody);
 
                 // Uncomment to debug locally
-                // TempData["ViewBagLink"] = callbackUrl;
+                //TempData["ViewBagLink"] = callback;
 
                 ModelState.Clear();
                 return RedirectToAction("AddUser");

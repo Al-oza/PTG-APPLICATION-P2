@@ -12,7 +12,15 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "txtEmail" })
+            <label id="lblEmail" class="text-danger"></label>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", id = "txtConfirmEmail" })
+            <label id="lblConfirmEmail" class="text-danger"></label>
         </div>
     </div>
     <div class="form-group">
@@ -28,7 +36,7 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Pharmacy,"Main Location", new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Pharmacy, "Main Location", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownList("ddlLocations", ViewBag.Locations as SelectList, new { @class = "form-control" })
         </div>
@@ -41,7 +49,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create" />
+            <input type="submit" class="btn btn-default" id="btnSubmit" value="Create" />
             <a href="~/Administration" class="btn btn-warning">Cancel</a>
         </div>
     </div>
@@ -50,3 +58,20 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $('#txtConfirmEmail').on('change', () => {
+            let email = $('#txtEmail').val()
+            let confirmEmail = $('#txtConfirmEmail').val()
+            if (email != confirmEmail) {
+                $('#lblConfirmEmail').html('Emails don\'t match')
+                $('#btnSubmit').attr('disabled', true)
+            } else {
+                $('#lblConfirmEmail').html('')
+                $('#btnSubmit').attr('disabled', false)
+            }
+        })
+    })
+</script>

@@ -78,6 +78,12 @@ namespace PTGApplication.Models
         public string Email { get; set; }
 
         [Required]
+        [EmailAddress]
+        [Display(Name = "Confirm Email")]
+        [Compare("Email", ErrorMessage = "Email addresses don't match")]
+        public string ConfirmEmail { get; set; }
+
+        [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
