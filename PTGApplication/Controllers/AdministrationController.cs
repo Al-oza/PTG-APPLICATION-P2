@@ -136,18 +136,33 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Administration/Modify/5
-        public ActionResult Modify(int id)
+        public ActionResult Modify(string id)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
-            return View();
+            using (var uzima = new UzimaRxEntities())
+            {
+                var locations = (from sites in uzima.PharmacyLocations
+                                 join types in uzima.PharmacyLocationTypes on sites.Id equals types.LocationId
+                                 where types.Supplier != null
+                                 select sites).ToList();
+              
+                if (!(locations is null))
+                {
+                    ViewBag.Locations = new SelectList(locations, "Name", "Name");
+                }
+
+                return View((from user in uzima.AspNetUsers
+                             where user.Id == id
+                             select user).SingleOrDefault());
+            }
         }
 
         // POST: Administration/Modify/5
         [HttpPost]
-        public ActionResult Modify(int id, RegisterViewModel model)
+        public async Task<ActionResult> Modify(string id, AspNetUser model)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -155,14 +170,24 @@ namespace PTGApplication.Controllers
             }
             try
             {
-                // TODO: Add update logic here
+                using (var uzima= new UzimaRxEntities())
+                {
+                    uzima.AspNetUsers.Remove(
+                        (from user in uzima.AspNetUsers
+                         where user.Id == id
+                         select user).SingleOrDefault());
+                    uzima.AspNetUsers.Add(model);
 
-                return RedirectToAction("Index");
+                    await uzima.SaveChangesAsync();
+                    ViewBag.successMessage = "User Modified";
+                }
             }
             catch
             {
-                return View();
+                ViewBag.errorMessage = "Something went wrong";
+                return View("Error");
             }
+            return RedirectToAction("SelectUser");
         }
 
         // GET: Administration/Remove/5
