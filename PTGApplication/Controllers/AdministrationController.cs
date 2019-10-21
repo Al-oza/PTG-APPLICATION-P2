@@ -14,6 +14,16 @@ namespace PTGApplication.Controllers
 {
     public class AdministrationController : Controller
     {
+        // GET: Administration/Details
+        public ActionResult Details(string id, AspNetUser model)
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                return View((from user in uzima.AspNetUsers
+                             where user.Id == id
+                             select user).SingleOrDefault());
+            }
+        }
         // GET: Administration
         public ActionResult Index()
         {
@@ -156,18 +166,23 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Administration/Remove/5
-        public ActionResult Remove(int id)
+        public ActionResult Remove(string id)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
-            return View();
+            using (var uzima = new UzimaRxEntities())
+            {
+                return View((from user in uzima.AspNetUsers
+                             where user.Id == id
+                             select user).SingleOrDefault());
+            }
         }
 
         // POST: Administration/Remove/5
         [HttpPost]
-        public ActionResult Remove(int id, ApplicationUser model)
+        public async Task<ActionResult> Remove(string id, ApplicationUser model)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -175,14 +190,16 @@ namespace PTGApplication.Controllers
             }
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = await UserManager.FindByIdAsync(id);
+                await UserManager.DeleteAsync(user);
             }
             catch
             {
-                return View();
+                ViewBag.errorMessage = "Something went wrong";
+                return View("Error");
             }
+            return RedirectToAction("SelectUser");
         }
         private async Task<String> SendEmailConfirmationTokenAsync(string userID, string subject, ApplicationUserManager UserManager)
         {

@@ -462,6 +462,8 @@
     <Content Include="Views\Administration\_Home.cshtml" />
     <Content Include="Views\Administration\AddUser.cshtml" />
     <Content Include="Views\Administration\SelectUser.cshtml" />
+    <Content Include="Views\Administration\Remove.cshtml" />
+    <Content Include="Views\Administration\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

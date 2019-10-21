@@ -38,9 +38,9 @@
             @Html.DisplayFor(modelItem => item.HomePharmacy)
         </td>
         <td>
-            @Html.ActionLink("Modify", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Modify", "Modify", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Remove", "Delete", new { id=item.Id })
+            @Html.ActionLink("Remove", "Remove", new { id=item.Id })
         </td>
     </tr>
 }
