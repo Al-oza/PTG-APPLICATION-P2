@@ -61,20 +61,6 @@ namespace PTGApplication.Controllers
             }
             return View();
         }
-
-        public ActionResult GetDrugCount(int drugId)
-        {
-            using (var uzima = new UzimaRxEntities())
-            {
-                return Json(new
-                {
-                    data = (from drug in uzima.PharmacyInventories
-                            where drug.DrugId == drugId && drug.StatusId == 0 && drug.FutureLocationId == null
-                            select drug).Count()
-                });
-            }
-        }
-
         // POST: Order/PlaceOrder
         [HttpPost]
         public async Task<ActionResult> PlaceOrder(String txtQty, PharmacyInventory model)
