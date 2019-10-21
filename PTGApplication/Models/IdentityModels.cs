@@ -39,5 +39,7 @@ namespace PTGApplication.Models
         public System.Data.Entity.DbSet<PTGApplication.Models.PharmacyLocation> PharmacyLocations { get; set; }
 
         public System.Data.Entity.DbSet<PTGApplication.Models.PharmacyInventory> PharmacyInventories { get; set; }
+
+        public System.Data.Entity.DbSet<PTGApplication.Models.AspNetUser> AspNetUsers { get; set; }
     }
 }

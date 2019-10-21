@@ -194,5 +194,14 @@ namespace PTGApplication.Controllers
 
             return callback;
         }
+
+        // GET: Administration/SelectUser
+        public ActionResult SelectUser()
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                return View(uzima.AspNetUsers.ToList());
+            }
+        }
     }
 }
