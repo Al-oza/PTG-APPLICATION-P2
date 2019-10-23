@@ -445,8 +445,8 @@
     <Content Include="Views\Pharmacy\DrugRemoved.cshtml" />
     <Content Include="Views\Pharmacy\SelectDrug.cshtml" />
     <Content Include="Views\Pharmacy\RemoveDrugFromList.cshtml" />
-    <Content Include="Views\Order\DestroyDrug.cshtml" />
-    <Content Include="Views\Order\DispenseDrug.cshtml" />
+    <Content Include="Views\Order\DestroyItem.cshtml" />
+    <Content Include="Views\Order\DispenseItem.cshtml" />
     <Content Include="Views\Order\PlaceOrder.cshtml" />
     <Content Include="Views\Order\RecieveOrder.cshtml" />
     <Content Include="Views\Order\SendOrder.cshtml" />
