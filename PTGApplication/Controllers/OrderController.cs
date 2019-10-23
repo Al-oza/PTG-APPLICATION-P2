@@ -150,8 +150,8 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.errorMessage = "There are currently no orders to be sent.";
-                    return View("Error");
+                    ViewBag.Message = "There are currently no orders to be sent.";
+                    return View("Info");
                 }
             }
 
@@ -268,8 +268,8 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.errorMessage = "You have no drugs on order to be recieved.";
-                    return View("Error");
+                    ViewBag.Message = "You have no drugs on order to be recieved.";
+                    return View("Info");
                 }
             }
 
@@ -394,8 +394,8 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.errorMessage = "You have no drugs in inventory to dispense. (Please input drug as recieved before dispensing.)";
-                    return View("Error");
+                    ViewBag.Message = "You have no drugs in inventory to dispense. (Please input drug as recieved before dispensing.)";
+                    return View("Info");
                 }
             }
 
@@ -520,8 +520,8 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.errorMessage = "You have no drugs in inventory to destroy. (If drugs were destroyed in transit, please input as recieved and then destroy.)";
-                    return View("Error");
+                    ViewBag.Message = "You have no drugs in inventory to destroy. (If drugs were destroyed in transit, please input as recieved and then destroy.)";
+                    return View("Info");
                 }
             }
 
