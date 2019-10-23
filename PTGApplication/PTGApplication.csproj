@@ -276,7 +276,6 @@
     <Compile Include="Models\PharmacyStatu.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ReportHelper.cs" />
     <Compile Include="Models\UzimaRx.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
