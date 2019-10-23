@@ -12,14 +12,18 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyBatchLocation
+    public partial class UzimaStatu
     {
-        public int Id { get; set; }
-        public Nullable<int> Count { get; set; }
-        public int BatchId { get; set; }
-        public int LocationId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UzimaStatu()
+        {
+            this.UzimaInventories = new HashSet<UzimaInventory>();
+        }
     
-        public virtual PharmacyBatch PharmacyBatch { get; set; }
-        public virtual PharmacyLocation PharmacyLocation { get; set; }
+        public int Id { get; set; }
+        public string Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UzimaInventory> UzimaInventories { get; set; }
     }
 }

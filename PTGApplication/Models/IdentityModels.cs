@@ -10,6 +10,7 @@ namespace PTGApplication.Models
     public class ApplicationUser : IdentityUser
     {
         public string HomePharmacy { get; set; }
+        public bool IsActive { get; set; }
         public string Name { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -36,9 +37,9 @@ namespace PTGApplication.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<PTGApplication.Models.PharmacyLocation> PharmacyLocations { get; set; }
+        public System.Data.Entity.DbSet<PTGApplication.Models.UzimaLocation> UzimaLocations { get; set; }
 
-        public System.Data.Entity.DbSet<PTGApplication.Models.PharmacyInventory> PharmacyInventories { get; set; }
+        public System.Data.Entity.DbSet<PTGApplication.Models.UzimaInventory> UzimaInventories { get; set; }
 
         public System.Data.Entity.DbSet<PTGApplication.Models.AspNetUser> AspNetUsers { get; set; }
     }

@@ -12,14 +12,14 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyLocationType
+    public partial class UzimaLocationType
     {
         public int Id { get; set; }
         public int LocationId { get; set; }
         public string LocationType { get; set; }
         public Nullable<int> Supplier { get; set; }
     
-        public virtual PharmacyLocation PharmacyLocation { get; set; }
-        public virtual PharmacyLocation PharmacyLocation1 { get; set; }
+        public virtual UzimaLocation UzimaLocation { get; set; }
+        public virtual UzimaLocation UzimaLocation1 { get; set; }
     }
 }

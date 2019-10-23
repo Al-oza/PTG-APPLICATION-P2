@@ -12,13 +12,12 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyDrug
+    public partial class UzimaDrug
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PharmacyDrug()
+        public UzimaDrug()
         {
-            this.PharmacyBatches = new HashSet<PharmacyBatch>();
-            this.PharmacyInventories = new HashSet<PharmacyInventory>();
+            this.UzimaInventories = new HashSet<UzimaInventory>();
         }
     
         public int Id { get; set; }
@@ -35,8 +34,6 @@ namespace PTGApplication.Models
         public string PackSize { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyBatch> PharmacyBatches { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
+        public virtual ICollection<UzimaInventory> UzimaInventories { get; set; }
     }
 }

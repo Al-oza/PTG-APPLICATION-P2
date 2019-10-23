@@ -255,25 +255,16 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
-    <Compile Include="Models\PharmacyBatch.cs">
+    <Compile Include="Models\UzimaDrug.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyBatchLocation.cs">
+    <Compile Include="Models\UzimaInventory.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyDrug.cs">
+    <Compile Include="Models\UzimaLocation.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyInventory.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PharmacyLocation.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PharmacyLocationType.cs">
-      <DependentUpon>UzimaRx.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PharmacyStatu.cs">
+    <Compile Include="Models\UzimaLocationType.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UzimaRx.Context.cs">
@@ -290,6 +281,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UzimaRx.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UzimaStatu.cs">
+      <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\ApiKeys.Designer.cs">
       <AutoGen>True</AutoGen>

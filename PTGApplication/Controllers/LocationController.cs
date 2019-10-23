@@ -19,14 +19,14 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var suppliers =
-                    (from location in uzima.PharmacyLocations
-                     join types in uzima.PharmacyLocationTypes on location.Id equals types.Id
+                    (from location in uzima.UzimaLocations
+                     join types in uzima.UzimaLocationTypes on location.Id equals types.Id
                      where types.Supplier == null
                      select location).ToList();
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
                 }
 
                 return View();
@@ -35,31 +35,31 @@ namespace PTGApplication.Controllers
 
         // POST: Location/AddHospitalLocation
         [HttpPost]
-        public ActionResult AddHospitalLocation(PharmacyLocation model)
+        public ActionResult AddHospitalLocation(UzimaLocation model)
         {
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
-                    var location = new PharmacyLocation()
+                    var location = new UzimaLocation()
                     {
 
-                        Id = cs.PharmacyLocations.Count(),
+                        Id = cs.UzimaLocations.Count(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
-                    var type = new PharmacyLocationType()
+                    var type = new UzimaLocationType()
                     {
-                        Id = cs.PharmacyLocationTypes.Count(),
+                        Id = cs.UzimaLocationTypes.Count(),
                         LocationType = "Hospital",
                         LocationId = location.Id,
                         Supplier = Convert.ToInt32(Request.Form["Supplier"])
                     };
 
-                    cs.PharmacyLocations.Add(location);
-                    cs.PharmacyLocationTypes.Add(type);
+                    cs.UzimaLocations.Add(location);
+                    cs.UzimaLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }
@@ -79,14 +79,14 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var suppliers =
-                    (from location in uzima.PharmacyLocations
-                     join types in uzima.PharmacyLocationTypes on location.Id equals types.Id
+                    (from location in uzima.UzimaLocations
+                     join types in uzima.UzimaLocationTypes on location.Id equals types.Id
                      where types.Supplier == null
                      select location).ToList();
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
                 }
 
                 return View();
@@ -95,31 +95,31 @@ namespace PTGApplication.Controllers
 
         // POST: Location/AddClinicLocation
         [HttpPost]
-        public ActionResult AddClinicLocation(PharmacyLocation model)
+        public ActionResult AddClinicLocation(UzimaLocation model)
         {
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
-                    var location = new PharmacyLocation()
+                    var location = new UzimaLocation()
                     {
 
-                        Id = cs.PharmacyLocations.Count(),
+                        Id = cs.UzimaLocations.Count(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
-                    var type = new PharmacyLocationType()
+                    var type = new UzimaLocationType()
                     {
-                        Id = cs.PharmacyLocationTypes.Count(),
+                        Id = cs.UzimaLocationTypes.Count(),
                         LocationType = "Clinic",
                         LocationId = location.Id,
                         Supplier = Convert.ToInt32(Request.Form["Supplier"])
                     };
 
-                    cs.PharmacyLocations.Add(location);
-                    cs.PharmacyLocationTypes.Add(type);
+                    cs.UzimaLocations.Add(location);
+                    cs.UzimaLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }
@@ -141,31 +141,31 @@ namespace PTGApplication.Controllers
 
         // POST: Location/AddSupplierLocation
         [HttpPost]
-        public ActionResult AddSupplierLocation(PharmacyLocation model)
+        public ActionResult AddSupplierLocation(UzimaLocation model)
         {
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
-                    var location = new PharmacyLocation()
+                    var location = new UzimaLocation()
                     {
 
-                        Id = cs.PharmacyLocations.Count(),
+                        Id = cs.UzimaLocations.Count(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };
 
-                    var type = new PharmacyLocationType()
+                    var type = new UzimaLocationType()
                     {
-                        Id = cs.PharmacyLocationTypes.Count(),
+                        Id = cs.UzimaLocationTypes.Count(),
                         LocationType = "Supplier",
                         LocationId = location.Id,
                         Supplier = null
                     };
 
-                    cs.PharmacyLocations.Add(location);
-                    cs.PharmacyLocationTypes.Add(type);
+                    cs.UzimaLocations.Add(location);
+                    cs.UzimaLocationTypes.Add(type);
 
                     cs.SaveChanges();
                 }

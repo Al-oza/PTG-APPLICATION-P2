@@ -30,12 +30,10 @@ namespace PTGApplication.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<PharmacyBatch> PharmacyBatches { get; set; }
-        public virtual DbSet<PharmacyBatchLocation> PharmacyBatchLocations { get; set; }
-        public virtual DbSet<PharmacyDrug> PharmacyDrugs { get; set; }
-        public virtual DbSet<PharmacyInventory> PharmacyInventories { get; set; }
-        public virtual DbSet<PharmacyLocation> PharmacyLocations { get; set; }
-        public virtual DbSet<PharmacyLocationType> PharmacyLocationTypes { get; set; }
-        public virtual DbSet<PharmacyStatu> PharmacyStatus { get; set; }
+        public virtual DbSet<UzimaDrug> UzimaDrugs { get; set; }
+        public virtual DbSet<UzimaInventory> UzimaInventories { get; set; }
+        public virtual DbSet<UzimaLocation> UzimaLocations { get; set; }
+        public virtual DbSet<UzimaLocationType> UzimaLocationTypes { get; set; }
+        public virtual DbSet<UzimaStatu> UzimaStatus { get; set; }
     }
 }

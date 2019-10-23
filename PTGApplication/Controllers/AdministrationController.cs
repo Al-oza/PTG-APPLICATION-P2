@@ -45,8 +45,8 @@ namespace PTGApplication.Controllers
             using (var uzima = new UzimaRxEntities())
             {
                 var locations =
-                    (from location in uzima.PharmacyLocations
-                     join type in uzima.PharmacyLocationTypes on location.Id equals type.LocationId
+                    (from location in uzima.UzimaLocations
+                     join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
                      where type.Supplier != null
                      select location).ToList();
 
@@ -80,7 +80,8 @@ namespace PTGApplication.Controllers
                 UserName = model.Username,
                 Email = model.Email,
                 HomePharmacy = ddlLocations,
-                Name = model.Name
+                Name = model.Name,
+                IsActive = true
             };
 
             var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -144,8 +145,8 @@ namespace PTGApplication.Controllers
             }
             using (var uzima = new UzimaRxEntities())
             {
-                var locations = (from sites in uzima.PharmacyLocations
-                                 join types in uzima.PharmacyLocationTypes on sites.Id equals types.LocationId
+                var locations = (from sites in uzima.UzimaLocations
+                                 join types in uzima.UzimaLocationTypes on sites.Id equals types.LocationId
                                  where types.Supplier != null
                                  select sites).ToList();
               

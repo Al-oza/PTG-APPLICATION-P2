@@ -12,11 +12,11 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyInventory
+    public partial class UzimaInventory
     {
         public int Id { get; set; }
         public System.DateTime DateOrdered { get; set; }
-        public string UserId { get; set; }
+        public string LastModifiedBy { get; set; }
         public int DrugId { get; set; }
         public int StatusId { get; set; }
         public int CurrentLocationId { get; set; }
@@ -24,9 +24,9 @@ namespace PTGApplication.Models
         public System.DateTime ExpirationDate { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual PharmacyDrug PharmacyDrug { get; set; }
-        public virtual PharmacyLocation PharmacyLocation { get; set; }
-        public virtual PharmacyLocation PharmacyLocation1 { get; set; }
-        public virtual PharmacyStatu PharmacyStatu { get; set; }
+        public virtual UzimaDrug UzimaDrug { get; set; }
+        public virtual UzimaLocation UzimaLocation { get; set; }
+        public virtual UzimaLocation UzimaLocation1 { get; set; }
+        public virtual UzimaStatu UzimaStatu { get; set; }
     }
 }

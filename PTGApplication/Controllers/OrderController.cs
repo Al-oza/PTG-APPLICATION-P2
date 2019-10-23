@@ -19,17 +19,17 @@ namespace PTGApplication.Controllers
         // GET: Order/PlaceOrder
         public ActionResult PlaceOrder()
         {
-            IEnumerable<PharmacyDrug> drugs;
-            IEnumerable<PharmacyLocation> locations;
-            IEnumerable<PharmacyInventory> inventories;
-            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<UzimaDrug> drugs;
+            IEnumerable<UzimaLocation> locations;
+            IEnumerable<UzimaInventory> inventories;
+            IEnumerable<UzimaLocationType> locationTypes;
             IEnumerable<AspNetUser> users;
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.PharmacyDrugs.ToList();
-                locations = uzima.PharmacyLocations.ToList();
-                inventories = uzima.PharmacyInventories.ToList();
-                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                drugs = uzima.UzimaDrugs.ToList();
+                locations = uzima.UzimaLocations.ToList();
+                inventories = uzima.UzimaInventories.ToList();
+                locationTypes = uzima.UzimaLocationTypes.ToList();
                 users = uzima.AspNetUsers.ToList();
             }
 
@@ -43,11 +43,11 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
 
             }
 
-            
+
 
             if (!(locations is null) && !(locationTypes is null))
             {
@@ -57,13 +57,13 @@ namespace PTGApplication.Controllers
                     where user.Username == User.Identity.Name
                     select location);
 
-                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "DrugName");
+                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
         // POST: Order/PlaceOrder
         [HttpPost]
-        public async Task<ActionResult> PlaceOrder(String txtQty, PharmacyInventory model)
+        public async Task<ActionResult> PlaceOrder(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -80,26 +80,26 @@ namespace PTGApplication.Controllers
                     for (int i = 0; i < Convert.ToInt32(txtQty); i++)
                     {
 
-                    id =
-                        (from drug in uzima.PharmacyInventories
-                         join location in uzima.PharmacyLocationTypes on drug.CurrentLocationId equals location.LocationId
-                         where location.Supplier == null && drug.StatusId == 0 && model.DrugId == drug.DrugId
-                         select drug.Id).FirstOrDefault();
+                        id =
+                            (from drug in uzima.UzimaInventories
+                             join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
+                             where location.Supplier == null && drug.StatusId == 0 && model.DrugId == drug.DrugId
+                             select drug.Id).FirstOrDefault();
 
 
-                    var entryToEdit = uzima.PharmacyInventories.Find(id);
-                    uzima.PharmacyInventories.Remove(entryToEdit);
-                    await uzima.SaveChangesAsync();
-
-                    entryToEdit.FutureLocationId = model.FutureLocationId;
-                    entryToEdit.DateOrdered = DateTime.Now;
-                    entryToEdit.UserId = userid;
-                    entryToEdit.StatusId = 1;
-
-
-                        uzima.PharmacyInventories.Add(entryToEdit);
+                        var entryToEdit = uzima.UzimaInventories.Find(id);
+                        uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
-                    }                   
+
+                        entryToEdit.FutureLocationId = model.FutureLocationId;
+                        entryToEdit.DateOrdered = DateTime.Now;
+                        entryToEdit.LastModifiedBy = userid;
+                        entryToEdit.StatusId = 1;
+
+
+                        uzima.UzimaInventories.Add(entryToEdit);
+                        await uzima.SaveChangesAsync();
+                    }
                 }
             }
             catch (Exception ex)
@@ -124,16 +124,16 @@ namespace PTGApplication.Controllers
         // GET: Order/SendOrder
         public ActionResult SendOrder()
         {
-            IEnumerable<PharmacyDrug> drugs;
-            IEnumerable<PharmacyLocation> locations;
-            IEnumerable<PharmacyInventory> inventories;
-            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<UzimaDrug> drugs;
+            IEnumerable<UzimaLocation> locations;
+            IEnumerable<UzimaInventory> inventories;
+            IEnumerable<UzimaLocationType> locationTypes;
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.PharmacyDrugs.ToList();
-                locations = uzima.PharmacyLocations.ToList();
-                inventories = uzima.PharmacyInventories.ToList();
-                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                drugs = uzima.UzimaDrugs.ToList();
+                locations = uzima.UzimaLocations.ToList();
+                inventories = uzima.UzimaInventories.ToList();
+                locationTypes = uzima.UzimaLocationTypes.ToList();
             }
 
             if (!(drugs is null) && !(inventories is null))
@@ -145,7 +145,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -163,7 +163,7 @@ namespace PTGApplication.Controllers
                      where type.Supplier != null
                      select location);
 
-                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "DrugName");
+                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "Name");
             }
             return View();
         }
@@ -171,7 +171,7 @@ namespace PTGApplication.Controllers
 
         // POST: Order/SendOrder
         [HttpPost]
-        public async Task<ActionResult> SendOrder(String txtQty, PharmacyInventory model)
+        public async Task<ActionResult> SendOrder(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -189,23 +189,23 @@ namespace PTGApplication.Controllers
                     {
 
                         id =
-                            (from drug in uzima.PharmacyInventories
-                             join location in uzima.PharmacyLocationTypes on drug.CurrentLocationId equals location.LocationId
+                            (from drug in uzima.UzimaInventories
+                             join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
                              where location.Supplier == null && drug.StatusId == 1 && model.DrugId == drug.DrugId
                              select drug.Id).FirstOrDefault();
 
 
-                        var entryToEdit = uzima.PharmacyInventories.Find(id);
-                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        var entryToEdit = uzima.UzimaInventories.Find(id);
+                        uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
                         entryToEdit.FutureLocationId = model.FutureLocationId;
                         entryToEdit.DateOrdered = DateTime.Now;
-                        entryToEdit.UserId = userid;
+                        entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 2;
 
 
-                        uzima.PharmacyInventories.Add(entryToEdit);
+                        uzima.UzimaInventories.Add(entryToEdit);
                         await uzima.SaveChangesAsync();
                     }
                 }
@@ -230,18 +230,18 @@ namespace PTGApplication.Controllers
         // GET: Order/RecieveOrder
         public ActionResult RecieveOrder()
         {
-            IEnumerable<PharmacyDrug> drugs;
-            IEnumerable<PharmacyLocation> locations;
-            IEnumerable<PharmacyInventory> inventories;
-            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<UzimaDrug> drugs;
+            IEnumerable<UzimaLocation> locations;
+            IEnumerable<UzimaInventory> inventories;
+            IEnumerable<UzimaLocationType> locationTypes;
             IEnumerable<AspNetUser> users;
 
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.PharmacyDrugs.ToList();
-                locations = uzima.PharmacyLocations.ToList();
-                inventories = uzima.PharmacyInventories.ToList();
-                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                drugs = uzima.UzimaDrugs.ToList();
+                locations = uzima.UzimaLocations.ToList();
+                inventories = uzima.UzimaInventories.ToList();
+                locationTypes = uzima.UzimaLocationTypes.ToList();
                 users = uzima.AspNetUsers.ToList();
             }
 
@@ -253,7 +253,7 @@ namespace PTGApplication.Controllers
                      join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
-                    
+
                 var inventorydrugs =
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
@@ -263,9 +263,10 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
 
-                if (inventorydrugs.Count() == 0) { 
+                if (inventorydrugs.Count() == 0)
+                {
 
                     ViewBag.errorMessage = "You have no drugs on order to be recieved.";
                     return View("Error");
@@ -280,7 +281,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "DrugName");
+                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
@@ -288,7 +289,7 @@ namespace PTGApplication.Controllers
 
         // POST: Order/RecieveOrder
         [HttpPost]
-        public async Task<ActionResult> RecieveOrder(String txtQty, PharmacyInventory model)
+        public async Task<ActionResult> RecieveOrder(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -300,7 +301,7 @@ namespace PTGApplication.Controllers
                 {
 
                     var userhomelocation =
-                    (from location in uzima.PharmacyLocations
+                    (from location in uzima.UzimaLocations
                      join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
@@ -313,24 +314,24 @@ namespace PTGApplication.Controllers
                     {
 
                         id =
-                            (from drug in uzima.PharmacyInventories
-                             join location in uzima.PharmacyLocationTypes on drug.CurrentLocationId equals location.LocationId
+                            (from drug in uzima.UzimaInventories
+                             join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
                              where drug.StatusId == 2 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
-                        var entryToEdit = uzima.PharmacyInventories.Find(id);
-                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        var entryToEdit = uzima.UzimaInventories.Find(id);
+                        uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
                         entryToEdit.FutureLocationId = model.FutureLocationId;
                         entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
                         entryToEdit.DateOrdered = DateTime.Now;
-                        entryToEdit.UserId = userid;
+                        entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 0;
 
 
-                        uzima.PharmacyInventories.Add(entryToEdit);
+                        uzima.UzimaInventories.Add(entryToEdit);
                         await uzima.SaveChangesAsync();
                     }
                 }
@@ -355,18 +356,18 @@ namespace PTGApplication.Controllers
         // GET: Order/DispenseDrug
         public ActionResult DispenseDrug()
         {
-            IEnumerable<PharmacyDrug> drugs;
-            IEnumerable<PharmacyLocation> locations;
-            IEnumerable<PharmacyInventory> inventories;
-            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<UzimaDrug> drugs;
+            IEnumerable<UzimaLocation> locations;
+            IEnumerable<UzimaInventory> inventories;
+            IEnumerable<UzimaLocationType> locationTypes;
             IEnumerable<AspNetUser> users;
 
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.PharmacyDrugs.ToList();
-                locations = uzima.PharmacyLocations.ToList();
-                inventories = uzima.PharmacyInventories.ToList();
-                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                drugs = uzima.UzimaDrugs.ToList();
+                locations = uzima.UzimaLocations.ToList();
+                inventories = uzima.UzimaInventories.ToList();
+                locationTypes = uzima.UzimaLocationTypes.ToList();
                 users = uzima.AspNetUsers.ToList();
             }
 
@@ -388,7 +389,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -406,7 +407,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "DrugName");
+                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
@@ -414,7 +415,7 @@ namespace PTGApplication.Controllers
 
         // POST: Order/DispenseDrug
         [HttpPost]
-        public async Task<ActionResult> DispenseDrug(String txtQty, PharmacyInventory model)
+        public async Task<ActionResult> DispenseDrug(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -426,7 +427,7 @@ namespace PTGApplication.Controllers
                 {
 
                     var userhomelocation =
-                    (from location in uzima.PharmacyLocations
+                    (from location in uzima.UzimaLocations
                      join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
@@ -439,23 +440,23 @@ namespace PTGApplication.Controllers
                     {
 
                         id =
-                            (from drug in uzima.PharmacyInventories
+                            (from drug in uzima.UzimaInventories
                              where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
-                        var entryToEdit = uzima.PharmacyInventories.Find(id);
-                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        var entryToEdit = uzima.UzimaInventories.Find(id);
+                        uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
                         entryToEdit.FutureLocationId = model.FutureLocationId;
                         entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
                         entryToEdit.DateOrdered = DateTime.Now;
-                        entryToEdit.UserId = userid;
+                        entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 3;
 
 
-                        uzima.PharmacyInventories.Add(entryToEdit);
+                        uzima.UzimaInventories.Add(entryToEdit);
                         await uzima.SaveChangesAsync();
                     }
                 }
@@ -481,18 +482,18 @@ namespace PTGApplication.Controllers
         // GET: Order/DestroyDrug
         public ActionResult DestroyDrug()
         {
-            IEnumerable<PharmacyDrug> drugs;
-            IEnumerable<PharmacyLocation> locations;
-            IEnumerable<PharmacyInventory> inventories;
-            IEnumerable<PharmacyLocationType> locationTypes;
+            IEnumerable<UzimaDrug> drugs;
+            IEnumerable<UzimaLocation> locations;
+            IEnumerable<UzimaInventory> inventories;
+            IEnumerable<UzimaLocationType> locationTypes;
             IEnumerable<AspNetUser> users;
 
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.PharmacyDrugs.ToList();
-                locations = uzima.PharmacyLocations.ToList();
-                inventories = uzima.PharmacyInventories.ToList();
-                locationTypes = uzima.PharmacyLocationTypes.ToList();
+                drugs = uzima.UzimaDrugs.ToList();
+                locations = uzima.UzimaLocations.ToList();
+                inventories = uzima.UzimaInventories.ToList();
+                locationTypes = uzima.UzimaLocationTypes.ToList();
                 users = uzima.AspNetUsers.ToList();
             }
 
@@ -514,7 +515,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -532,7 +533,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "DrugName");
+                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "Name");
             }
             return View();
         }
@@ -540,7 +541,7 @@ namespace PTGApplication.Controllers
 
         // POST: Order/DestroyOrder
         [HttpPost]
-        public async Task<ActionResult> DestroyDrug(String txtQty, PharmacyInventory model)
+        public async Task<ActionResult> DestroyDrug(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -552,7 +553,7 @@ namespace PTGApplication.Controllers
                 {
 
                     var userhomelocation =
-                    (from location in uzima.PharmacyLocations
+                    (from location in uzima.UzimaLocations
                      join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
@@ -565,23 +566,23 @@ namespace PTGApplication.Controllers
                     {
 
                         id =
-                            (from drug in uzima.PharmacyInventories
+                            (from drug in uzima.UzimaInventories
                              where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
-                        var entryToEdit = uzima.PharmacyInventories.Find(id);
-                        uzima.PharmacyInventories.Remove(entryToEdit);
+                        var entryToEdit = uzima.UzimaInventories.Find(id);
+                        uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
                         entryToEdit.FutureLocationId = model.FutureLocationId;
                         entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
                         entryToEdit.DateOrdered = DateTime.Now;
-                        entryToEdit.UserId = userid;
+                        entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 4;
 
 
-                        uzima.PharmacyInventories.Add(entryToEdit);
+                        uzima.UzimaInventories.Add(entryToEdit);
                         await uzima.SaveChangesAsync();
                     }
                 }

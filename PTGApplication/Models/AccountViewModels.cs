@@ -14,6 +14,9 @@ namespace PTGApplication.Models
         [Display(Name = "Pharmacy")]
         public string HomePharmacy { get; set; }
 
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; }
+
         [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }

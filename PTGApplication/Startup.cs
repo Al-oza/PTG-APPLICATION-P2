@@ -30,7 +30,8 @@ namespace PTGApplication
                 Email = "rapula@uzima.org",
                 HomePharmacy = "warehouse1",
                 Name = "Rapula Otukile",
-                UserName = "rapula"
+                UserName = "rapula",
+                IsActive = true
             };
 
             var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -42,7 +43,8 @@ namespace PTGApplication
                 Email = "brucewayne@gothem.net",
                 HomePharmacy = "clinic",
                 Name = "Bruce Wayne",
-                UserName = "batman"
+                UserName = "batman",
+                IsActive = true
             };
 
             chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -91,7 +93,8 @@ namespace PTGApplication
                 Email = "bobross@uzima.org",
                 HomePharmacy = "clinic",
                 Name = "Bob Ross",
-                UserName = "rOssBoBbOss"
+                UserName = "rOssBoBbOss",
+                IsActive = true
             };
 
             var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -103,7 +106,8 @@ namespace PTGApplication
                 Email = "joey@hotail.com",
                 HomePharmacy = "hospital",
                 Name = "Joey Tribiani",
-                UserName = "joeyt"
+                UserName = "joeyt",
+                IsActive = true
             };
 
             chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -117,7 +121,8 @@ namespace PTGApplication
                 Email = "lskywalker@rebels.com",
                 HomePharmacy = "clinic",
                 Name = "Luke Skywalker",
-                UserName = "notVadersSon"
+                UserName = "notVadersSon",
+                IsActive = true
             };
 
             var chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);
@@ -129,7 +134,8 @@ namespace PTGApplication
                 Email = "jdoe1@mail.com",
                 HomePharmacy = "hospital",
                 Name = "John Doe",
-                UserName = "johndoe"
+                UserName = "johndoe",
+                IsActive = true
             };
 
             chkUser = await userManager.CreateAsync(user, Properties.SharedResources.DefaultPass);

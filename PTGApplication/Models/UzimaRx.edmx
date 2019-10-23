@@ -67,65 +67,48 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="PharmacyBatch">
+        <EntityType Name="UzimaDrug">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
-          <Property Name="BatchSize" Type="int" Nullable="false" />
-          <Property Name="DrugBrandId" Type="int" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar(max)" />
+          <Property Name="DrugName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BrandName" Type="nvarchar(max)" />
+          <Property Name="ApplicationNumber" Type="nvarchar(max)" />
+          <Property Name="Manufacturer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ManufacturerLocation" Type="nvarchar(max)" />
+          <Property Name="ApprovalNumber" Type="nvarchar(max)" />
+          <Property Name="Schedule" Type="nvarchar(max)" />
+          <Property Name="License" Type="nvarchar(max)" />
+          <Property Name="Ingredients" Type="nvarchar(max)" />
+          <Property Name="PackSize" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="PharmacyBatchLocation">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Count" Type="int" />
-          <Property Name="BatchId" Type="int" Nullable="false" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PharmacyDrug">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Barcode" Type="nvarchar" MaxLength="256" />
-          <Property Name="DrugName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="BrandName" Type="nvarchar" MaxLength="256" />
-          <Property Name="ApplicationNumber" Type="nvarchar" MaxLength="256" />
-          <Property Name="Manufacturer" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="ManufacturerLocation" Type="nvarchar" MaxLength="256" />
-          <Property Name="ApprovalNumber" Type="nvarchar" MaxLength="256" />
-          <Property Name="Schedule" Type="nvarchar" MaxLength="256" />
-          <Property Name="License" Type="nvarchar" MaxLength="256" />
-          <Property Name="Ingredients" Type="nvarchar" MaxLength="256" />
-          <Property Name="PackSize" Type="nvarchar" MaxLength="256" />
-        </EntityType>
-        <EntityType Name="PharmacyInventory">
+        <EntityType Name="UzimaInventory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="DateOrdered" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DrugId" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CurrentLocationId" Type="int" Nullable="false" />
           <Property Name="FutureLocationId" Type="int" />
           <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="PharmacyLocation">
+        <EntityType Name="UzimaLocation">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="LocationName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="PharmacyLocationType">
+        <EntityType Name="UzimaLocationType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -134,12 +117,12 @@
           <Property Name="LocationType" Type="nvarchar(max)" />
           <Property Name="Supplier" Type="int" />
         </EntityType>
-        <EntityType Name="PharmacyStatus">
+        <EntityType Name="UzimaStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -197,136 +180,94 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
-          <End Role="PharmacyDrug" Type="Self.PharmacyDrug" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyDrug">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyBatch">
-              <PropertyRef Name="DrugBrandId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
-          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyBatch">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyBatchLocation">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyBatchLocation">
-              <PropertyRef Name="LocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+        <Association Name="FK_dbo_UzimaInventory_dbo_AspNetUser_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="UzimaInventory">
+              <PropertyRef Name="LastModifiedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyLocationType">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaLocationType">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyLocationType" Type="Self.PharmacyLocationType" Multiplicity="*" />
+          <End Role="UzimaLocationType" Type="Self.UzimaLocationType" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyLocationType">
+            <Dependent Role="UzimaLocationType">
               <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyLocationType_Supplier">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
-          <End Role="PharmacyLocationType" Type="Self.PharmacyLocationType" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaLocationType_Supplier">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="0..1" />
+          <End Role="UzimaLocationType" Type="Self.UzimaLocationType" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyLocationType">
+            <Dependent Role="UzimaLocationType">
               <PropertyRef Name="Supplier" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
-          <End Role="PharmacyDrug" Type="Self.PharmacyDrug" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId">
+          <End Role="UzimaDrug" Type="Self.UzimaDrug" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyDrug">
+            <Principal Role="UzimaDrug">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="DrugId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1" />
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="1" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="CurrentLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="0..1" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="FutureLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
-          <End Role="PharmacyStatus" Type="Self.PharmacyStatus" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId">
+          <End Role="UzimaStatus" Type="Self.UzimaStatus" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyStatus">
+            <Principal Role="UzimaStatus">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
@@ -338,13 +279,11 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyBatch" EntityType="Self.PharmacyBatch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyBatchLocation" EntityType="Self.PharmacyBatchLocation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyDrug" EntityType="Self.PharmacyDrug" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyInventory" EntityType="Self.PharmacyInventory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyLocation" EntityType="Self.PharmacyLocation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyLocationType" EntityType="Self.PharmacyLocationType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyStatus" EntityType="Self.PharmacyStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UzimaDrug" EntityType="Self.UzimaDrug" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UzimaInventory" EntityType="Self.UzimaInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UzimaLocation" EntityType="Self.UzimaLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UzimaLocationType" EntityType="Self.UzimaLocationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UzimaStatus" EntityType="Self.UzimaStatus" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -361,45 +300,33 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" Association="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
-            <End Role="PharmacyDrug" EntitySet="PharmacyDrug" />
-            <End Role="PharmacyBatch" EntitySet="PharmacyBatch" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
-            <End Role="PharmacyBatch" EntitySet="PharmacyBatch" />
-            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
-            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+          <AssociationSet Name="FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyLocationType" Association="Self.FK_dbo_PharmacyLocationType">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
-            <End Role="PharmacyLocationType" EntitySet="PharmacyLocationType" />
+          <AssociationSet Name="FK_dbo_UzimaLocationType" Association="Self.FK_dbo_UzimaLocationType">
+            <End Role="UzimaLocation" EntitySet="UzimaLocation" />
+            <End Role="UzimaLocationType" EntitySet="UzimaLocationType" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyLocationType_Supplier" Association="Self.FK_dbo_PharmacyLocationType_Supplier">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
-            <End Role="PharmacyLocationType" EntitySet="PharmacyLocationType" />
+          <AssociationSet Name="FK_dbo_UzimaLocationType_Supplier" Association="Self.FK_dbo_UzimaLocationType_Supplier">
+            <End Role="UzimaLocation" EntitySet="UzimaLocation" />
+            <End Role="UzimaLocationType" EntitySet="UzimaLocationType" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
-            <End Role="PharmacyDrug" EntitySet="PharmacyDrug" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId">
+            <End Role="UzimaDrug" EntitySet="UzimaDrug" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId">
+            <End Role="UzimaLocation" EntitySet="UzimaLocation" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocation" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId">
+            <End Role="UzimaLocation" EntitySet="UzimaLocation" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventory" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
-            <End Role="PharmacyStatus" EntitySet="PharmacyStatus" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventory" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId">
+            <End Role="UzimaStatus" EntitySet="UzimaStatus" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventory" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -464,85 +391,62 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="PharmacyInventories" Relationship="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" FromRole="AspNetUsers" ToRole="PharmacyInventory" />
+          <NavigationProperty Name="UzimaInventories" Relationship="Self.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" FromRole="AspNetUsers" ToRole="UzimaInventory" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="PharmacyBatch">
+        <EntityType Name="UzimaDrug">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="BatchSize" Type="Int32" Nullable="false" />
-          <Property Name="DrugBrandId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PharmacyDrug" Relationship="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" FromRole="PharmacyBatch" ToRole="PharmacyDrug" />
-          <NavigationProperty Name="PharmacyBatchLocations" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" FromRole="PharmacyBatch" ToRole="PharmacyBatchLocation" />
+          <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DrugName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrandName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManufacturerLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Schedule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="License" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PackSize" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UzimaInventories" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" FromRole="UzimaDrug" ToRole="UzimaInventory" />
         </EntityType>
-        <EntityType Name="PharmacyBatchLocation">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="BatchId" Type="Int32" Nullable="false" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PharmacyBatch" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" FromRole="PharmacyBatchLocation" ToRole="PharmacyBatch" />
-          <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" FromRole="PharmacyBatchLocation" ToRole="PharmacyLocation" />
-        </EntityType>
-        <EntityType Name="PharmacyDrug">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Barcode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="DrugName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BrandName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicationNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Manufacturer" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ManufacturerLocation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovalNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Schedule" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="License" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Ingredients" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="PackSize" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PharmacyBatches" Relationship="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" FromRole="PharmacyDrug" ToRole="PharmacyBatch" />
-          <NavigationProperty Name="PharmacyInventories" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" FromRole="PharmacyDrug" ToRole="PharmacyInventory" />
-        </EntityType>
-        <EntityType Name="PharmacyInventory">
+        <EntityType Name="UzimaInventory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DrugId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="CurrentLocationId" Type="Int32" Nullable="false" />
           <Property Name="FutureLocationId" Type="Int32" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" FromRole="PharmacyInventory" ToRole="AspNetUsers" />
-          <NavigationProperty Name="PharmacyDrug" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" FromRole="PharmacyInventory" ToRole="PharmacyDrug" />
-          <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" FromRole="PharmacyInventory" ToRole="PharmacyLocation" />
-          <NavigationProperty Name="PharmacyLocation1" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" FromRole="PharmacyInventory" ToRole="PharmacyLocation" />
-          <NavigationProperty Name="PharmacyStatu" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" FromRole="PharmacyInventory" ToRole="PharmacyStatus" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" FromRole="UzimaInventory" ToRole="AspNetUsers" />
+          <NavigationProperty Name="UzimaDrug" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" FromRole="UzimaInventory" ToRole="UzimaDrug" />
+          <NavigationProperty Name="UzimaLocation" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" FromRole="UzimaInventory" ToRole="UzimaLocation" />
+          <NavigationProperty Name="UzimaLocation1" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" FromRole="UzimaInventory" ToRole="UzimaLocation" />
+          <NavigationProperty Name="UzimaStatu" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" FromRole="UzimaInventory" ToRole="UzimaStatus" />
         </EntityType>
-        <EntityType Name="PharmacyLocation">
+        <EntityType Name="UzimaLocation">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="LocationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PharmacyBatchLocations" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" FromRole="PharmacyLocation" ToRole="PharmacyBatchLocation" />
-          <NavigationProperty Name="PharmacyInventories" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" FromRole="PharmacyLocation" ToRole="PharmacyInventory" />
-          <NavigationProperty Name="PharmacyInventories1" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" FromRole="PharmacyLocation" ToRole="PharmacyInventory" />
-          <NavigationProperty Name="PharmacyLocationTypes" Relationship="Self.FK_dbo_PharmacyLocationType" FromRole="PharmacyLocation" ToRole="PharmacyLocationType" />
-          <NavigationProperty Name="PharmacyLocationTypes1" Relationship="Self.FK_dbo_PharmacyLocationType_Supplier" FromRole="PharmacyLocation" ToRole="PharmacyLocationType" />
+          <Property Name="LocationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UzimaInventories" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" FromRole="UzimaLocation" ToRole="UzimaInventory" />
+          <NavigationProperty Name="UzimaInventories1" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" FromRole="UzimaLocation" ToRole="UzimaInventory" />
+          <NavigationProperty Name="UzimaLocationTypes" Relationship="Self.FK_dbo_UzimaLocationType" FromRole="UzimaLocation" ToRole="UzimaLocationType" />
+          <NavigationProperty Name="UzimaLocationTypes1" Relationship="Self.FK_dbo_UzimaLocationType_Supplier" FromRole="UzimaLocation" ToRole="UzimaLocationType" />
         </EntityType>
-        <EntityType Name="PharmacyLocationType">
+        <EntityType Name="UzimaLocationType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -550,16 +454,16 @@
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <Property Name="LocationType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Supplier" Type="Int32" />
-          <NavigationProperty Name="PharmacyLocation" Relationship="Self.FK_dbo_PharmacyLocationType" FromRole="PharmacyLocationType" ToRole="PharmacyLocation" />
-          <NavigationProperty Name="PharmacyLocation1" Relationship="Self.FK_dbo_PharmacyLocationType_Supplier" FromRole="PharmacyLocationType" ToRole="PharmacyLocation" />
+          <NavigationProperty Name="UzimaLocation" Relationship="Self.FK_dbo_UzimaLocationType" FromRole="UzimaLocationType" ToRole="UzimaLocation" />
+          <NavigationProperty Name="UzimaLocation1" Relationship="Self.FK_dbo_UzimaLocationType_Supplier" FromRole="UzimaLocationType" ToRole="UzimaLocation" />
         </EntityType>
-        <EntityType Name="PharmacyStatu">
+        <EntityType Name="UzimaStatu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PharmacyInventories" Relationship="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" FromRole="PharmacyStatus" ToRole="PharmacyInventory" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UzimaInventories" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" FromRole="UzimaStatus" ToRole="UzimaInventory" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -589,136 +493,94 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+        <Association Name="FK_dbo_UzimaInventory_dbo_AspNetUser_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="UzimaInventory">
+              <PropertyRef Name="LastModifiedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
-          <End Role="PharmacyDrug" Type="Self.PharmacyDrug" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId">
+          <End Role="UzimaDrug" Type="Self.UzimaDrug" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyDrug">
+            <Principal Role="UzimaDrug">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyBatch">
-              <PropertyRef Name="DrugBrandId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
-          <End Role="PharmacyBatch" Type="Self.PharmacyBatch" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyBatch">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyBatchLocation">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyBatchLocation" Type="Self.PharmacyBatchLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyBatchLocation">
-              <PropertyRef Name="LocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
-          <End Role="PharmacyDrug" Type="Self.PharmacyDrug" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PharmacyDrug">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="DrugId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1" />
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="1" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="CurrentLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="0..1" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="FutureLocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
-          <End Role="PharmacyStatus" Type="Self.PharmacyStatu" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId">
+          <End Role="UzimaStatus" Type="Self.UzimaStatu" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyInventory" Type="Self.PharmacyInventory" Multiplicity="*" />
+          <End Role="UzimaInventory" Type="Self.UzimaInventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyStatus">
+            <Principal Role="UzimaStatus">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyInventory">
+            <Dependent Role="UzimaInventory">
               <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyLocationType">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="1">
+        <Association Name="FK_dbo_UzimaLocationType">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PharmacyLocationType" Type="Self.PharmacyLocationType" Multiplicity="*" />
+          <End Role="UzimaLocationType" Type="Self.UzimaLocationType" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyLocationType">
+            <Dependent Role="UzimaLocationType">
               <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_PharmacyLocationType_Supplier">
-          <End Role="PharmacyLocation" Type="Self.PharmacyLocation" Multiplicity="0..1" />
-          <End Role="PharmacyLocationType" Type="Self.PharmacyLocationType" Multiplicity="*" />
+        <Association Name="FK_dbo_UzimaLocationType_Supplier">
+          <End Role="UzimaLocation" Type="Self.UzimaLocation" Multiplicity="0..1" />
+          <End Role="UzimaLocationType" Type="Self.UzimaLocationType" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PharmacyLocation">
+            <Principal Role="UzimaLocation">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PharmacyLocationType">
+            <Dependent Role="UzimaLocationType">
               <PropertyRef Name="Supplier" />
             </Dependent>
           </ReferentialConstraint>
@@ -733,13 +595,11 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="PharmacyBatches" EntityType="Self.PharmacyBatch" />
-          <EntitySet Name="PharmacyBatchLocations" EntityType="Self.PharmacyBatchLocation" />
-          <EntitySet Name="PharmacyDrugs" EntityType="Self.PharmacyDrug" />
-          <EntitySet Name="PharmacyInventories" EntityType="Self.PharmacyInventory" />
-          <EntitySet Name="PharmacyLocations" EntityType="Self.PharmacyLocation" />
-          <EntitySet Name="PharmacyLocationTypes" EntityType="Self.PharmacyLocationType" />
-          <EntitySet Name="PharmacyStatus" EntityType="Self.PharmacyStatu" />
+          <EntitySet Name="UzimaDrugs" EntityType="Self.UzimaDrug" />
+          <EntitySet Name="UzimaInventories" EntityType="Self.UzimaInventory" />
+          <EntitySet Name="UzimaLocations" EntityType="Self.UzimaLocation" />
+          <EntitySet Name="UzimaLocationTypes" EntityType="Self.UzimaLocationType" />
+          <EntitySet Name="UzimaStatus" EntityType="Self.UzimaStatu" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -748,45 +608,33 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_PharmacyInventory_dbo_AspNetUser_UserId">
+          <AssociationSet Name="FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" Association="Self.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId" Association="Self.FK_dbo_PharmacyBatch_dbo_PharmacyDrugBrand_DrugBrandId">
-            <End Role="PharmacyDrug" EntitySet="PharmacyDrugs" />
-            <End Role="PharmacyBatch" EntitySet="PharmacyBatches" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId">
+            <End Role="UzimaDrug" EntitySet="UzimaDrugs" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyBatch_BatchId">
-            <End Role="PharmacyBatch" EntitySet="PharmacyBatches" />
-            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocations" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId">
+            <End Role="UzimaLocation" EntitySet="UzimaLocations" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" Association="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
-            <End Role="PharmacyBatchLocation" EntitySet="PharmacyBatchLocations" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId">
+            <End Role="UzimaLocation" EntitySet="UzimaLocations" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyDrugBrand_BarcodeId">
-            <End Role="PharmacyDrug" EntitySet="PharmacyDrugs" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
+          <AssociationSet Name="FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" Association="Self.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId">
+            <End Role="UzimaStatus" EntitySet="UzimaStatus" />
+            <End Role="UzimaInventory" EntitySet="UzimaInventories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_CurrentLocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
+          <AssociationSet Name="FK_dbo_UzimaLocationType" Association="Self.FK_dbo_UzimaLocationType">
+            <End Role="UzimaLocation" EntitySet="UzimaLocations" />
+            <End Role="UzimaLocationType" EntitySet="UzimaLocationTypes" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyLocation_FutureLocationId">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId" Association="Self.FK_dbo_PharmacyOrder_dbo_PharmacyStatus_StatusId">
-            <End Role="PharmacyStatus" EntitySet="PharmacyStatus" />
-            <End Role="PharmacyInventory" EntitySet="PharmacyInventories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyLocationType" Association="Self.FK_dbo_PharmacyLocationType">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
-            <End Role="PharmacyLocationType" EntitySet="PharmacyLocationTypes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_PharmacyLocationType_Supplier" Association="Self.FK_dbo_PharmacyLocationType_Supplier">
-            <End Role="PharmacyLocation" EntitySet="PharmacyLocations" />
-            <End Role="PharmacyLocationType" EntitySet="PharmacyLocationTypes" />
+          <AssociationSet Name="FK_dbo_UzimaLocationType_Supplier" Association="Self.FK_dbo_UzimaLocationType_Supplier">
+            <End Role="UzimaLocation" EntitySet="UzimaLocations" />
+            <End Role="UzimaLocationType" EntitySet="UzimaLocationTypes" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -853,32 +701,13 @@
                 <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyBatches">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyBatch">
-              <MappingFragment StoreEntitySet="PharmacyBatch">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="BatchSize" ColumnName="BatchSize" />
-                <ScalarProperty Name="DrugBrandId" ColumnName="DrugBrandId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyBatchLocations">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyBatchLocation">
-              <MappingFragment StoreEntitySet="PharmacyBatchLocation">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyDrugs">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyDrug">
-              <MappingFragment StoreEntitySet="PharmacyDrug">
+          <EntitySetMapping Name="UzimaDrugs">
+            <EntityTypeMapping TypeName="UzimaRxModel.UzimaDrug">
+              <MappingFragment StoreEntitySet="UzimaDrug">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="DrugName" ColumnName="DrugName" />
@@ -894,12 +723,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyInventories">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyInventory">
-              <MappingFragment StoreEntitySet="PharmacyInventory">
+          <EntitySetMapping Name="UzimaInventories">
+            <EntityTypeMapping TypeName="UzimaRxModel.UzimaInventory">
+              <MappingFragment StoreEntitySet="UzimaInventory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="DrugId" ColumnName="DrugId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="CurrentLocationId" ColumnName="CurrentLocationId" />
@@ -908,9 +737,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyLocations">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyLocation">
-              <MappingFragment StoreEntitySet="PharmacyLocation">
+          <EntitySetMapping Name="UzimaLocations">
+            <EntityTypeMapping TypeName="UzimaRxModel.UzimaLocation">
+              <MappingFragment StoreEntitySet="UzimaLocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -918,9 +747,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyLocationTypes">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyLocationType">
-              <MappingFragment StoreEntitySet="PharmacyLocationType">
+          <EntitySetMapping Name="UzimaLocationTypes">
+            <EntityTypeMapping TypeName="UzimaRxModel.UzimaLocationType">
+              <MappingFragment StoreEntitySet="UzimaLocationType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="LocationType" ColumnName="LocationType" />
@@ -928,9 +757,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyStatus">
-            <EntityTypeMapping TypeName="UzimaRxModel.PharmacyStatu">
-              <MappingFragment StoreEntitySet="PharmacyStatus">
+          <EntitySetMapping Name="UzimaStatus">
+            <EntityTypeMapping TypeName="UzimaRxModel.UzimaStatu">
+              <MappingFragment StoreEntitySet="UzimaStatus">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>

@@ -12,16 +12,15 @@ namespace PTGApplication.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PharmacyLocation
+    public partial class UzimaLocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PharmacyLocation()
+        public UzimaLocation()
         {
-            this.PharmacyBatchLocations = new HashSet<PharmacyBatchLocation>();
-            this.PharmacyInventories = new HashSet<PharmacyInventory>();
-            this.PharmacyInventories1 = new HashSet<PharmacyInventory>();
-            this.PharmacyLocationTypes = new HashSet<PharmacyLocationType>();
-            this.PharmacyLocationTypes1 = new HashSet<PharmacyLocationType>();
+            this.UzimaInventories = new HashSet<UzimaInventory>();
+            this.UzimaInventories1 = new HashSet<UzimaInventory>();
+            this.UzimaLocationTypes = new HashSet<UzimaLocationType>();
+            this.UzimaLocationTypes1 = new HashSet<UzimaLocationType>();
         }
     
         public int Id { get; set; }
@@ -30,14 +29,12 @@ namespace PTGApplication.Models
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyBatchLocation> PharmacyBatchLocations { get; set; }
+        public virtual ICollection<UzimaInventory> UzimaInventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyInventory> PharmacyInventories { get; set; }
+        public virtual ICollection<UzimaInventory> UzimaInventories1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyInventory> PharmacyInventories1 { get; set; }
+        public virtual ICollection<UzimaLocationType> UzimaLocationTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyLocationType> PharmacyLocationTypes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyLocationType> PharmacyLocationTypes1 { get; set; }
+        public virtual ICollection<UzimaLocationType> UzimaLocationTypes1 { get; set; }
     }
 }
