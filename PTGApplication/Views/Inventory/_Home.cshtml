@@ -8,19 +8,19 @@
     <br>
     @if (User.IsInRole("PharmaAdmin"))
     {
-        <p><b><a href="~/Pharmacy/AddInventory">Add Inventory</a></b></p>
+        <p><b><a href="~/Inventory/AddInventory">Add Inventory</a></b></p>
         <p style="margin-left:4em;">Input new inventory that will be on shelf in warehouse with the ability for hospitals and clinics to order.</p>
         <br>
     }
-    <p><b><a href="~/Pharmacy/SelectInventory">Modify Inventory</a></b></p>
+    <p><b><a href="~/Inventory/SelectInventory">Modify Inventory</a></b></p>
     <p style="margin-left:4em;">Allows for changes to inventory table.</p>
     <br>
     @if (User.IsInRole("PharmaAdmin"))
     {
-        <p><b><a href="~/Pharmacy/AddtoDrugList">Add Drug to Drug List</a></b> </p>
+        <p><b><a href="~/Inventory/AddtoDrugList">Add Drug to Drug List</a></b> </p>
         <p style="margin-left:4em;">Add new drugs that become avaible over time. </p>
         <br>
-        <p><b><a href="~/Pharmacy/SelectDrug">Remove Drug from Drug List</a></b> </p>
+        <p><b><a href="~/Inventory/SelectDrug">Remove Drug from Drug List</a></b> </p>
         <p style="margin-left:4em;">Delete drugs if no longer offered.</p>
         <br>
     }

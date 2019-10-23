@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
-    public class PharmacyController : Controller
+    public class InventoryController : Controller
     {
         // GET: Pharmacy
         public ActionResult Index()
