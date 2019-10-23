@@ -28,7 +28,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "rapula@uzima.org",
-                HomePharmacy = "Pilane",
+                HomePharmacy = "warehouse1",
                 Name = "Rapula Otukile",
                 UserName = "rapula"
             };
@@ -40,7 +40,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "brucewayne@gothem.net",
-                HomePharmacy = "Gotham",
+                HomePharmacy = "clinic",
                 Name = "Bruce Wayne",
                 UserName = "batman"
             };
@@ -89,7 +89,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "bobross@uzima.org",
-                HomePharmacy = "Orlando",
+                HomePharmacy = "clinic",
                 Name = "Bob Ross",
                 UserName = "rOssBoBbOss"
             };
@@ -101,7 +101,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "joey@hotail.com",
-                HomePharmacy = "CVS",
+                HomePharmacy = "hospital",
                 Name = "Joey Tribiani",
                 UserName = "joeyt"
             };
@@ -115,7 +115,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "lskywalker@rebels.com",
-                HomePharmacy = "Degaba",
+                HomePharmacy = "clinic",
                 Name = "Luke Skywalker",
                 UserName = "notVadersSon"
             };
@@ -127,7 +127,7 @@ namespace PTGApplication
             {
                 EmailConfirmed = true,
                 Email = "jdoe1@mail.com",
-                HomePharmacy = "Scripps",
+                HomePharmacy = "hospital",
                 Name = "John Doe",
                 UserName = "johndoe"
             };
