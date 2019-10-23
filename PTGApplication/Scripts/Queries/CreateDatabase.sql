@@ -5,7 +5,7 @@ DROP DATABASE IF EXISTS [UzimaRx];
 CREATE DATABASE [UzimaRx];
 
 GO
-USE UzimaRx;
+USE [UzimaRx];
 
 GO
 CREATE TABLE [dbo].[AspNetUsers] (
@@ -23,10 +23,11 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [LockoutEndDateUtc]    DATETIME       NULL,
     [LockoutEnabled]       BIT            NOT NULL,
     [AccessFailedCount]    INT            NOT NULL,
+	[IsActive]			   BIT			  NOT NULL,
     CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 GO
+
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
     ON [dbo].[AspNetUsers]([Id] ASC);
 
@@ -43,9 +44,8 @@ CREATE TABLE [dbo].[AspNetRoles] (
     [Name] NVARCHAR (256) NOT NULL,
     CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
-
 GO
+
 CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex]
     ON [dbo].[AspNetRoles]([Name] ASC);
 
@@ -57,8 +57,8 @@ CREATE TABLE [dbo].[AspNetUserClaims] (
     CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserClaims]([UserId] ASC);
 
@@ -69,8 +69,8 @@ CREATE TABLE [dbo].[AspNetUserLogins] (
     CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED ([LoginProvider] ASC, [ProviderKey] ASC, [UserId] ASC),
     CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserLogins]([UserId] ASC);
 
@@ -81,99 +81,73 @@ CREATE TABLE [dbo].[AspNetUserRoles] (
     CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[AspNetRoles] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
 );
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserRoles]([UserId] ASC);
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_RoleId]
     ON [dbo].[AspNetUserRoles]([RoleId] ASC);
-
 GO
-CREATE TABLE [dbo].[PharmacyDrug] (
+
+CREATE TABLE [dbo].[UzimaDrug] (
     [Id]   INT   NOT NULL,
-    [Barcode]  NVARCHAR (256) NULL,
-    [DrugName]  NVARCHAR (256)  NOT NULL,
-	[BrandName]   NVARCHAR (256)  NULL,
-	[ApplicationNumber] NVARCHAR (256) NULL,
-	[Manufacturer] NVARCHAR(256)   NOT NULL,
-	[ManufacturerLocation] NVARCHAR(256) NULL,
-	[ApprovalNumber] NVARChar (256) NULL,
-	[Schedule]   NVARCHAR(256)  NULL,
-    [License]  NVARCHAR (256) NULL,
-	[Ingredients] NVARCHAR (256) NULL,
-    [PackSize]  NVARCHAR(256)  NULL,
-    CONSTRAINT [PK_dbo.PharmacyDrugBrand] PRIMARY KEY CLUSTERED ([Id] ASC),
+    [Barcode]  NVARCHAR (MAX) NULL,
+    [DrugName]  NVARCHAR (MAX)  NOT NULL,
+	[BrandName]   NVARCHAR (MAX)  NULL,
+	[ApplicationNumber] NVARCHAR (MAX) NULL,
+	[Manufacturer] NVARCHAR(MAX)   NOT NULL,
+	[ManufacturerLocation] NVARCHAR(MAX) NULL,
+	[ApprovalNumber] NVARChar (MAX) NULL,
+	[Schedule]   NVARCHAR(MAX)  NULL,
+    [License]  NVARCHAR (MAX) NULL,
+	[Ingredients] NVARCHAR (MAX) NULL,
+    [PackSize]  NVARCHAR(MAX)  NULL,
+    CONSTRAINT [PK_dbo.UzimaDrug] PRIMARY KEY CLUSTERED ([Id] ASC),
 );
+GO
 
-GO
-CREATE TABLE [dbo].[PharmacyBatch] (
-    [Id]  INT   NOT NULL,
-    [ExpirationDate] DATETIME NOT NULL,
-    [BatchSize]  INT  NOT NULL,
-    [DrugBrandId] INT  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacyBatch] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.PharmacyBatch_dbo.PharmacyDrugBrand_DrugBrandId] FOREIGN KEY ([DrugBrandId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE
-);
-GO
-CREATE TABLE [dbo].[PharmacyLocation] (
+CREATE TABLE [dbo].[UzimaLocation] (
     [Id]   INT   NOT NULL,
-    [LocationName]  NVARCHAR (256)  NOT NULL,
-    [Address]  NVARCHAR (256)  NOT NULL,
-    [Phone]  NVARCHAR (256)  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacySupplier] PRIMARY KEY CLUSTERED ([Id] ASC)
+    [LocationName]  NVARCHAR (MAX)  NOT NULL,
+    [Address]  NVARCHAR (MAX)  NOT NULL,
+    [Phone]  NVARCHAR (MAX)  NOT NULL,
+    CONSTRAINT [PK_dbo.UzimaLocation] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 GO
-CREATE TABLE [dbo].[PharmacyLocationType] (
+
+CREATE TABLE [dbo].[UzimaLocationType] (
     [Id]   INT   NOT NULL,
     [LocationId] INT NOT NULL,
 	[LocationType] NVARCHAR(MAX),
 	[Supplier] INT NULL,
-    CONSTRAINT [PK_dbo.PharmacyLocationType] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [FK_dbo.PharmacyLocationType] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE CASCADE,
-	CONSTRAINT [FK_dbo.PharmacyLocationType_Supplier] FOREIGN KEY ([Supplier]) REFERENCES [dbo].[PharmacyLocation] ([Id]) 
+    CONSTRAINT [PK_dbo.UzimaLocationType] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.UzimaLocationType] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[UzimaLocation] ([Id]) ON DELETE CASCADE,
+	CONSTRAINT [FK_dbo.UzimaLocationType_Supplier] FOREIGN KEY ([Supplier]) REFERENCES [dbo].[UzimaLocation] ([Id]) 
 );
-
-
-
 GO
-CREATE TABLE [dbo].[PharmacyBatchLocation] (
+
+CREATE TABLE [dbo].[UzimaStatus] (
     [Id]  INT  NOT NULL,
-    [Count]  INT  NULL,
-    [BatchId]  INT  NOT NULL,
-    [LocationId] INT  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacyBatchLocation] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.PharmacyBatchLocation_dbo.PharmacyBatch_BatchId] FOREIGN KEY ([BatchId]) REFERENCES [dbo].[PharmacyBatch] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_dbo.PharmacyBatchLocation_dbo.PharmacyLocation_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE CASCADE
+    [Status]  NVARCHAR (MAX)  NOT NULL,
+    CONSTRAINT [PK_dbo.UzimaStatus] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 GO
-CREATE TABLE [dbo].[PharmacyStatus] (
-    [Id]  INT  NOT NULL,
-    [Status]  NVARCHAR (256)  NOT NULL,
-    CONSTRAINT [PK_dbo.PharmacyStatus] PRIMARY KEY CLUSTERED ([Id] ASC)
-);
 
-GO
-CREATE TABLE [dbo].[PharmacyInventory] (
+CREATE TABLE [dbo].[UzimaInventory] (
     [Id]  INT   NOT NULL,
     [DateOrdered] DATETIME NOT NULL,
-    [UserId]  NVARCHAR(128) NOT NULL, --use this as user or do the PK or AuthUser Table?
+    [LastModifiedBy]  NVARCHAR(128) NOT NULL,
     [DrugId]  INT  NOT NULL,
     [StatusId]  INT  NOT NULL,
     [CurrentLocationId] INT   NOT NULL,
     [FutureLocationId] INT ,
-    [ExpirationDate] DATETIME NOT NULL,--is this a FK to PharmacyBatch Table?
-    CONSTRAINT [PK_dbo.PharmacyOrder] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [FK_dbo.PharmacyInventory_dbo.AspNetUser_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyDrugBrand_BarcodeId] FOREIGN KEY ([DrugId]) REFERENCES [dbo].[PharmacyDrug] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyStatus_StatusId] FOREIGN KEY ([StatusId]) REFERENCES [dbo].[PharmacyStatus] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_CurrentLocationId] FOREIGN KEY ([CurrentLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION, --may cause cycles or multiple paths
-    CONSTRAINT [FK_dbo.PharmacyOrder_dbo.PharmacyLocation_FutureLocationId] FOREIGN KEY ([FutureLocationId]) REFERENCES [dbo].[PharmacyLocation] ([Id]) ON DELETE NO ACTION --may cause cycles or multiple paths
+    [ExpirationDate] DATETIME NOT NULL,
+    CONSTRAINT [PK_dbo.UzimaOrder] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.UzimaInventory_dbo.AspNetUser_UserId] FOREIGN KEY ([LastModifiedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.UzimaOrder_dbo.UzimaDrugBrand_BarcodeId] FOREIGN KEY ([DrugId]) REFERENCES [dbo].[UzimaDrug] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.UzimaOrder_dbo.UzimaStatus_StatusId] FOREIGN KEY ([StatusId]) REFERENCES [dbo].[UzimaStatus] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.UzimaOrder_dbo.UzimaLocation_CurrentLocationId] FOREIGN KEY ([CurrentLocationId]) REFERENCES [dbo].[UzimaLocation] ([Id]) ON DELETE NO ACTION, --may cause cycles or multiple paths
+    CONSTRAINT [FK_dbo.UzimaOrder_dbo.UzimaLocation_FutureLocationId] FOREIGN KEY ([FutureLocationId]) REFERENCES [dbo].[UzimaLocation] ([Id]) ON DELETE NO ACTION --may cause cycles or multiple paths
 );
-
-
-
-
