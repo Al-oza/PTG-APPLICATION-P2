@@ -2,19 +2,12 @@
     ViewBag.Title = "Administration";
 }
 
-<div class="navbar navbar-left nav-stacked">
-    <ul class="nav navbar-nav navbar-link">
-        <li>@Html.ActionLink("Add Account", "AddUser")</li>
-        <li>@Html.ActionLink("Account List", "SelectUser")</li>
-    </ul>
-</div>
-
-<br />
-<br />
-<div class="panel-info" style="clear: both;">
-    <h3>Administration User Guide</h3>
-    <br>
-    <p><em><b>Add an Account:</b> Enter new user information</em></p>
-    <br>
-    <p><em><b>Account List:</b> See a list of all system users. Gives the option to modify user information, view user details, and remove a user. </em></p>
-</div>
+    <div class="panel-info" style="clear: both;">
+        <h3>Administration User Guide</h3>
+        <br>
+        <p><b>@Html.ActionLink("Add Account", "AddUser")</b></p>
+        <p style="margin-left:4em;"> Enter new user information.</p>
+        <br>
+        <p><b>@Html.ActionLink("Account List", "SelectUser")</b></p>
+        <p style="margin-left:4em;"> See a list of all system users. Gives the option to modify user information, view user details, and remove a user.</p>
+    </div>

@@ -3,31 +3,27 @@
 }
 
 
-<div class="navbar navbar-left nav-stacked">
-    <ul class="nav navbar-nav navbar-link">
-        <li><a href="~/Pharmacy/AddInventory">Add Inventory</a></li>
-        <li><a href="~/Pharmacy/SelectInventory">Modify Inventory</a></li>
-        @if (User.IsInRole("PharmaAdmin"))
-        {
-            <li><a href="~/Pharmacy/AddtoDrugList">Add Drug to Drug List</a></li>
-            <li><a href="~/Pharmacy/SelectDrug">Remove Drug from Drug List</a></li>
-        }
-    </ul>
-</div>
-
-<br />
-<br />
 <div class="panel-info" style="clear: both;">
     <h3>Inventory User Guide</h3>
     <br>
-    <p><em><b>Add Inventory:</b> Input new inventory that will be on shelf in warehouse with the ability for hospitals and clinics to order.</em></p>
+    @if (User.IsInRole("PharmaAdmin"))
+    {
+        <p><b><a href="~/Pharmacy/AddInventory">Add Inventory</a></b></p>
+        <p style="margin-left:4em;">Input new inventory that will be on shelf in warehouse with the ability for hospitals and clinics to order.</p>
+        <br>
+    }
+    <p><b><a href="~/Pharmacy/SelectInventory">Modify Inventory</a></b></p>
+    <p style="margin-left:4em;">Allows for changes to inventory table.</p>
     <br>
-    <p><em><b>Modify Inventory:</b> Allows for changes to inventory table.</em></p>
-    <br>
-    <p><em><b>Add Drug to Drug List:</b> Add new drugs that become avaible over time. </em></p>
-    <br>
-    <p><em><b>Remove Drug from Drug List:</b> Delete drugs if no longer offered.</em></p>
-    <br>
+    @if (User.IsInRole("PharmaAdmin"))
+    {
+        <p><b><a href="~/Pharmacy/AddtoDrugList">Add Drug to Drug List</a></b> </p>
+        <p style="margin-left:4em;">Add new drugs that become avaible over time. </p>
+        <br>
+        <p><b><a href="~/Pharmacy/SelectDrug">Remove Drug from Drug List</a></b> </p>
+        <p style="margin-left:4em;">Delete drugs if no longer offered.</p>
+        <br>
+    }
 </div>
 
 
