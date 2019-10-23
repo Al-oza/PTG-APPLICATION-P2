@@ -94,7 +94,7 @@ GO
 CREATE TABLE [dbo].[PharmacyDrug] (
     [Id]   INT   NOT NULL,
     [Barcode]  NVARCHAR (256) NULL,
-    [Name]  NVARCHAR (256)  NOT NULL,
+    [DrugName]  NVARCHAR (256)  NOT NULL,
 	[BrandName]   NVARCHAR (256)  NULL,
 	[ApplicationNumber] NVARCHAR (256) NULL,
 	[Manufacturer] NVARCHAR(256)   NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[PharmacyBatch] (
 GO
 CREATE TABLE [dbo].[PharmacyLocation] (
     [Id]   INT   NOT NULL,
-    [Name]  NVARCHAR (256)  NOT NULL,
+    [LocationName]  NVARCHAR (256)  NOT NULL,
     [Address]  NVARCHAR (256)  NOT NULL,
     [Phone]  NVARCHAR (256)  NOT NULL,
     CONSTRAINT [PK_dbo.PharmacySupplier] PRIMARY KEY CLUSTERED ([Id] ASC)

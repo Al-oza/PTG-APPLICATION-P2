@@ -40,7 +40,7 @@ namespace PTGApplication.Controllers
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
                 }
 
                 var statuses = uzima.PharmacyStatus.ToList();
@@ -261,7 +261,7 @@ namespace PTGApplication.Controllers
                     {
                         Id = cs.PharmacyDrugs.Count() + 1,
                         Barcode = model.Barcode,
-                        Name = model.Name,
+                        DrugName = model.DrugName,
                         BrandName = model.BrandName,
                         ApplicationNumber = model.ApplicationNumber,
                         Manufacturer = model.Manufacturer,
@@ -347,7 +347,7 @@ namespace PTGApplication.Controllers
                 else
                 {
                     model = (from drug in uzima.PharmacyDrugs
-                             where drug.Name.Contains(searchString)
+                             where drug.DrugName.Contains(searchString)
                              select drug).ToList();
                 }
 

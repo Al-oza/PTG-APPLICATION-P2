@@ -26,7 +26,7 @@ namespace PTGApplication.Controllers
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
                 }
 
                 return View();
@@ -45,7 +45,7 @@ namespace PTGApplication.Controllers
                     {
 
                         Id = cs.PharmacyLocations.Count(),
-                        Name = model.Name,
+                        LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };
@@ -86,7 +86,7 @@ namespace PTGApplication.Controllers
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
                 }
 
                 return View();
@@ -105,7 +105,7 @@ namespace PTGApplication.Controllers
                     {
 
                         Id = cs.PharmacyLocations.Count(),
-                        Name = model.Name,
+                        LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };
@@ -151,7 +151,7 @@ namespace PTGApplication.Controllers
                     {
 
                         Id = cs.PharmacyLocations.Count(),
-                        Name = model.Name,
+                        LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
                     };

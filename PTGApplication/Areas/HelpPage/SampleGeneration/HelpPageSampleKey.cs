@@ -47,8 +47,8 @@ namespace PTGApplication.Areas.HelpPage
         /// Creates a new <see cref="HelpPageSampleKey"/> based on <see cref="SampleDirection"/>, controller name, action name and parameter names.
         /// </summary>
         /// <param name="sampleDirection">The <see cref="SampleDirection"/>.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public HelpPageSampleKey(SampleDirection sampleDirection, string controllerName, string actionName, IEnumerable<string> parameterNames)
         {
@@ -80,8 +80,8 @@ namespace PTGApplication.Areas.HelpPage
         /// </summary>
         /// <param name="mediaType">The media type.</param>
         /// <param name="sampleDirection">The <see cref="SampleDirection"/>.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public HelpPageSampleKey(MediaTypeHeaderValue mediaType, SampleDirection sampleDirection, string controllerName, string actionName, IEnumerable<string> parameterNames)
             : this(sampleDirection, controllerName, actionName, parameterNames)

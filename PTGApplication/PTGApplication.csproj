@@ -276,6 +276,7 @@
     <Compile Include="Models\PharmacyStatu.cs">
       <DependentUpon>UzimaRx.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportHelper.cs" />
     <Compile Include="Models\UzimaRx.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -465,6 +466,7 @@
     <Content Include="Views\Administration\Remove.cshtml" />
     <Content Include="Views\Administration\Details.cshtml" />
     <Content Include="Views\Administration\Modify.cshtml" />
+    <Content Include="Views\Report\PendingOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

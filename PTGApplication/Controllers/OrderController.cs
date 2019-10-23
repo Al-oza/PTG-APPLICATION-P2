@@ -43,7 +43,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
             }
 
@@ -53,11 +53,11 @@ namespace PTGApplication.Controllers
             {
                 var userhomelocation =
                    (from location in locations
-                    join user in users on location.Name equals user.HomePharmacy
+                    join user in users on location.LocationName equals user.HomePharmacy
                     where user.Username == User.Identity.Name
                     select location);
 
-                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "DrugName");
             }
             return View();
         }
@@ -145,7 +145,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -163,7 +163,7 @@ namespace PTGApplication.Controllers
                      where type.Supplier != null
                      select location);
 
-                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "Name");
+                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "DrugName");
             }
             return View();
         }
@@ -250,7 +250,7 @@ namespace PTGApplication.Controllers
 
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
                     
@@ -258,12 +258,12 @@ namespace PTGApplication.Controllers
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
                      join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where drug.Id == inventory.DrugId && inventory.StatusId == 2 && inventory.FutureLocationId == userhomelocation
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0) { 
 
@@ -276,11 +276,11 @@ namespace PTGApplication.Controllers
             {
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "DrugName");
             }
             return View();
         }
@@ -301,7 +301,7 @@ namespace PTGApplication.Controllers
 
                     var userhomelocation =
                     (from location in uzima.PharmacyLocations
-                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
 
@@ -375,7 +375,7 @@ namespace PTGApplication.Controllers
 
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
 
@@ -383,12 +383,12 @@ namespace PTGApplication.Controllers
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
                      join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -402,11 +402,11 @@ namespace PTGApplication.Controllers
             {
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "DrugName");
             }
             return View();
         }
@@ -427,7 +427,7 @@ namespace PTGApplication.Controllers
 
                     var userhomelocation =
                     (from location in uzima.PharmacyLocations
-                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
 
@@ -501,7 +501,7 @@ namespace PTGApplication.Controllers
 
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
 
@@ -509,12 +509,12 @@ namespace PTGApplication.Controllers
                     (from drug in drugs
                      join inventory in inventories on drug.Id equals inventory.DrugId
                      join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -528,11 +528,11 @@ namespace PTGApplication.Controllers
             {
                 var userhomelocation =
                     (from location in locations
-                     join user in users on location.Name equals user.HomePharmacy
+                     join user in users on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "DrugName");
             }
             return View();
         }
@@ -553,7 +553,7 @@ namespace PTGApplication.Controllers
 
                     var userhomelocation =
                     (from location in uzima.PharmacyLocations
-                     join user in uzima.AspNetUsers on location.Name equals user.HomePharmacy
+                     join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
 

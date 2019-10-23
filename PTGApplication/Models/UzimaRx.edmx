@@ -92,7 +92,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Barcode" Type="nvarchar" MaxLength="256" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="DrugName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="BrandName" Type="nvarchar" MaxLength="256" />
           <Property Name="ApplicationNumber" Type="nvarchar" MaxLength="256" />
           <Property Name="Manufacturer" Type="nvarchar" MaxLength="256" Nullable="false" />
@@ -121,7 +121,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
@@ -497,7 +497,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Barcode" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DrugName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BrandName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="ApplicationNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Manufacturer" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
@@ -533,7 +533,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="PharmacyBatchLocations" Relationship="Self.FK_dbo_PharmacyBatchLocation_dbo_PharmacyLocation_LocationId" FromRole="PharmacyLocation" ToRole="PharmacyBatchLocation" />
@@ -881,7 +881,7 @@
               <MappingFragment StoreEntitySet="PharmacyDrug">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DrugName" ColumnName="DrugName" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="ApplicationNumber" ColumnName="ApplicationNumber" />
                 <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
@@ -912,7 +912,7 @@
             <EntityTypeMapping TypeName="UzimaRxModel.PharmacyLocation">
               <MappingFragment StoreEntitySet="PharmacyLocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>

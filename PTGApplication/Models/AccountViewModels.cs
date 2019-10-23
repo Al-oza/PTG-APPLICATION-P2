@@ -88,7 +88,7 @@ namespace PTGApplication.Models
         public string Username { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "DrugName")]
         public string Name { get; set; }
 
         [Required]

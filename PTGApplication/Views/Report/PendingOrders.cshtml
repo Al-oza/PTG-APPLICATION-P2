@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Pending Orders";
+}
+
+<h2>Pending Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>Drug Name</th>
+        <th>Ordered On</th>
+        <th>Ordered By</th>
+        <th>Going To</th>
+        <th>Expiring On</th>
+    </tr>
+
+@foreach (var item in ViewBag.DrugNames as IEnumerable<string>) {
+    <tr>
+        <td>
+            @item
+        </td>
+    </tr>
+}
+
+</table>

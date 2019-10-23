@@ -46,8 +46,8 @@ namespace PTGApplication.Areas.HelpPage
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="sample">The sample request.</param>
         /// <param name="mediaType">The media type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         public static void SetSampleRequest(this HttpConfiguration config, object sample, MediaTypeHeaderValue mediaType, string controllerName, string actionName)
         {
             config.GetHelpPageSampleGenerator().ActionSamples.Add(new HelpPageSampleKey(mediaType, SampleDirection.Request, controllerName, actionName, new[] { "*" }), sample);
@@ -59,8 +59,8 @@ namespace PTGApplication.Areas.HelpPage
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="sample">The sample request.</param>
         /// <param name="mediaType">The media type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public static void SetSampleRequest(this HttpConfiguration config, object sample, MediaTypeHeaderValue mediaType, string controllerName, string actionName, params string[] parameterNames)
         {
@@ -73,8 +73,8 @@ namespace PTGApplication.Areas.HelpPage
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="sample">The sample response.</param>
         /// <param name="mediaType">The media type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         public static void SetSampleResponse(this HttpConfiguration config, object sample, MediaTypeHeaderValue mediaType, string controllerName, string actionName)
         {
             config.GetHelpPageSampleGenerator().ActionSamples.Add(new HelpPageSampleKey(mediaType, SampleDirection.Response, controllerName, actionName, new[] { "*" }), sample);
@@ -86,8 +86,8 @@ namespace PTGApplication.Areas.HelpPage
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="sample">The sample response.</param>
         /// <param name="mediaType">The media type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public static void SetSampleResponse(this HttpConfiguration config, object sample, MediaTypeHeaderValue mediaType, string controllerName, string actionName, params string[] parameterNames)
         {
@@ -123,8 +123,8 @@ namespace PTGApplication.Areas.HelpPage
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         public static void SetActualRequestType(this HttpConfiguration config, Type type, string controllerName, string actionName)
         {
             config.GetHelpPageSampleGenerator().ActualHttpMessageTypes.Add(new HelpPageSampleKey(SampleDirection.Request, controllerName, actionName, new[] { "*" }), type);
@@ -136,8 +136,8 @@ namespace PTGApplication.Areas.HelpPage
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public static void SetActualRequestType(this HttpConfiguration config, Type type, string controllerName, string actionName, params string[] parameterNames)
         {
@@ -150,8 +150,8 @@ namespace PTGApplication.Areas.HelpPage
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         public static void SetActualResponseType(this HttpConfiguration config, Type type, string controllerName, string actionName)
         {
             config.GetHelpPageSampleGenerator().ActualHttpMessageTypes.Add(new HelpPageSampleKey(SampleDirection.Response, controllerName, actionName, new[] { "*" }), type);
@@ -163,8 +163,8 @@ namespace PTGApplication.Areas.HelpPage
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
-        /// <param name="controllerName">Name of the controller.</param>
-        /// <param name="actionName">Name of the action.</param>
+        /// <param name="controllerName">DrugName of the controller.</param>
+        /// <param name="actionName">DrugName of the action.</param>
         /// <param name="parameterNames">The parameter names.</param>
         public static void SetActualResponseType(this HttpConfiguration config, Type type, string controllerName, string actionName, params string[] parameterNames)
         {
