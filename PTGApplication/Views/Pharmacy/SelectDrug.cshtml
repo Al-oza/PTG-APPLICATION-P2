@@ -1,5 +1,4 @@
-﻿@model IEnumerable<PTGApplication.Models.PharmacyDrug>
-
+﻿@model IEnumerable<PTGApplication.Models.UzimaDrug>
 @{
     ViewBag.Title = "Remove Drug";
 }
@@ -51,7 +50,7 @@
                     @Html.DisplayFor(modelItem => item.Barcode)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.DrugName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BrandName)

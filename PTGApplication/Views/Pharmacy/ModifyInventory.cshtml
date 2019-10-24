@@ -1,5 +1,4 @@
-﻿@model PTGApplication.Models.PharmacyInventory
-
+﻿@model PTGApplication.Models.UzimaInventory
 @{
     ViewBag.Title = "Modify Inventory";
 }
@@ -13,21 +12,20 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.DrugId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DrugId, new SelectList(ViewBag.drugs, "Id", "Name"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.DrugId, new SelectList(ViewBag.drugs, "Id", "DrugName"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DrugId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "User", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.LastModifiedBy, "User", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.UserId, new SelectList(ViewBag.users, "Id", "Username"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.LastModifiedBy, new SelectList(ViewBag.users, "Id", "Username"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LastModifiedBy, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -42,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CurrentLocationId, "CurrentLocationId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CurrentLocationId, new SelectList(ViewBag.locations, "Id", "Name"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CurrentLocationId, new SelectList(ViewBag.locations, "Id", "LocationName"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CurrentLocationId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +48,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FutureLocationId, "FutureLocationId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.FutureLocationId, new SelectList(ViewBag.locations, "Id", "Name"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.FutureLocationId, new SelectList(ViewBag.locations, "Id", "LocationName"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FutureLocationId, "", new { @class = "text-danger" })
             </div>
         </div>

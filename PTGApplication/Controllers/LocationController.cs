@@ -26,7 +26,7 @@ namespace PTGApplication.Controllers
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "LocationName");
                 }
 
                 return View();
@@ -86,7 +86,7 @@ namespace PTGApplication.Controllers
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "Name");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "LocationName");
                 }
 
                 return View();

@@ -26,24 +26,24 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var drugs = uzima.PharmacyDrugs.ToList();
+                var drugs = uzima.UzimaDrugs.ToList();
                 if (!(drugs is null))
                 {
                     ViewBag.drugs = drugs;
                 }
 
                 var suppliers =
-                    (from location in uzima.PharmacyLocations
-                     join type in uzima.PharmacyLocationTypes on location.Id equals type.LocationId
+                    (from location in uzima.UzimaLocations
+                     join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
                      where type.Supplier == null
                      select location).ToList();
 
                 if (!(suppliers is null))
                 {
-                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "DrugName");
+                    ViewBag.Suppliers = new SelectList(suppliers, "Id", "LocationName");
                 }
 
-                var statuses = uzima.PharmacyStatus.ToList();
+                var statuses = uzima.UzimaStatus.ToList();
                 if (!(statuses is null))
                 {
                     ViewBag.Statuses = new SelectList(statuses, "Id", "Status");
@@ -55,7 +55,7 @@ namespace PTGApplication.Controllers
 
         // POST: Pharmacy/AddInventory
         [HttpPost]
-        public async Task<ActionResult> AddInventory(string txtQuantity, PharmacyInventory model)
+        public async Task<ActionResult> AddInventory(string txtQuantity, UzimaInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -64,22 +64,22 @@ namespace PTGApplication.Controllers
 
                 try
                 {
-                    var inventory = new PharmacyInventory()
+                    var inventory = new UzimaInventory()
                     {
                         DrugId = model.DrugId,
                         CurrentLocationId = model.CurrentLocationId,
                         DateOrdered = model.DateOrdered,
                         ExpirationDate = model.ExpirationDate,
                         FutureLocationId = null,
-                        Id = uzima.PharmacyInventories.Count(),
+                        Id = uzima.UzimaInventories.Count(),
                         StatusId = model.StatusId,
-                        UserId = user.Id
+                        LastModifiedBy = user.Id
                     };
 
 
                     for (int i = 0; i < Convert.ToInt32(txtQuantity); i++)
                     {
-                        uzima.PharmacyInventories.Add(inventory);
+                        uzima.UzimaInventories.Add(inventory);
                         inventory.Id++;
                         await uzima.SaveChangesAsync();
                     }
@@ -109,7 +109,7 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var drugs = uzima.PharmacyDrugs.ToList();
+                var drugs = uzima.UzimaDrugs.ToList();
                 if (!(drugs is null))
                 {
                     ViewBag.drugs = drugs;
@@ -121,19 +121,19 @@ namespace PTGApplication.Controllers
                     ViewBag.users = users;
                 }
 
-                var statuses = uzima.PharmacyStatus.ToList();
+                var statuses = uzima.UzimaStatus.ToList();
                 if (!(statuses is null))
                 {
                     ViewBag.statuses = statuses;
                 }
 
-                var locations = uzima.PharmacyLocations.ToList();
+                var locations = uzima.UzimaLocations.ToList();
                 if (!(locations is null))
                 {
                     ViewBag.locations = locations;
                 }
 
-                DateTime? orderDate = (from inventory in uzima.PharmacyInventories
+                DateTime? orderDate = (from inventory in uzima.UzimaInventories
                                  where inventory.Id == id
                                  select inventory.DateOrdered).SingleOrDefault();
                 if (!(orderDate is null))
@@ -141,7 +141,7 @@ namespace PTGApplication.Controllers
                     ViewBag.orderDate = orderDate;
                 }
 
-                DateTime? expirationDate = (from inventory in uzima.PharmacyInventories
+                DateTime? expirationDate = (from inventory in uzima.UzimaInventories
                                       where inventory.Id == id
                                       select inventory.ExpirationDate).SingleOrDefault();
                 if (!(expirationDate is null))
@@ -149,23 +149,23 @@ namespace PTGApplication.Controllers
                     ViewBag.expirationDate = expirationDate;
                 }
 
-                return View(uzima.PharmacyInventories.SingleOrDefault(model => model.Id == id));
+                return View(uzima.UzimaInventories.SingleOrDefault(model => model.Id == id));
             }
         }
 
         // POST: Pharmacy/ModifyInventory
         [HttpPost]
-        public async Task<ActionResult> ModifyInventory(PharmacyInventory model)
+        public async Task<ActionResult> ModifyInventory(UzimaInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
-                    uzima.PharmacyInventories.Remove(
-                        (from inventory in uzima.PharmacyInventories
+                    uzima.UzimaInventories.Remove(
+                        (from inventory in uzima.UzimaInventories
                          where inventory.Id == model.Id
                          select inventory).SingleOrDefault());
-                    uzima.PharmacyInventories.Add(model);
+                    uzima.UzimaInventories.Add(model);
 
                     await uzima.SaveChangesAsync();
                     ViewBag.successMessage = "Inventory Modified";
@@ -193,22 +193,22 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                return View(uzima.PharmacyInventories.SingleOrDefault(inv => inv.Id == id));
+                return View(uzima.UzimaInventories.SingleOrDefault(inv => inv.Id == id));
             }
         }
 
         // POST: Pharmacy/RemoveInventory
         [HttpPost]
-        public async Task<ActionResult> RemoveInventory(int id, PharmacyInventory model)
+        public async Task<ActionResult> RemoveInventory(int id, UzimaInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
-                    var inventory = (from inv in uzima.PharmacyInventories
+                    var inventory = (from inv in uzima.UzimaInventories
                                      where inv.Id == id
                                      select inv).SingleOrDefault();
-                    uzima.PharmacyInventories.Remove(inventory);
+                    uzima.UzimaInventories.Remove(inventory);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -234,14 +234,14 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var locations = uzima.PharmacyLocations.ToList();
+                var locations = uzima.UzimaLocations.ToList();
 
                 if (!(locations is null))
                 {
                     ViewBag.locations = locations;
                 }
 
-                return View(uzima.PharmacyInventories.ToList());
+                return View(uzima.UzimaInventories.ToList());
             }
         }
 
@@ -251,15 +251,15 @@ namespace PTGApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddtoDrugList(PharmacyDrug model)
+        public ActionResult AddtoDrugList(UzimaDrug model)
         {
             using (var cs = new UzimaRxEntities())
             {
                 try
                 {
-                    cs.PharmacyDrugs.Add(new PharmacyDrug()
+                    cs.UzimaDrugs.Add(new UzimaDrug()
                     {
-                        Id = cs.PharmacyDrugs.Count() + 1,
+                        Id = cs.UzimaDrugs.Count() + 1,
                         Barcode = model.Barcode,
                         DrugName = model.DrugName,
                         BrandName = model.BrandName,
@@ -296,22 +296,22 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                return View(uzima.PharmacyDrugs.SingleOrDefault(inv => inv.Id == id));
+                return View(uzima.UzimaDrugs.SingleOrDefault(inv => inv.Id == id));
             }
         }
 
         // POST: Pharmacy/RemoveDrug
         [HttpPost]
-        public async Task<ActionResult> RemoveDrugFromList(int id, PharmacyDrug model)
+        public async Task<ActionResult> RemoveDrugFromList(int id, UzimaDrug model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
-                    var drug = (from dr in uzima.PharmacyDrugs
+                    var drug = (from dr in uzima.UzimaDrugs
                                 where dr.Id == id
                                 select dr).SingleOrDefault();
-                    uzima.PharmacyDrugs.Remove(drug);
+                    uzima.UzimaDrugs.Remove(drug);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -338,15 +338,15 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var model = new List<PharmacyDrug>();
+                var model = new List<UzimaDrug>();
 
                 if (searchString is null)
                 {
-                    model = uzima.PharmacyDrugs.ToList();
+                    model = uzima.UzimaDrugs.ToList();
                 }
                 else
                 {
-                    model = (from drug in uzima.PharmacyDrugs
+                    model = (from drug in uzima.UzimaDrugs
                              where drug.DrugName.Contains(searchString)
                              select drug).ToList();
                 }
