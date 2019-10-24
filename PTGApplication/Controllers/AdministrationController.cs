@@ -54,12 +54,12 @@ namespace PTGApplication.Controllers
 
                 if (!(locations is null))
                 {
-                    ViewBag.Locations = new SelectList(locations, "DrugName", "DrugName");
+                    ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName");
                 }
 
                 if (!(roles is null))
                 {
-                    ViewBag.Roles = new SelectList(roles, "DrugName", "DrugName");
+                    ViewBag.Roles = new SelectList(roles, "Name", "Name");
                 }
 
                 return View();
@@ -152,7 +152,7 @@ namespace PTGApplication.Controllers
               
                 if (!(locations is null))
                 {
-                    ViewBag.Locations = new SelectList(locations, "DrugName", "DrugName");
+                    ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName");
                 }
 
                 return View((from user in uzima.AspNetUsers
