@@ -43,7 +43,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
             }
 
@@ -57,7 +57,7 @@ namespace PTGApplication.Controllers
                     where user.Username == User.Identity.Name
                     select location);
 
-                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
             }
             return View();
         }
@@ -145,7 +145,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -163,7 +163,7 @@ namespace PTGApplication.Controllers
                      where type.Supplier != null
                      select location);
 
-                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "Name");
+                ViewBag.LocationNeeded = new SelectList(clinics, "Id", "LocationName");
             }
             return View();
         }
@@ -263,7 +263,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -281,7 +281,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "LocationName");
             }
             return View();
         }
@@ -389,7 +389,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -407,7 +407,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "LocationName");
             }
             return View();
         }
@@ -515,7 +515,7 @@ namespace PTGApplication.Controllers
                      select drug
                      );
 
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "Name");
+                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
 
                 if (inventorydrugs.Count() == 0)
                 {
@@ -533,7 +533,7 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location);
 
-                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "Name");
+                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "LocationName");
             }
             return View();
         }
