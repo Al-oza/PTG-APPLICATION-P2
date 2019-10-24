@@ -353,8 +353,8 @@ namespace PTGApplication.Controllers
             return RedirectToAction("RecieveOrder");
         }
 
-        // GET: Order/DispenseDrug
-        public ActionResult DispenseDrug()
+        // GET: Order/DispenseItem
+        public ActionResult DispenseItem()
         {
             IEnumerable<UzimaDrug> drugs;
             IEnumerable<UzimaLocation> locations;
@@ -394,7 +394,7 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.Message = "You have no drugs in inventory to dispense. (Please input drug as recieved before dispensing.)";
+                    ViewBag.Message = "You have no items in inventory to dispense. (Please input item as recieved before dispensing.)";
                     return View("Info");
                 }
             }
@@ -413,9 +413,9 @@ namespace PTGApplication.Controllers
         }
 
 
-        // POST: Order/DispenseDrug
+        // POST: Order/DispenseItem
         [HttpPost]
-        public async Task<ActionResult> DispenseDrug(String txtQty, UzimaInventory model)
+        public async Task<ActionResult> DispenseItem(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -475,12 +475,12 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("DispenseDrug");
+            return RedirectToAction("DispenseItem");
         }
 
 
-        // GET: Order/DestroyDrug
-        public ActionResult DestroyDrug()
+        // GET: Order/DestroyItem
+        public ActionResult DestroyItem()
         {
             IEnumerable<UzimaDrug> drugs;
             IEnumerable<UzimaLocation> locations;
@@ -520,7 +520,7 @@ namespace PTGApplication.Controllers
                 if (inventorydrugs.Count() == 0)
                 {
 
-                    ViewBag.Message = "You have no drugs in inventory to destroy. (If drugs were destroyed in transit, please input as recieved and then destroy.)";
+                    ViewBag.Message = "You have no items in inventory to destroy. (If items were destroyed in transit, please input as recieved and then destroy.)";
                     return View("Info");
                 }
             }
@@ -541,7 +541,7 @@ namespace PTGApplication.Controllers
 
         // POST: Order/DestroyOrder
         [HttpPost]
-        public async Task<ActionResult> DestroyDrug(String txtQty, UzimaInventory model)
+        public async Task<ActionResult> DestroyItem(String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -601,7 +601,7 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("DestroyDrug");
+            return RedirectToAction("DestroyItem");
         }
 
     }
