@@ -5,12 +5,30 @@
 <h2>Pending Orders</h2>
 
 <table class="table">
-    <tr>
+    <!--tr>
         <th>Drug Name</th>
         <th>Ordered On</th>
         <th>Ordered By</th>
         <th>Going To</th>
         <th>Expiring On</th>
+    </!--tr-->
+
+    <tr>
+        @foreach (var column in ViewBag.Columns)
+        {
+            <th>@column</th>
+        }
     </tr>
+    @foreach (var row in ViewBag.Data)
+    {
+        <tr>
+            @foreach (var column in row.ItemArray)
+            {
+                <td>@column</td>
+            }
+        </tr>
+    }
+
+
 
 </table>

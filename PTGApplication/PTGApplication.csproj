@@ -307,6 +307,7 @@
       <DependentUpon>UserRoles.resx</DependentUpon>
     </Compile>
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Providers\ConnectionPool.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
