@@ -5,3 +5,21 @@
 
 <h2>Inventory by Location</h2>
 
+<table class="table">
+    <tr>
+        @foreach (var column in ViewBag.Columns)
+        {
+            <th>@column</th>
+        }
+    </tr>
+    @foreach (var row in ViewBag.Data)
+    {
+        <tr>
+            @foreach (var column in row.ItemArray)
+            {
+                <td>@column</td>
+            }
+        </tr>
+    }
+
+</table>

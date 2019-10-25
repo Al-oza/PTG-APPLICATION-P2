@@ -22,7 +22,7 @@ namespace PTGApplication.Controllers
             {
                 ViewBag.Columns = dataSet.Tables[0].Columns;
                 ViewBag.Data = dataSet.Tables[0].Rows;
-                
+
                 return View();
             }
         }
@@ -33,7 +33,32 @@ namespace PTGApplication.Controllers
 
         public ActionResult Inventory()
         {
-            return View();
+            using (var uzima = new UzimaRxEntities())
+            {
+                var userId =
+                    (from user in uzima.AspNetUsers
+                     join location in uzima.UzimaLocations on user.HomePharmacy equals location.LocationName
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+                string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    "Select DrugName as 'Drug Name', Count(DrugId) as 'Quantity', " +
+                    "LocationName as 'Location Name', ExpirationDate as 'Expiration Date' " +
+                    "From UzimaDrug Join UzimaInventory on UzimaDrug.Id = DrugId Join " +
+                    "UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id Group by " +
+                    "LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate" :
+                    $"Select DrugName as 'Drug Name', Count(DrugId) as 'Quantity', " +
+                    $"LocationName as 'Location Name', ExpirationDate as 'Expiration Date' " +
+                    $"From UzimaDrug Join UzimaInventory on UzimaDrug.Id = DrugId Join " +
+                    $"UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id WHERE CurrentLocationId=" +
+                    $"{userId} Group by LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+
+                    return View();
+                }
+            }
         }
     }
 }

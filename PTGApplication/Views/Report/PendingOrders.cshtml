@@ -5,15 +5,7 @@
 <h2>Pending Orders</h2>
 
 <table class="table">
-    <!--tr>
-        <th>Drug Name</th>
-        <th>Ordered On</th>
-        <th>Ordered By</th>
-        <th>Going To</th>
-        <th>Expiring On</th>
-    </!--tr-->
-
-    <tr>
+     <tr>
         @foreach (var column in ViewBag.Columns)
         {
             <th>@column</th>
@@ -28,7 +20,5 @@
             }
         </tr>
     }
-
-
 
 </table>
