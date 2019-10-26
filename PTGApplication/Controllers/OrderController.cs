@@ -51,7 +51,9 @@ namespace PTGApplication.Controllers
 
             if (!(locations is null) && !(locationTypes is null))
             {
-                var userhomelocation =
+
+                var userhomelocation = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    (from location in locations select location) :
                    (from location in locations
                     join user in users on location.LocationName equals user.HomePharmacy
                     where user.Username == User.Identity.Name
