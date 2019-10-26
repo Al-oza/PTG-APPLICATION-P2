@@ -25,7 +25,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Administration", "Index", "Administration", new { area = "" }, null)</li>
+                    @if (User.IsInRole("PharmaAdmin"))
+                    {<li>@Html.ActionLink("Administration", "Index", "Administration", new { area = "" }, null)</li>}
                     <li>@Html.ActionLink("Order", "Index", "Order", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Inventory", "Index", "Inventory", new { area = "" }, null)</li>
 
