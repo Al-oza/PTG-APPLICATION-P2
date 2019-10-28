@@ -26,12 +26,12 @@ Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more information :maple_l
 No form of versioning is currently enforced or agreed upon by the team, but it should probably be [SemVer](http://semver.org) or something similar. :man_shrugging: :woman_shrugging:
 
 # Authors
-* :construction_worker: Sooyoun Chung - :construction: TBD :construction: - [sooyoun0594](https://github.com/sooyoun0594)
-* :construction_worker: Carli Strathman - :construction: TBD :construction: - [cstrathman](https://github.com/cstrathman)
-* :construction_worker: Nicholas Gorden - :construction: TBD :construction: - [ngorden](https://github.com/ngorden)
-* :construction_worker: Ryan Gallardo - :construction: TBD :construction: - [r-gallardo](https://github.com/r-gallado)
-* :construction_worker: Eric Kozokar - :construction: TBD :construction: - [ekozokar](https://github.com/ekozokar)
-* :construction_worker: Fan Wu - :construction: TBD :construction:   - [wufan9702](https://github.com/wufan9702)
+* :construction_worker: Carli Strathman - :construction: Frontend/Backend :construction: - [cstrathman](https://github.com/cstrathman)
+* :construction_worker: Sooyoun Chung - :construction: Documentation :construction: - [sooyoun0594](https://github.com/sooyoun0594)
+* :construction_worker: Nicholas Gorden - :construction: Frontend/Backend :construction: - [ngorden](https://github.com/ngorden)
+* :construction_worker: Ryan Gallardo - :construction: Documentation :construction: - [r-gallardo](https://github.com/r-gallado)
+* :construction_worker: Eric Kozokar - :construction: Database :construction: - [ekozokar](https://github.com/ekozokar)
+* :construction_worker: Fan Wu - :construction: Database :construction:   - [wufan9702](https://github.com/wufan9702)
 
 # License 
 Uzima ℞ is not currently protected under any software licenses :flushed:
