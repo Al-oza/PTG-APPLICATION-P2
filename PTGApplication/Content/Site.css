@@ -28,6 +28,9 @@ textarea {
     padding-top: 20px;
 }
 
+.control-label{
+    font-size: 14px;
+}
 @media only screen and (max-width: 767px) {
     .nofloat {
         float: none;
