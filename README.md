@@ -27,8 +27,8 @@ No form of versioning is currently enforced or agreed upon by the team, but it s
 
 # Authors
 * :construction_worker: Carli Strathman - :construction: Frontend/Backend :construction: - [cstrathman](https://github.com/cstrathman)
-* :construction_worker: Sooyoun Chung - :construction: Documentation :construction: - [sooyoun0594](https://github.com/sooyoun0594)
 * :construction_worker: Nicholas Gorden - :construction: Frontend/Backend :construction: - [ngorden](https://github.com/ngorden)
+* :construction_worker: Sooyoun Chung - :construction: Documentation :construction: - [sooyoun0594](https://github.com/sooyoun0594)
 * :construction_worker: Ryan Gallardo - :construction: Documentation :construction: - [r-gallardo](https://github.com/r-gallado)
 * :construction_worker: Eric Kozokar - :construction: Database :construction: - [ekozokar](https://github.com/ekozokar)
 * :construction_worker: Fan Wu - :construction: Database :construction:   - [wufan9702](https://github.com/wufan9702)
