@@ -47,16 +47,19 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
                 string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
-                    "Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expired On' " +
+                    "Select DrugName as 'Drug', Count(DrugId) as 'Quantity',LocationName as 'Current Location', ExpirationDate as 'Expired On' " +
                     "from UzimaInventory " +
                     "join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     "where ExpirationDate <= CURRENT_TIMESTAMP and StatusId IN(0, 1, 2)" +
+                    " Group by LocationName,ExpirationDate,DrugName " +
                     " ORDER BY  expirationDate ASC, DrugName, LocationName" :
-                    $"Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expired On' " +
+                    $"Select DrugName as 'Drug',Count(DrugId) as 'Quantity', LocationName as 'Current Location',ExpirationDate as 'Expired On' " +
                     $"from UzimaInventory " +
                     $"join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     $"where ExpirationDate <= CURRENT_TIMESTAMP and StatusId IN(0, 1, 2) and CurrentLocationId=" +
-                    $"{userId} ORDER BY  expirationDate ASC, DrugName, LocationName";
+                    $"{userId} " +
+                    " Group by LocationName,ExpirationDate,DrugName " +
+                    $"ORDER BY  expirationDate ASC, DrugName, LocationName";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
                 {
                     ViewBag.Columns = dataSet.Tables[0].Columns;
@@ -108,13 +111,13 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
                 string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
-                    "Select DrugName as 'Drug', LocationName as 'Current Location', Count(DrugId) as 'Quantity', ExpirationDate as 'Expiring On' " +
+                    "Select DrugName as 'Drug', Count(DrugId) as 'Quantity', LocationName as 'Current Location', ExpirationDate as 'Expiring On' " +
                     "from UzimaInventory " +
                     "join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     "where ExpirationDate <= dateadd(dd, 120, getdate()) and ExpirationDate > CURRENT_TIMESTAMP and StatusId IN(0, 1, 2)" +
                     " Group by LocationName,ExpirationDate,DrugName " +
                     "ORDER BY  expirationDate ASC, DrugName, LocationName" :
-                    $"Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expiring On' " +
+                    $"Select DrugName as 'Drug', Count(DrugId) as 'Quantity', LocationName as 'Current Location',ExpirationDate as 'Expiring On' " +
                     $"from UzimaInventory " +
                     $"join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     $"where ExpirationDate <= dateadd(dd, 120, getdate()) and ExpirationDate > CURRENT_TIMESTAMP and StatusId IN(0, 1, 2) and CurrentLocationId=" +
