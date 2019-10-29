@@ -47,15 +47,15 @@ namespace PTGApplication.Controllers
                      where user.Username == User.Identity.Name
                      select location.Id).SingleOrDefault();
                 string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
-                    "Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expiring On' " +
+                    "Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expired On' " +
                     "from UzimaInventory " +
                     "join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
-                    "where ExpirationDate <= dateadd(dd, 120, getdate()) and StatusId IN(0, 1, 2)" +
+                    "where ExpirationDate <= CURRENT_TIMESTAMP and StatusId IN(0, 1, 2)" +
                     " ORDER BY  expirationDate ASC, DrugName, LocationName" :
-                    $"Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expiring On' " +
+                    $"Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expired On' " +
                     $"from UzimaInventory " +
                     $"join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
-                    $"where ExpirationDate <= dateadd(dd, 120, getdate()) and StatusId IN(0, 1, 2) and CurrentLocationId=" +
+                    $"where ExpirationDate <= CURRENT_TIMESTAMP and StatusId IN(0, 1, 2) and CurrentLocationId=" +
                     $"{userId} ORDER BY  expirationDate ASC, DrugName, LocationName";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
                 {
@@ -87,6 +87,40 @@ namespace PTGApplication.Controllers
                     $"From UzimaDrug Join UzimaInventory on UzimaDrug.Id = DrugId Join " +
                     $"UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id WHERE CurrentLocationId=" +
                     $"{userId} Group by LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+
+                    return View();
+                }
+            }
+        }
+
+        public ActionResult ExpiringDrugs()
+
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                var userId =
+                    (from user in uzima.AspNetUsers
+                     join location in uzima.UzimaLocations on user.HomePharmacy equals location.LocationName
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+                string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    "Select DrugName as 'Drug', LocationName as 'Current Location', Count(DrugId) as 'Quantity', ExpirationDate as 'Expiring On' " +
+                    "from UzimaInventory " +
+                    "join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    "where ExpirationDate <= dateadd(dd, 120, getdate()) and ExpirationDate > CURRENT_TIMESTAMP and StatusId IN(0, 1, 2)" +
+                    " Group by LocationName,ExpirationDate,DrugName " +
+                    "ORDER BY  expirationDate ASC, DrugName, LocationName" :
+                    $"Select DrugName as 'Drug', LocationName as 'Current Location',ExpirationDate as 'Expiring On' " +
+                    $"from UzimaInventory " +
+                    $"join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    $"where ExpirationDate <= dateadd(dd, 120, getdate()) and ExpirationDate > CURRENT_TIMESTAMP and StatusId IN(0, 1, 2) and CurrentLocationId=" +
+                    $"{userId}" +
+                    $" Group by LocationName,ExpirationDate,DrugName" +
+                    " ORDER BY  expirationDate ASC, DrugName, LocationName";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
                 {
                     ViewBag.Columns = dataSet.Tables[0].Columns;
