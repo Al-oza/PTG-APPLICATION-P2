@@ -6,12 +6,14 @@
 <h2>Expiring Drugs</h2>
 
 <table id="tblExpired" class="table">
-    <tr>
-        @foreach (var column in ViewBag.Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
+    <thead>
+        <tr>
+            @foreach (var column in ViewBag.Columns)
+            {
+                <th>@column</th>
+            }
+        </tr>
+    </thead>
     @foreach (var row in ViewBag.Data)
     {
         <tr>
@@ -24,7 +26,7 @@
 
 </table>
 
-@using (Html.BeginForm("DownloadExpired", "Report", FormMethod.Post, new { id="export" }))
+@using (Html.BeginForm("DownloadExpired", "Report", FormMethod.Post, new { id = "export" }))
 {
     <input type="hidden" id="hiddenCsv" />
     <input type="submit" class="btn btn-primary" value="Download Report" />
@@ -32,6 +34,9 @@
 
 <script type="text/javascript" src="~/Scripts/csv.js"></script>
 <script type="text/javascript">
+    $(document).ready(() => {
+        $('#tblExpired').DataTable()
+    })
     $('#export').submit(() => {
         exportTableToCSV('ExpiredDrugs.xls')
     })

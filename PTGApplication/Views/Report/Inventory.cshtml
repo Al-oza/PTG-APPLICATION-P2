@@ -5,13 +5,15 @@
 
 <h2>Inventory by Location</h2>
 
-<table class="table">
-    <tr>
-        @foreach (var column in ViewBag.Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
+<table class="table table-striped table-bordered" id="tblInventory">
+    <thead>
+        <tr>
+            @foreach (var column in ViewBag.Columns)
+            {
+                <th>@column</th>
+            }
+        </tr>
+    </thead>
     @foreach (var row in ViewBag.Data)
     {
         <tr>
@@ -23,3 +25,9 @@
     }
 
 </table>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $('#tblInventory').DataTable()
+    })
+</script>

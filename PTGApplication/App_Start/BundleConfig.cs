@@ -11,7 +11,8 @@ namespace PTGApplication
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery.dataTables.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.unobtrusive*",
@@ -35,10 +36,12 @@ namespace PTGApplication
                 "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/dataTables.bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
+                 "~/Content/dataTables.bootstrap.css",
                  "~/Content/Site.css"));
         }
     }
