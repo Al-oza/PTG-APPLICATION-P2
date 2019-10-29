@@ -81,7 +81,7 @@ namespace PTGApplication.Controllers
                 var suppliers =
                     (from location in uzima.UzimaLocations
                      join types in uzima.UzimaLocationTypes on location.Id equals types.Id
-                     where types.Supplier == null
+                     where types.Supplier == null || types.LocationType == "hospital"
                      select location).ToList();
 
                 if (!(suppliers is null))
