@@ -133,5 +133,68 @@ namespace PTGApplication.Controllers
                 }
             }
         }
+
+        public ActionResult DispensedDrugs()
+
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                var userId =
+                    (from user in uzima.AspNetUsers
+                     join location in uzima.UzimaLocations on user.HomePharmacy equals location.LocationName
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+                string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    "Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
+                    "from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    "where StatusId = 3 " +
+                    "Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    " ORDER BY  'Dispensed On', DrugName, LocationName" :
+                    $"Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
+                    $"from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    $"where StatusId = 3 and CurrentLocationId = {userId}" +
+                    $"Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    $" ORDER BY  'Dispensed On', DrugName, LocationName";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+
+                    return View();
+                }
+            }
+        }
+
+        public ActionResult DestroyedDrugs()
+
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                var userId =
+                    (from user in uzima.AspNetUsers
+                     join location in uzima.UzimaLocations on user.HomePharmacy equals location.LocationName
+                     where user.Username == User.Identity.Name
+                     select location.Id).SingleOrDefault();
+                string query = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    "Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
+                    "from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    "where StatusId = 4 " +
+                    "Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    " ORDER BY  'Dispensed On', DrugName, LocationName" :
+                    $"Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
+                    $"from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    $"where StatusId = 4 and CurrentLocationId = {userId}" +
+                    $"Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    $" ORDER BY  'Dispensed On', DrugName, LocationName";
+
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+
+                    return View();
+                }
+            }
+        }
     }
 }

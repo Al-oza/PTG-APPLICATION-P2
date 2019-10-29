@@ -37,9 +37,11 @@
                         <div class="dropdown-menu navbar-collapse navbar-inverse" aria-labelledby="navbarDropdown">
                             <ul class="nav navbar-nav nav-stacked">
                                 <li>@Html.ActionLink("Pending Orders", "PendingOrders", "Report", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report", null, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report", null, new { @class = "dropdown-item" })</li>
                             </ul>
                         </div>
                     </li>
