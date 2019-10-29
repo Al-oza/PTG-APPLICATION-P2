@@ -2,8 +2,11 @@
 using PTGApplication.Providers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace PTGApplication.Controllers
 {
@@ -26,8 +29,15 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public ActionResult DownloadExpired(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "ExpiredDrugs.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
+        }
         public ActionResult ExpiredDrugs()
-
         {
             using (var uzima = new UzimaRxEntities())
             {
