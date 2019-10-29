@@ -47,7 +47,6 @@ namespace PTGApplication.Controllers
                 var locations =
                     (from location in uzima.UzimaLocations
                      join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
-                     where type.Supplier != null
                      select location).ToList();
 
                 var roles = uzima.AspNetRoles.ToList();
