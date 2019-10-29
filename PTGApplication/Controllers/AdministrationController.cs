@@ -173,10 +173,12 @@ namespace PTGApplication.Controllers
             {
                 using (var uzima= new UzimaRxEntities())
                 {
-                    uzima.AspNetUsers.Remove(
-                        (from user in uzima.AspNetUsers
-                         where user.Id == id
-                         select user).SingleOrDefault());
+                    var user = (from u in uzima.AspNetUsers
+                                where u.Id == id
+                                select u).SingleOrDefault();
+                    uzima.AspNetUsers.Remove(user);
+                    model.PasswordHash = user.PasswordHash;
+                    model.SecurityStamp = user.SecurityStamp;
                     uzima.AspNetUsers.Add(model);
 
                     await uzima.SaveChangesAsync();
