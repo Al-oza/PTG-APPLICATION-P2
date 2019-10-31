@@ -25,9 +25,7 @@ namespace PTGApplication.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base(Properties.Database.DefaultConnectionString
-                  .Replace("[Catalog]", Properties.Database.DatabaseName)
-                  .Replace("[Source]", System.Environment.MachineName), 
+            : base("Data Source=uzimarx.database.windows.net;Initial Catalog=uzimarx;Persist Security Info=True;User ID=uzimarx-app;Password=tyqh34@$sdlfia3dlkfPOJ23LKUwnudfn*(t789qe*4",
                   throwIfV1Schema: false)
         {
         }

@@ -55,21 +55,6 @@ namespace PTGApplication
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
 
-            if (section.ConnectionStrings["DefaultConnection"] == null)
-            {
-                section.ConnectionStrings.Add(new ConnectionStringSettings(
-                    "DefaultConnection", Properties.Database.DefaultConnectionString
-                    .Replace("[Source]", Environment.MachineName).Replace("[Catalog]",
-                    Properties.Database.DatabaseName), "System.Data.SqlClient"));
-            }
-            else
-            {
-                section.ConnectionStrings["DefaultConnection"].ConnectionString =
-                    Properties.Database.DefaultConnectionString
-                    .Replace("[Source]", Environment.MachineName)
-                    .Replace("[Catalog]", Properties.Database.DatabaseName);
-            }
-
             if (section.ConnectionStrings["UzimaRxEntities"] == null)
             {
                 section.ConnectionStrings.Add(new ConnectionStringSettings(
