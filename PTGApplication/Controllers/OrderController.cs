@@ -118,7 +118,13 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("PlaceOrder");
+            return RedirectToAction("OrderPlaced");
+        }
+
+        //GET: Order/OrderPlaced
+        public ActionResult OrderPlaced()
+        {
+            return View();
         }
 
 

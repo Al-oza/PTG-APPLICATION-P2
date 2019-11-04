@@ -523,6 +523,8 @@
     <Content Include="Views\Report\ExpiringDrugs.cshtml" />
     <Content Include="Views\Report\DispensedDrugs.cshtml" />
     <Content Include="Views\Report\DestroyedDrugs.cshtml" />
+    <Content Include="Views\Administration\UserAdded.cshtml" />
+    <Content Include="Views\Order\OrderPlaced.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

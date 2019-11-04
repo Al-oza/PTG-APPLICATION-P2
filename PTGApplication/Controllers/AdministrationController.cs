@@ -127,12 +127,18 @@ namespace PTGApplication.Controllers
                 //TempData["ViewBagLink"] = callback;
 
                 ModelState.Clear();
-                return RedirectToAction("AddUser");
+                return RedirectToAction("UserAdded");
             }
 
 
             ViewBag.errorMessage = "Something went wrong";
             return View("Error");
+        }
+
+        //GET: UserAdded
+        public ActionResult UserAdded()
+        {
+            return View();
         }
 
         // GET: Administration/Modify/5
@@ -148,7 +154,7 @@ namespace PTGApplication.Controllers
                                  join types in uzima.UzimaLocationTypes on sites.Id equals types.LocationId
                                  where types.Supplier != null
                                  select sites).ToList();
-              
+
                 if (!(locations is null))
                 {
                     ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName");
@@ -170,7 +176,7 @@ namespace PTGApplication.Controllers
             }
             try
             {
-                using (var uzima= new UzimaRxEntities())
+                using (var uzima = new UzimaRxEntities())
                 {
                     var user = (from u in uzima.AspNetUsers
                                 where u.Id == id
