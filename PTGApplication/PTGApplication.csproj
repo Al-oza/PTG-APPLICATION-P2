@@ -364,13 +364,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\UzimaRx.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UzimaRx.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\UzimaRx.edmx.diagram">
-      <DependentUpon>UzimaRx.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -399,6 +392,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\UzimaRx.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UzimaRx.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UzimaRx.edmx.diagram">
+      <DependentUpon>UzimaRx.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\f19-msci4350-01 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\f19-msci4350-01 - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\f19-msci4350-01 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\uzimarx - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uzimarx - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uzimarx - Web Deploy.pubxml" />

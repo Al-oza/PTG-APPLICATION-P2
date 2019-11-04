@@ -55,18 +55,6 @@ namespace PTGApplication
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
 
-            if (section.ConnectionStrings["UzimaRxEntities"] == null)
-            {
-                section.ConnectionStrings.Add(new ConnectionStringSettings(
-                    "UzimaRxEntities", Properties.Database.EntityConnectionString, "System.Data.EntityClient"));
-            }
-            else
-            {
-                section.ConnectionStrings["UzimaRxEntities"].ConnectionString =
-                    Properties.Database.EntityConnectionString
-                    .Replace("[Source]", Environment.MachineName)
-                    .Replace("[Catalog]", Properties.Database.DatabaseName);
-            }
 
             configuration.Save();
         }
