@@ -93,6 +93,11 @@ namespace PTGApplication.Controllers
                     ViewBag.errorMessage = "You must have a confirmed email to log on.";
                     return View("Error");
                 }
+                if (!user.IsActive)
+                {
+                    ViewBag.errorMessage = "Invalid login attempt.";
+                    return View("Error");
+                }
             }
 
             // This doesn't count login failures towards account lockout
@@ -181,15 +186,15 @@ namespace PTGApplication.Controllers
                     Name = model.Name
                 };
 
-                if(UserManager.FindByEmail(model.Email) != null)
+                if (UserManager.FindByEmail(model.Email) != null)
                 {
                     var callback = UserManager.GeneratePasswordResetToken(model.Username);
                     ViewBag.errorMessage = "This email address is already associated with an account. " +
                         $"Maybe you <a href=\"{callback}\">Forgot your password</a>?";
                     return View("Error");
                 }
-                
-                if(UserManager.FindByName(model.Username) != null)
+
+                if (UserManager.FindByName(model.Username) != null)
                 {
                     ViewBag.errorMessage = "This username is already taken, please try again";
                     return View("Error");
@@ -205,7 +210,7 @@ namespace PTGApplication.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = await SendEmailConfirmationTokenAsync(user.Id,
                         "Confirm Your Uzima Rx Account");
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", 
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account",
                         $"Dear {user.Name},\nPlease confirm your Uzima Rx account by clicking <a href=\"{callbackUrl}\">here</a>");
 
                     // Uncomment to debug locally
@@ -263,7 +268,7 @@ namespace PTGApplication.Controllers
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
