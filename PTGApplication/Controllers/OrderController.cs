@@ -232,7 +232,13 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("SendOrder");
+            return RedirectToAction("OrderSent");
+        }
+
+        // GET: OrderSent
+        public ActionResult OrderSent()
+        {
+            return View();
         }
 
         // GET: Order/RecieveOrder
