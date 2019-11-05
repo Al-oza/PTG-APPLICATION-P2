@@ -402,6 +402,8 @@
     <Content Include="Models\UzimaRx.edmx.diagram">
       <DependentUpon>UzimaRx.edmx</DependentUpon>
     </Content>
+    <Content Include="Files\linktest.pdf" />
+    <Content Include="Files\UserManual.pdf" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - Web Deploy.pubxml" />
