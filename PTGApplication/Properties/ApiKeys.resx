@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MailjetPrivateKey" xml:space="preserve">
-    <value>4841a50716aed14663c2f0fffdb6320c</value>
+    <value>3e5efdb6ed66a686b2a0c06ac49b7153</value>
   </data>
   <data name="MailjetPublicKey" xml:space="preserve">
-    <value>325dd5524469ce505fef71969ad0cde6</value>
+    <value>e388cb655cfb3093b7ab1209c2a8e172</value>
   </data>
 </root>
