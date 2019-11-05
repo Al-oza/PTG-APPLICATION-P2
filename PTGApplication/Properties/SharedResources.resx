@@ -121,11 +121,11 @@
     <value>Tantalum Health</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>npgorden@uiowa.edu</value>
+    <value>rapula@oppidaan.com</value>
     <comment>Email from which registration alerts are sent</comment>
   </data>
   <data name="RegistrationSender" xml:space="preserve">
-    <value>Nicholas Gorden</value>
+    <value>Rapula Otukile</value>
     <comment>Who sends the registration email</comment>
   </data>
   <data name="DefaultPass" xml:space="preserve">
