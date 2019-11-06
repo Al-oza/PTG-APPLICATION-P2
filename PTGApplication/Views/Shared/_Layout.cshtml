@@ -26,35 +26,29 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    {<li>@Html.ActionLink("Administration", "Index", "Administration", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Administration", "Index", "Administration", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Order", "Index", "Order", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Inventory", "Index", "Inventory", new { area = "" }, null)</li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Reports
-                        </a>
-                        <div class="dropdown-menu navbar-collapse navbar-inverse" aria-labelledby="navbarDropdown">
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li>@Html.ActionLink("Pending Orders", "PendingOrders", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report", null, new { @class = "dropdown-item" })</li>
-                            </ul>
+                        <a class="nav-link dropdown-toggle" id="navbarReportsDropdown" data-toggle="dropdown" 
+                           aria-haspopup="true" aria-expanded="false">Reports</a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarReportsDropdown">
+                            @Html.ActionLink("Pending Orders", "PendingOrders", "Report", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report", null, new { @class = "dropdown-item" })
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Locations
-                        </a>
-                        <div class="dropdown-menu navbar-collapse navbar-inverse" aria-labelledby="navbarDropdown">
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li>@Html.ActionLink("Add Clinic", "AddClinicLocation", "Location", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Add Hospital", "AddHospitalLocation", "Location", null, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Add Supplier", "AddSupplierLocation", "Location", null, new { @class = "dropdown-item" })</li>
-                            </ul>
+                        <a class="nav-link dropdown-toggle" id="navbarLocationsDropdown" data-toggle="dropdown" 
+                           aria-haspopup="true" aria-expanded="false">Locations</a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarLocationsDropdown">
+                            @Html.ActionLink("Add Clinic", "AddClinicLocation", "Location", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Add Hospital", "AddHospitalLocation", "Location", null, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Add Supplier", "AddSupplierLocation", "Location", null, new { @class = "dropdown-item" })
                         </div>
                     </li>
                 </ul>
