@@ -7,35 +7,38 @@
 <h2>Select Inventory to Modify</h2>
 
 
-<table class="table">
-    <tr>
-        <th>Drug Name</th>
-        <th>Current Location</th>
-        <th>Order Date</th>
-        <th>Expiration Date</th>
-        <th></th>
-    </tr>
+<table class="table" id="tblInventory">
+    <thead>
+        <tr>
+            <th>Drug Name</th>
+            <th>Current Location</th>
+            <th>Last Modified On</th>
+            <th>Expiration Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var item = Model.ElementAtOrDefault(i);
+        <tr>
+            <td>
+                <p>@ViewBag.Drugs[i]</p>
+            </td>
+            <td>
+                <p>@ViewBag.Locations[i] </p>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOrdered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpirationDate)
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentLocationId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DrugId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOrdered)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpirationDate)
-        
-        <td>
-            @Html.ActionLink("Modify", "ModifyInventory", new { id=item.Id }) |
-            @Html.ActionLink("Remove", "RemoveInventory", new { id=item.Id })
-        </td>
-    </tr>
-}
+            <td>
+                @Html.ActionLink("Modify", "ModifyInventory", new { id = item.Id }) |
+                @Html.ActionLink("Remove", "RemoveInventory", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
 

@@ -243,14 +243,33 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
+                var inventories = uzima.UzimaInventories.ToList();
                 var locations = uzima.UzimaLocations.ToList();
+                var drugs = uzima.UzimaDrugs.ToList();
+
+                var drugNames = new String[inventories.Count];
+                var locationNames = new string[inventories.Count];
+                for (int i = 0; i < inventories.Count; i++)
+                {
+                    locationNames[i] = (from location in locations
+                                        where location.Id == inventories[i].CurrentLocationId
+                                        select location.LocationName).Single();
+                    //locations.Where(loc => loc.Id == inventories[i].CurrentLocationId).Select(loc=>loc.LocationName).Single();
+                    drugNames[i] = (from drug in drugs
+                                    where drug.Id == inventories[i].DrugId
+                                    select drug.DrugName).Single();
+                }
+                if (!(drugs is null))
+                {
+                    ViewBag.Drugs = drugNames;
+                }
 
                 if (!(locations is null))
                 {
-                    ViewBag.locations = locations;
+                    ViewBag.Locations = locationNames;
                 }
 
-                return View(uzima.UzimaInventories.ToList());
+                return View(inventories);
             }
         }
 
