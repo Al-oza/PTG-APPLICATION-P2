@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using PTGApplication.Models;
 using System;
@@ -155,9 +156,21 @@ namespace PTGApplication.Controllers
                                  where types.Supplier != null
                                  select sites).ToList();
 
+                var roles = uzima.AspNetRoles.ToList();
+
                 if (!(locations is null))
                 {
                     ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName");
+                }
+
+                if (!(roles is null))
+                {
+                    using (var context = new ApplicationDbContext())
+                    using (var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                    {
+                        var currentRole = userManager.GetRoles(id).SingleOrDefault();
+                        ViewBag.Roles = new SelectList(roles, "Name", "Name", currentRole);
+                    }
                 }
 
                 return View((from user in uzima.AspNetUsers
@@ -168,7 +181,7 @@ namespace PTGApplication.Controllers
 
         // POST: Administration/Modify/5
         [HttpPost]
-        public async Task<ActionResult> Modify(string id, AspNetUser model)
+        public async Task<ActionResult> Modify(string ddlRoles, string id, AspNetUser model)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -178,16 +191,27 @@ namespace PTGApplication.Controllers
             {
                 using (var uzima = new UzimaRxEntities())
                 {
+
                     var user = (from u in uzima.AspNetUsers
                                 where u.Id == id
                                 select u).SingleOrDefault();
                     uzima.AspNetUsers.Remove(user);
                     model.PasswordHash = user.PasswordHash;
                     model.SecurityStamp = user.SecurityStamp;
+
                     uzima.AspNetUsers.Add(model);
 
                     await uzima.SaveChangesAsync();
                     ViewBag.successMessage = "User Modified";
+
+                    using (var context = new ApplicationDbContext())
+                    using (var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                    {
+                        var newUserId = (from u in uzima.AspNetUsers
+                                         where u.Username == model.Username
+                                         select u.Id).SingleOrDefault();
+                        await userManager.AddToRoleAsync(newUserId, ddlRoles);
+                    }
                 }
             }
             catch

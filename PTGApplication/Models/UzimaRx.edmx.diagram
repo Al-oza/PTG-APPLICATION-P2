@@ -4,27 +4,27 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8d02c68a4b354d35a476704b9cbe50d8" Name="Diagram1">
-        <EntityTypeShape EntityType="UzimaRxModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetRole" Width="1.5" PointX="1.5" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.AspNetUser" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.UzimaDrug" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.UzimaInventory" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.UzimaLocation" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.UzimaLocationType" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="UzimaRxModel.UzimaStatu" Width="1.5" PointX="0.75" PointY="22.5" IsExpanded="true" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaLocationType" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.FK_dbo_UzimaLocationType_Supplier" ManuallyRouted="false" />
-        <AssociationConnector Association="UzimaRxModel.AspNetUserRoles" ManuallyRouted="false" />
+      <Diagram DiagramId="c8f5b4b7232e402abfad2785e1eadbad" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="uzimarxModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.AspNetRole" Width="1.5" PointX="1.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.AspNetUser" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.UzimaDrug" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.UzimaInventory" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.UzimaLocation" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.UzimaLocationType" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uzimarxModel.UzimaStatu" Width="1.5" PointX="0.75" PointY="22.5" IsExpanded="true" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaOrder_dbo_UzimaLocation_CurrentLocationId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaOrder_dbo_UzimaLocation_FutureLocationId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaOrder_dbo_UzimaStatus_StatusId" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaLocationType" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.FK_dbo_UzimaLocationType_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="uzimarxModel.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

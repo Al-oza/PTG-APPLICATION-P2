@@ -395,6 +395,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Files\linktest.pdf" />
+    <Content Include="Files\UserManual.pdf" />
     <EntityDeploy Include="Models\UzimaRx.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>UzimaRx.Designer.cs</LastGenOutput>
@@ -402,8 +404,6 @@
     <Content Include="Models\UzimaRx.edmx.diagram">
       <DependentUpon>UzimaRx.edmx</DependentUpon>
     </Content>
-    <Content Include="Files\linktest.pdf" />
-    <Content Include="Files\UserManual.pdf" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\f19-msci4350-01 - Web Deploy.pubxml" />
