@@ -109,41 +109,50 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
+                var currentInventory = (from inventory in uzima.UzimaInventories
+                                        where inventory.Id == id
+                                        select inventory).SingleOrDefault();
+
                 var drugs = uzima.UzimaDrugs.ToList();
                 if (!(drugs is null))
                 {
-                    ViewBag.drugs = drugs;
+                    var currentDrug = drugs.Where(drug => drug.Id == id);
+                    ViewBag.Drugs = new SelectList(drugs, "Id", "DrugName", currentDrug);
                 }
 
                 var users = uzima.AspNetUsers.ToList();
                 if (!(users is null))
                 {
-                    ViewBag.users = users;
+                    var currentUser = users.Where(user => user.Username == currentInventory.LastModifiedBy).SingleOrDefault();
+                    ViewBag.Users = new SelectList(users, "Id", "Username", currentUser);
                 }
 
                 var statuses = uzima.UzimaStatus.ToList();
                 if (!(statuses is null))
                 {
-                    ViewBag.statuses = statuses;
+                    var currentStatus = (from status in uzima.UzimaStatus
+                                         where status.Id == currentInventory.StatusId
+                                         select status.Status).SingleOrDefault();
+                    ViewBag.Statuses = new SelectList(statuses, "Id", "Status", currentStatus);
                 }
 
                 var locations = uzima.UzimaLocations.ToList();
                 if (!(locations is null))
                 {
-                    ViewBag.locations = locations;
+                    ViewBag.Locations = locations;
                 }
 
                 DateTime? orderDate = (from inventory in uzima.UzimaInventories
-                                 where inventory.Id == id
-                                 select inventory.DateOrdered).SingleOrDefault();
+                                       where inventory.Id == id
+                                       select inventory.DateOrdered).SingleOrDefault();
                 if (!(orderDate is null))
                 {
                     ViewBag.orderDate = orderDate;
                 }
 
                 DateTime? expirationDate = (from inventory in uzima.UzimaInventories
-                                      where inventory.Id == id
-                                      select inventory.ExpirationDate).SingleOrDefault();
+                                            where inventory.Id == id
+                                            select inventory.ExpirationDate).SingleOrDefault();
                 if (!(expirationDate is null))
                 {
                     ViewBag.expirationDate = expirationDate;
