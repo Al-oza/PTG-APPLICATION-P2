@@ -31,25 +31,34 @@
                     <li>@Html.ActionLink("Inventory", "Index", "Inventory", new { area = "" }, null)</li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarReportsDropdown" data-toggle="dropdown" 
-                           aria-haspopup="true" aria-expanded="false">Reports</a>
-                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarReportsDropdown">
-                            @Html.ActionLink("Pending Orders", "PendingOrders", "Report", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Inventory by Location", "Inventory", "Report", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report", null, new { @class = "dropdown-item" })
-                        </div>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Reports <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Order &amp; Inventory Reports</li>
+                            <li>@Html.ActionLink("Pending Orders", "PendingOrders", "Report")</li>
+                            <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report")</li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Expired/Expiring Drug Reports</li>
+                            <li>@Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report")</li>
+                            <li>@Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report")</li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Dispensed/Destroyed Drug Reports</li>
+                            <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report")</li>
+                            <li>@Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report")</li>
+                        </ul>
+
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarLocationsDropdown" data-toggle="dropdown" 
-                           aria-haspopup="true" aria-expanded="false">Locations</a>
-                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarLocationsDropdown">
-                            @Html.ActionLink("Add Clinic", "AddClinicLocation", "Location", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Add Hospital", "AddHospitalLocation", "Location", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("Add Supplier", "AddSupplierLocation", "Location", null, new { @class = "dropdown-item" })
-                        </div>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Locations <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Clinics &amp; Hospitals</li>
+                            <li>@Html.ActionLink("Add Clinic", "AddClinicLocation", "Location")</li>
+                            <li>@Html.ActionLink("Add Hospital", "AddHospitalLocation", "Location")</li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Warehouse Suppliers</li>
+                            <li>@Html.ActionLink("Add Supplier", "AddSupplierLocation", "Location")</li>
+                        </ul>
                     </li>
                 </ul>
 
