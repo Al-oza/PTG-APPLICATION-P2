@@ -160,7 +160,10 @@ namespace PTGApplication.Controllers
 
                 if (!(locations is null))
                 {
-                    ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName");
+                    var currentLocation = (from loc in uzima.UzimaLocations
+                                           join usr in uzima.AspNetUsers on loc.LocationName equals usr.HomePharmacy
+                                           select loc.LocationName).FirstOrDefault();
+                    ViewBag.Locations = new SelectList(locations, "LocationName", "LocationName", currentLocation);
                 }
 
                 if (!(roles is null))
