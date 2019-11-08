@@ -1,82 +1,33 @@
-﻿@*model IEnumerable<PTGApplication.Models.UzimaInventory>
+﻿<h2>Place an Order</h2>
 
-    @{
-        ViewBag.Title = "Place an Order";
-    }
-
-    <h2>Place an Order</h2>
-
-    <table class="table">
-        <tr>
-            <th>
-                Drug
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpirationDate)
-            </th>
-            <th></th>
-        </tr>
-
-    @for (var i = 0; i < Model.Count(); i++)
-    {
-        var item = Model.ElementAt(i);
-        <tr>
-            <td>
-                @ViewBag.Drugs[i]
-            </td>
-            <td>
-                @ViewBag.Quantity[i]
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
-            </td>
-            <td>
-                @Html.ActionLink("Place Order", "PlaceOrder", new { name=ViewBag.DrugName[i], quantity=ViewBag.Quantity[i] })
-            </td>
-        </tr>
-    }
-
-    </table>
-*@
-
-<h2>Expired Drugs</h2>
-
-<table id="tblExpired" class="table">
+<table id="tblPlaceOrder" class="table">
     <thead>
         <tr>
-            @foreach (var column in ViewBag.Columns)
-            {
-                <th>@column</th>
-            }
+            <th>Drug Name</th>
+            <th>Quantity Available</th>
+            <th>Expiration Date</th>
+            <th></th>
         </tr>
     </thead>
+    <tbody>
     @foreach (var row in ViewBag.Data)
     {
         <tr>
-            @foreach (var column in row.ItemArray)
+            @for (var j = 1; j < row.ItemArray.Length; j++)
             {
+                var column = row[j];
                 <td>@column</td>
             }
+            <td>
+                @Html.ActionLink("Place Order", "PlaceOrder", new { id = row[0], qty = row[2]})
+            </td>
         </tr>
     }
-
+    </tbody>
 </table>
 
-@using (Html.BeginForm("DownloadExpired", "Report", FormMethod.Post, new { id = "export" }))
-{
-    <input type="hidden" id="hiddenCsv" />
-    <input type="submit" class="btn btn-primary" value="Download Report" />
-}
-
-<script type="text/javascript" src="~/Scripts/csv.js"></script>
 <script type="text/javascript">
     $(document).ready(() => {
-        $('#tblExpired').DataTable()
-    })
-    $('#export').submit(() => {
-        exportTableToCSV('ExpiredDrugs.xls')
+        $('#tblPlaceOrder').DataTable()
     })
 </script>

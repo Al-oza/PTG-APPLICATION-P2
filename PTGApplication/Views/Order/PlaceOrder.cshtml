@@ -12,17 +12,16 @@
     <div class="form-horizontal">
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DrugId, "Drug", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class = "control-label col-md-2">Drug</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DrugId, ViewBag.Drugs as SelectList, "--Select One--", new { @id = "ddldrug", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DrugId, "", new { @class = "text-danger" })
+                <input size="50" type="text" readonly class="form-control-plaintext" name="drugname" id="staticEmail" value="@ViewBag.Drug.DrugName">
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Quantity *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("txtQty", null, new { @class = "form-control" })
+                <input type="text" name="txtQty" class="form-control" placeholder="@ViewBag.Quantity" required>
                 @Html.ValidationMessage("", new { @class = "text-danger" })
             </div>
         </div>
