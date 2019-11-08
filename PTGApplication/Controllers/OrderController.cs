@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using PTGApplication.Models;
+using PTGApplication.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +120,53 @@ namespace PTGApplication.Controllers
             }
 
             return RedirectToAction("OrderPlaced");
+        }
+
+        // GET: Order/SelectPlaceOrder
+        public ActionResult SelectPlaceOrder()
+        {
+            AspNetUser user;
+            UzimaLocationType homePharmacy;
+            UzimaLocation homeSupplier;
+            IEnumerable<UzimaInventory> inventories;
+            using (var uzima = new UzimaRxEntities())
+            {
+                user = (from u in uzima.AspNetUsers where u.Id == User.Identity.GetUserId() select u).Single();
+                homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
+                homeSupplier = (from l in uzima.UzimaLocations
+                                join lt in uzima.UzimaLocationTypes on l.Id equals lt.LocationId
+                                where lt.LocationId == homePharmacy.Supplier
+                                select l).Single();
+                inventories = User.IsInRole(Properties.UserRoles.PharmacyManager)
+                    ? uzima.UzimaInventories.ToList() :
+                    (from inventory in uzima.UzimaInventories
+                     join locationtype in uzima.UzimaLocationTypes on inventory.CurrentLocationId equals homeSupplier.Id
+                     where inventory.StatusId == 0 && inventory.FutureLocationId == null && locationtype.Supplier == homeSupplier.Id
+                     select inventory).ToList();
+
+                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
+                    "SELECT DrugName, COUNT(*) AS Quantity, ExpirationDate" +
+                    $"FROM UzimaDrug, UzimaInventory WHERE StatusId=0 AND FutureLocationId != NULL" +
+                    "GROUP BY DrugName, ExpirationDate" :
+                    "SELECT DrugName, COUNT(*) AS Quantity, ExpirationDate" +
+                    $"FROM UzimaDrug, UzimaInventory WHERE StatusId=0 AND CurrentLocationId = {homeSupplier.Id} AND FutureLocationId != NULL" +
+                    "GROUP BY DrugName, ExpirationDate";
+
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+                    return View();
+                }
+
+                var drugNames = new string[inventories.Count()];
+                for (int i = 0; i < drugNames.Length; i++)
+                {
+                    drugNames[i] = (from drug in uzima.UzimaDrugs where inventories.ElementAt(i).DrugId == drug.Id select drug.DrugName).Single();
+                }
+                ViewBag.Drugs = drugNames;
+            }
+            return View(inventories);
         }
 
         //GET: Order/OrderPlaced

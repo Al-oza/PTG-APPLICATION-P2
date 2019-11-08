@@ -527,6 +527,7 @@
     <Content Include="Views\Report\DestroyedDrugs.cshtml" />
     <Content Include="Views\Administration\UserAdded.cshtml" />
     <Content Include="Views\Order\OrderPlaced.cshtml" />
+    <Content Include="Views\Order\SelectPlaceOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
