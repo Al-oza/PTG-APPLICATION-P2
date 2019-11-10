@@ -5,12 +5,14 @@
 <h2>Pending Orders</h2>
 
 <table class="table table-striped table-bordered" id="tblOrders">
-    <tr>
-        @foreach (var column in ViewBag.Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
+    <thead>
+        <tr>
+            @foreach (var column in ViewBag.Columns)
+            {
+                <th>@column</th>
+            }
+        </tr>
+    </thead>
     @foreach (var row in ViewBag.Data)
     {
         <tr>
@@ -22,10 +24,19 @@
     }
 
 </table>
+@using (Html.BeginForm("DownloadPendingOrders", "Report", FormMethod.Post, new { id = "export" }))
+{
+    <input type="hidden" id="hiddenCsv" />
+    <input type="submit" class="btn btn-primary" value="Download Report" />
+}
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="~/Scripts/csv.js"></script>
 <script type="text/javascript">
-    $('#tblOrders').DataTable()
+    $(document).ready(() => {
+        $('#tblOrders').DataTable()
+    })
+    $('#export').submit(() => {
+        exportTableToCSV('PendingOrders.xls')
+    })
 </script>
 

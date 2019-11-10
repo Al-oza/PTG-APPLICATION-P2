@@ -30,6 +30,14 @@ namespace PTGApplication.Controllers
             }
         }
         [HttpPost]
+        public ActionResult DownloadPendingOrders(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "PendingOrders.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
+        }
+        [HttpPost]
         public ActionResult DownloadExpired(object report)
         {
             Response.ContentType = "application/x-msexcel";
@@ -99,6 +107,14 @@ namespace PTGApplication.Controllers
                 }
             }
         }
+        [HttpPost]
+        public ActionResult DownloadInventory(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "Inventory.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
+        }
 
         public ActionResult ExpiringDrugs()
 
@@ -133,6 +149,14 @@ namespace PTGApplication.Controllers
                 }
             }
         }
+        [HttpPost]
+        public ActionResult DownloadExpiring(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "ExpiringDrugs.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
+        }
 
         public ActionResult DispensedDrugs()
 
@@ -164,7 +188,14 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        [HttpPost]
+        public ActionResult DownloadDispensed(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "DispensedDrugs.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
+        }
         public ActionResult DestroyedDrugs()
 
         {
@@ -195,6 +226,14 @@ namespace PTGApplication.Controllers
                     return View();
                 }
             }
+        }
+        [HttpPost]
+        public ActionResult DownloadDestroyed(object report)
+        {
+            Response.ContentType = "application/x-msexcel";
+            var cd = new ContentDisposition { FileName = "DestroyedDrugs.csv", Inline = false };
+            Response.AddHeader("Content-Disposition", cd.ToString());
+            return Content(report.ToString(), "application/vnd.openxmlformats-officedocument.spreadsheet.sheet");
         }
     }
 }

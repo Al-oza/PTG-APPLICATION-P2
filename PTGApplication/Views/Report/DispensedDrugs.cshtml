@@ -5,13 +5,15 @@
 
 <h2>Dispensed Drugs</h2>
 
-<table class="table">
-    <tr>
-        @foreach (var column in ViewBag.Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
+<table id="tblDispensed" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            @foreach (var column in ViewBag.Columns)
+            {
+                <th>@column</th>
+            }
+        </tr>
+    </thead>
     @foreach (var row in ViewBag.Data)
     {
         <tr>
@@ -21,5 +23,20 @@
             }
         </tr>
     }
-
 </table>
+
+@using (Html.BeginForm("DownloadDispensed", "Report", FormMethod.Post, new { id = "export" }))
+{
+    <input type="hidden" id="hiddenCsv" />
+    <input type="submit" class="btn btn-primary" value="Download Report" />
+}
+
+<script type="text/javascript" src="~/Scripts/csv.js"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $('#tblDispensed').DataTable()
+    })
+    $('#export').submit(() => {
+        exportTableToCSV('DispensedDrugs.xls')
+    })
+</script>

@@ -26,8 +26,18 @@
 
 </table>
 
+@using (Html.BeginForm("DownloadInventory", "Report", FormMethod.Post, new { id = "export" }))
+{
+    <input type="hidden" id="hiddenCsv" />
+    <input type="submit" class="btn btn-primary" value="Download Report" />
+}
+
+<script type="text/javascript" src="~/Scripts/csv.js"></script>
 <script type="text/javascript">
     $(document).ready(() => {
         $('#tblInventory').DataTable()
+    })
+     $('#export').submit(() => {
+        exportTableToCSV('Inventory.xls')
     })
 </script>
