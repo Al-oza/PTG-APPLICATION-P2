@@ -4,6 +4,7 @@ using PTGApplication.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -149,6 +150,11 @@ namespace PTGApplication.Controllers
         // GET: Order/SendOrder
         public ActionResult SendOrder(int id, int qty)
         {
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
+
             using (var uzima = new UzimaRxEntities())
             {
                 ViewBag.Quantity = qty;
