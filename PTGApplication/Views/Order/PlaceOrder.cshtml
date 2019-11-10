@@ -5,11 +5,10 @@
 
 <h2>Place an Order</h2>
 
-@using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post))
-{
+<form id="orderform">
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal" id="orderform">
+    <div class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-md-2">Drug</label>
@@ -37,29 +36,32 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                <input id="btnSubmit" type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
 
     </div>
-}
+</form>
 
 <script>
     let maxQuantity = @(ViewBag.Quantity)
 
-        $('#btnSubmit').click(() => {
-            let inputVal = $('#txtQty').val()
-            if (inputVal > maxQuantity) {
-                $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
-            } else {
-                let dname = $('#drugname').val()
-                let tQty = $('#txtQty').val()
-                $.ajax({
-                    type: 'POST',
-                    url: `/Order/PlaceOrder/${dname}?txtQty=${tQty}`,
-                    data: $('#orderform').serialize()
-                })
-            }
-        })
+    $('#orderform').submit(event => {
+        event.preventDefault()
+        let inputVal = $('#txtQty').val()
+        if (inputVal > maxQuantity) {
+            $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
+        } else {
+            $('#btnSubmit').attr('disabled', true)
+            let dname = $('#drugname').val()
+            let tQty = $('#txtQty').val()
+            $.ajax({
+                type: 'POST',
+                url: `/Order/PlaceOrder/${dname}?txtQty=${tQty}`,
+                data: $('#orderform').serialize(),
+                success: () => location.href= "/Order/OrderPlaced"
+            })
+        }
+    })
 </script>
 

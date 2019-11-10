@@ -5,6 +5,7 @@
         <tr>
             <th>Drug Name</th>
             <th>Quantity Available</th>
+            <th>Send To</th>
             <th>Expiration Date</th>
             <th></th>
         </tr>
@@ -19,7 +20,7 @@
                     <td>@column</td>
                 }
                 <td>
-                    @Html.ActionLink("Send Order", "SendOrder", new { id = row[0], qty = row[2] })
+                    @Html.ActionLink("Send Order", "SendOrder", new { id = row[0], qty = row[2], futureLocation=row[3] })
                 </td>
             </tr>
         }
