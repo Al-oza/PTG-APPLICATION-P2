@@ -161,7 +161,7 @@ namespace PTGApplication.Controllers
                 ViewBag.Quantity = qty;
                 var location = (from l in uzima.UzimaLocations where l.LocationName == futureLocation select l).Single();
                 var inventory = (from i in uzima.UzimaInventories where i.DrugId == id && i.FutureLocationId == location.Id select i).Single();
-                ViewBag.Drug = inventory;
+                ViewBag.Drug = inventory.UzimaDrug;
 
                 var locations = uzima.UzimaLocations.ToList();
                 var users = uzima.AspNetUsers.ToList();
@@ -186,6 +186,7 @@ namespace PTGApplication.Controllers
             {
                 using (var uzima = new UzimaRxEntities())
                 {
+                    var sendTo = (from l in uzima.UzimaLocations where l.LocationName == futureLocation select l.Id).FirstOrDefault();
                     userid =
                         (from user in uzima.AspNetUsers
                          where user.Username == User.Identity.Name
@@ -200,11 +201,12 @@ namespace PTGApplication.Controllers
                              select drug.Id).FirstOrDefault();
 
 
+
                         var entryToEdit = uzima.UzimaInventories.Find(id);
                         uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
-                        entryToEdit.FutureLocationId = model.FutureLocationId;
+                        entryToEdit.FutureLocationId = sendTo;
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 2;
