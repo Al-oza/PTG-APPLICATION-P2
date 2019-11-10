@@ -528,6 +528,7 @@
     <Content Include="Views\Administration\UserAdded.cshtml" />
     <Content Include="Views\Order\OrderPlaced.cshtml" />
     <Content Include="Views\Order\SelectPlaceOrder.cshtml" />
+    <Content Include="Views\Order\SelectSendOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
