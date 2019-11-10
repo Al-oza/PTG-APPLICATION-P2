@@ -1,4 +1,4 @@
-﻿<h2>Destroy an Order</h2>
+﻿<h2>Destroy an Item</h2>
 
 <table id="tblDestroyOrder" class="table table-bordered table-striped">
     <thead>
@@ -19,7 +19,7 @@
                     <td>@column</td>
                 }
                 <td>
-                    @Html.ActionLink("Destroy Order", "DestroyOrder", new { id = row[0], qty = row[2] })
+                    @Html.ActionLink("Destroy Item", "DestroyItem", new { id = row[0], qty = row[2] })
                 </td>
             </tr>
         }
