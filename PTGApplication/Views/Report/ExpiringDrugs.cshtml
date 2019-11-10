@@ -37,7 +37,8 @@
     $(document).ready(() => {
         $('#tblExpiring').DataTable()
     })
-    $('#export').submit(() => {
-        exportTableToCSV('ExpiringDrugs.xls')
+    $('#export').submit(event => {
+        event.preventDefault()
+        exportTableToCSV('ExpiringDrugs.csv')
     })
 </script>
