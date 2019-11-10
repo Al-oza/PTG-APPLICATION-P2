@@ -160,7 +160,7 @@ namespace PTGApplication.Controllers
                 if (!(locations is null))
                 {
 
-                    var userhomelocation = 
+                    var userhomelocation =
                        (from location in locations
                         join user in users on location.LocationName equals user.HomePharmacy
                         where user.Username == User.Identity.Name
@@ -240,7 +240,7 @@ namespace PTGApplication.Controllers
                 var userId = User.Identity.GetUserId();
                 user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
                 homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
-                var query = 
+                var query =
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     $"WHERE [UzimaInventory].StatusId=1 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} " +
@@ -261,68 +261,37 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Order/RecieveOrder
-        public ActionResult RecieveOrder()
+        public ActionResult RecieveOrder(int id, int qty)
         {
-            IEnumerable<UzimaDrug> drugs;
-            IEnumerable<UzimaLocation> locations;
-            IEnumerable<UzimaInventory> inventories;
-            IEnumerable<UzimaLocationType> locationTypes;
-            IEnumerable<AspNetUser> users;
-
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.UzimaDrugs.ToList();
-                locations = uzima.UzimaLocations.ToList();
-                inventories = uzima.UzimaInventories.ToList();
-                locationTypes = uzima.UzimaLocationTypes.ToList();
-                users = uzima.AspNetUsers.ToList();
-            }
+                ViewBag.Quantity = qty;
+                var inventory = (from i in uzima.UzimaDrugs where i.Id == id select i).Single();
+                ViewBag.Drug = inventory;
 
-            if (!(drugs is null) && !(inventories is null))
-            {
-
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location.Id).SingleOrDefault();
-
-                var inventorydrugs =
-                    (from drug in drugs
-                     join inventory in inventories on drug.Id equals inventory.DrugId
-                     join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where drug.Id == inventory.DrugId && inventory.StatusId == 2 && inventory.FutureLocationId == userhomelocation
-                     select drug
-                     );
-
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
-
-                if (inventorydrugs.Count() == 0)
+                var locations = uzima.UzimaLocations.ToList();
+                var users = uzima.AspNetUsers.ToList();
+                if (!(locations is null))
                 {
 
-                    ViewBag.Message = "You have no drugs on order to be recieved.";
-                    return View("Info");
+                    var userhomelocation = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                        (from location in locations select location) :
+                       (from location in locations
+                        join user in users on location.LocationName equals user.HomePharmacy
+                        where user.Username == User.Identity.Name
+                        select location);
+
+                    ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
                 }
-            }
 
-            if (!(locations is null) && !(locationTypes is null))
-            {
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location);
-
-                ViewBag.LocationRecieved = new SelectList(userhomelocation, "Id", "LocationName");
+                return View();
             }
-            return View();
         }
 
 
         // POST: Order/RecieveOrder
         [HttpPost]
-        public async Task<ActionResult> RecieveOrder(String txtQty, UzimaInventory model)
+        public async Task<ActionResult> RecieveOrder(String drugname, String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -349,7 +318,7 @@ namespace PTGApplication.Controllers
                         id =
                             (from drug in uzima.UzimaInventories
                              join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
-                             where drug.StatusId == 2 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
+                             where drug.StatusId == 2 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
@@ -386,69 +355,66 @@ namespace PTGApplication.Controllers
             return RedirectToAction("RecieveOrder");
         }
 
-        // GET: Order/DispenseItem
-        public ActionResult DispenseItem()
+        // GET: Order/SelectRecieveOrder
+        public ActionResult SelectRecieveOrder()
         {
-            IEnumerable<UzimaDrug> drugs;
-            IEnumerable<UzimaLocation> locations;
-            IEnumerable<UzimaInventory> inventories;
-            IEnumerable<UzimaLocationType> locationTypes;
-            IEnumerable<AspNetUser> users;
-
+            AspNetUser user;
+            UzimaLocationType homePharmacy;
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.UzimaDrugs.ToList();
-                locations = uzima.UzimaLocations.ToList();
-                inventories = uzima.UzimaInventories.ToList();
-                locationTypes = uzima.UzimaLocationTypes.ToList();
-                users = uzima.AspNetUsers.ToList();
-            }
+                var userId = User.Identity.GetUserId();
+                user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
+                homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
 
-            if (!(drugs is null) && !(inventories is null))
-            {
-
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location.Id).SingleOrDefault();
-
-                var inventorydrugs =
-                    (from drug in drugs
-                     join inventory in inventories on drug.Id equals inventory.DrugId
-                     join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
-                     select drug
-                     );
-
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
-
-                if (inventorydrugs.Count() == 0)
+                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    "WHERE [UzimaInventory].StatusId=2 " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate" :
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    $"WHERE [UzimaInventory].StatusId=2 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
-
-                    ViewBag.Message = "You have no items in inventory to dispense. (Please input item as recieved before dispensing.)";
-                    return View("Info");
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+                    return View();
                 }
             }
-
-            if (!(locations is null) && !(locationTypes is null))
-            {
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location);
-
-                ViewBag.LocationDispensed = new SelectList(userhomelocation, "Id", "LocationName");
-            }
-            return View();
         }
 
+        // GET: Order/DispenseItem
+        public ActionResult DispenseItem(int id, int qty)
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                ViewBag.Quantity = qty;
+                var inventory = (from i in uzima.UzimaDrugs where i.Id == id select i).Single();
+                ViewBag.Drug = inventory;
+
+                var locations = uzima.UzimaLocations.ToList();
+                var users = uzima.AspNetUsers.ToList();
+                if (!(locations is null))
+                {
+
+                    var userhomelocation = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                        (from location in locations select location) :
+                       (from location in locations
+                        join user in users on location.LocationName equals user.HomePharmacy
+                        where user.Username == User.Identity.Name
+                        select location);
+
+                    ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
+                }
+
+                return View();
+            }
+        }
 
         // POST: Order/DispenseItem
         [HttpPost]
-        public async Task<ActionResult> DispenseItem(String txtQty, UzimaInventory model)
+        public async Task<ActionResult> DispenseItem(String drugname, String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -474,7 +440,7 @@ namespace PTGApplication.Controllers
 
                         id =
                             (from drug in uzima.UzimaInventories
-                             where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
+                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
@@ -511,70 +477,68 @@ namespace PTGApplication.Controllers
             return RedirectToAction("DispenseItem");
         }
 
-
-        // GET: Order/DestroyItem
-        public ActionResult DestroyItem()
+        // GET: Order/SelectDispenseOrder
+        public ActionResult SelectDispenseOrder()
         {
-            IEnumerable<UzimaDrug> drugs;
-            IEnumerable<UzimaLocation> locations;
-            IEnumerable<UzimaInventory> inventories;
-            IEnumerable<UzimaLocationType> locationTypes;
-            IEnumerable<AspNetUser> users;
-
+            AspNetUser user;
+            UzimaLocationType homePharmacy;
             using (var uzima = new UzimaRxEntities())
             {
-                drugs = uzima.UzimaDrugs.ToList();
-                locations = uzima.UzimaLocations.ToList();
-                inventories = uzima.UzimaInventories.ToList();
-                locationTypes = uzima.UzimaLocationTypes.ToList();
-                users = uzima.AspNetUsers.ToList();
-            }
+                var userId = User.Identity.GetUserId();
+                user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
+                homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
 
-            if (!(drugs is null) && !(inventories is null))
-            {
-
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location.Id).SingleOrDefault();
-
-                var inventorydrugs =
-                    (from drug in drugs
-                     join inventory in inventories on drug.Id equals inventory.DrugId
-                     join location in locations on inventory.FutureLocationId equals location.Id
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where drug.Id == inventory.DrugId && inventory.StatusId == 0 && inventory.FutureLocationId == userhomelocation
-                     select drug
-                     );
-
-                ViewBag.Drugs = new SelectList(inventorydrugs.Distinct(), "Id", "DrugName");
-
-                if (inventorydrugs.Count() == 0)
+                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    "WHERE [UzimaInventory].StatusId=0 " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate" :
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
-
-                    ViewBag.Message = "You have no items in inventory to destroy. (If items were destroyed in transit, please input as recieved and then destroy.)";
-                    return View("Info");
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+                    return View();
                 }
             }
+        }
 
-            if (!(locations is null) && !(locationTypes is null))
+
+        // GET: Order/DestroyItem
+        public ActionResult DestroyItem(int id, int qty)
+        {
+            using (var uzima = new UzimaRxEntities())
             {
-                var userhomelocation =
-                    (from location in locations
-                     join user in users on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location);
+                ViewBag.Quantity = qty;
+                var inventory = (from i in uzima.UzimaDrugs where i.Id == id select i).Single();
+                ViewBag.Drug = inventory;
 
-                ViewBag.LocationDestroyed = new SelectList(userhomelocation, "Id", "LocationName");
+                var locations = uzima.UzimaLocations.ToList();
+                var users = uzima.AspNetUsers.ToList();
+                if (!(locations is null))
+                {
+
+                    var userhomelocation = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                        (from location in locations select location) :
+                       (from location in locations
+                        join user in users on location.LocationName equals user.HomePharmacy
+                        where user.Username == User.Identity.Name
+                        select location);
+
+                    ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
+                }
+
+                return View();
             }
-            return View();
         }
 
 
         // POST: Order/DestroyOrder
         [HttpPost]
-        public async Task<ActionResult> DestroyItem(String txtQty, UzimaInventory model)
+        public async Task<ActionResult> DestroyItem(String drugname, String txtQty, UzimaInventory model)
         {
 
             int id;
@@ -600,7 +564,7 @@ namespace PTGApplication.Controllers
 
                         id =
                             (from drug in uzima.UzimaInventories
-                             where drug.StatusId == 0 && model.DrugId == drug.DrugId && drug.FutureLocationId == userhomelocation
+                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
                              select drug.Id).FirstOrDefault();
 
 
@@ -637,5 +601,33 @@ namespace PTGApplication.Controllers
             return RedirectToAction("DestroyItem");
         }
 
+        // GET: Order/SelectDestroyOrder
+        public ActionResult SelectDestroyOrder()
+        {
+            AspNetUser user;
+            UzimaLocationType homePharmacy;
+            using (var uzima = new UzimaRxEntities())
+            {
+                var userId = User.Identity.GetUserId();
+                user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
+                homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
+
+                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    "WHERE [UzimaInventory].StatusId=0 " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate" :
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate";
+                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
+                {
+                    ViewBag.Columns = dataSet.Tables[0].Columns;
+                    ViewBag.Data = dataSet.Tables[0].Rows;
+                    return View();
+                }
+            }
+        }
     }
 }
