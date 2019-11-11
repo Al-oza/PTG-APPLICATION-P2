@@ -15,7 +15,8 @@ namespace PTGApplication.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            TempData["UserRole"] = User.IsInRole(Properties.UserRoles.PharmacyManager);
+            TempData["UserRoleAdmin"] = User.IsInRole(Properties.UserRoles.PharmacyManager);
+            TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
             return View();
         }
 

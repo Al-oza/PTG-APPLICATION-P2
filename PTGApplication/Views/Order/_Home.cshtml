@@ -1,23 +1,30 @@
 ﻿@{
     ViewBag.Title = "Order";
-    ViewBag.UserRole = TempData["UserRole"];
+    ViewBag.UserRoleAdmin = TempData["UserRoleAdmin"];
+    ViewBag.CSManager = TempData["UserRoleSiteManager"];
 }
 
 <div class="panel-info" style="clear: both;">
     <h3>Order User Guide</h3>
     <br>
-    <p><b><a href="~/Order/SelectPlaceOrder">Place an Order</a></b></p>
-    <p style="margin-left:4em;"> Drugs from warehouse inventory for users location.</p>
-    <br>
-    @if (ViewBag.UserRole)
+    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager)
+    {
+        <p><b><a href="~/Order/SelectPlaceOrder">Place an Order</a></b></p>
+        <p style="margin-left:4em;"> Drugs from warehouse inventory for users location.</p>
+        <br>
+    }
+    @if (ViewBag.UserRoleAdmin)
     {
         <p><b><a href="~/Order/SelectSendOrder">Send an Order</a></b></p>
         <p style="margin-left:4em;"> Submit form for each order that has been sent to requested location.</p>
         <br>
     }
-    <p><b><a href="~/Order/SelectRecieveOrder">Receive an Order</a></b></p>
-    <p style="margin-left:4em;">Once ordered drugs arrive at pharmacy or clinic, user should input on form to add to their locations inventory.</p>
-    <br>
+    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager)
+    {
+        <p><b><a href="~/Order/SelectRecieveOrder">Receive an Order</a></b></p>
+        <p style="margin-left:4em;">Once ordered drugs arrive at pharmacy or clinic, user should input on form to add to their locations inventory.</p>
+        <br>
+    }
     <p><b><a href="~/Order/SelectDispenseOrder">Dispense Inventory</a></b></p>
     <p style="margin-left:4em;">Once an item in inventory has been dispensed, user must update inventory by filling out dispense form.</p>
     <br>
