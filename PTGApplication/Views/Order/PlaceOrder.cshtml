@@ -53,13 +53,12 @@
             $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
         } else {
             $('#btnSubmit').attr('disabled', true)
-            let dname = $('#drugname').val()
-            let tQty = $('#txtQty').val()
             $.ajax({
                 type: 'POST',
-                url: `/Order/PlaceOrder/${dname}?txtQty=${tQty}`,
+                url: `/Order/PlaceOrder/`,
                 data: $('#orderform').serialize(),
-                success: () => location.href= "/Order/OrderPlaced"
+                dataType: 'html',
+                success: () => location.href = "/Order/OrderPlaced"
             })
         }
     })

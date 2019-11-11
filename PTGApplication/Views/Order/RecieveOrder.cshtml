@@ -5,11 +5,8 @@
 
 <h2>Receive an Order</h2>
 
-@using (Html.BeginForm("RecieveOrder", "Order", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal" id="recieveform">
+<form id="recieveform">
+    <div class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-md-2">Drug</label>
@@ -29,27 +26,30 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                <input id="btnSubmit" type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
 
     </div>
-}
+</form>
+
 
 <script>
     let maxQuantity = @(ViewBag.Quantity)
 
-        $('#btnSubmit').click(() => {
+        $('#recieveform').submit(event => {
+            event.preventDefault()
             let inputVal = $('#txtQty').val()
+            console.log(inputVal)
             if (inputVal > maxQuantity) {
                 $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
             } else {
-                let dname = $('#drugname').val()
-                let tQty = $('#txtQty').val()
+                $('#btnSubmit').attr('disabled', true)
                 $.ajax({
                     type: 'POST',
-                    url: `/Order/RecieveOrder/${dname}?txtQty=${tQty}`,
-                    data: $('#recieveform').serialize()
+                    url: `/Order/RecieveOrder/`,
+                    data: $('#recieveform').serialize(),
+                    success: () => location.href='/Order/SelectRecieveOrder'
                 })
             }
         })

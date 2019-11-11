@@ -6,11 +6,8 @@
 
 <h2>Dispense an Item</h2>
 
-@using (Html.BeginForm("DispenseItem", "Order", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal" id="dispenseform">
+<form id="dispenseform">
+    <div class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-md-2">Drug</label>
@@ -35,7 +32,7 @@
         </div>
 
     </div>
-}
+</form>
 
 <script>
     let maxQuantity = @(ViewBag.Quantity)
@@ -46,12 +43,12 @@
         if (inputVal > maxQuantity) {
             $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
         } else {
-            let dname = $('#drugname').val()
-            let tQty = $('#txtQty').val()
+            $('#btnSubmit').attr('disabled', true)
             $.ajax({
                 type: 'POST',
-                url: `/Order/DestroyItem/${dname}?txtQty=${tQty}`,
-                data: $('#dispenseform').serialize()
+                url: `/Order/DispenseItem/`,
+                data: $('#dispenseform').serialize(),
+                success: () => location.href='/Order/SelectDispenseOrder'
             })
         }
     })

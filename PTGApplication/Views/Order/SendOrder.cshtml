@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FutureLocationId, "Location Sent To", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="text" name="futureLocation" class="form-control" placeholder="@ViewBag.LocationNeeded" readonly />
+                <input type="text" name="futureLocation" class="form-control" value="@ViewBag.LocationNeeded" readonly />
                 @Html.ValidationMessageFor(model => model.FutureLocationId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,12 +53,11 @@
             $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
         } else {
             $('#btnSubmit').attr('disabled', true)
-            let dname = $('#drugname').val()
-            let tQty = $('#txtQty').val()
             $.ajax({
                 type: 'POST',
-                url: `/Order/SendOrder/${dname}?txtQty=${tQty}`,
+                url: `/Order/SendOrder/`,
                 data: $('#sendform').serialize(),
+                dataType: 'html',
                 success: () => location.href = "/Order/SelectSendOrder"
             })
         }

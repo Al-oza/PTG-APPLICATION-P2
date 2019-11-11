@@ -160,7 +160,7 @@ namespace PTGApplication.Controllers
             {
                 ViewBag.Quantity = qty;
                 var location = (from l in uzima.UzimaLocations where l.LocationName == futureLocation select l).Single();
-                var inventory = (from i in uzima.UzimaInventories where i.DrugId == id && i.FutureLocationId == location.Id select i).Single();
+                var inventory = (from i in uzima.UzimaInventories where i.DrugId == id && i.FutureLocationId == location.Id select i).FirstOrDefault();
                 ViewBag.Drug = inventory.UzimaDrug;
 
                 var locations = uzima.UzimaLocations.ToList();
@@ -331,8 +331,8 @@ namespace PTGApplication.Controllers
                         uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
-                        entryToEdit.FutureLocationId = model.FutureLocationId;
-                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
+                        entryToEdit.CurrentLocationId = userhomelocation;
+                        entryToEdit.FutureLocationId = userhomelocation;
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 0;
@@ -357,7 +357,7 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("RecieveOrder");
+            return RedirectToAction("SelectRecieveOrder");
         }
 
         // GET: Order/SelectRecieveOrder
@@ -378,7 +378,7 @@ namespace PTGApplication.Controllers
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate" :
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    $"WHERE [UzimaInventory].StatusId=2 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} " +
+                    $"WHERE [UzimaInventory].StatusId=2 AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
@@ -453,8 +453,8 @@ namespace PTGApplication.Controllers
                         uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
-                        entryToEdit.FutureLocationId = model.FutureLocationId;
-                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
+                        entryToEdit.FutureLocationId = userhomelocation;
+                        entryToEdit.CurrentLocationId = userhomelocation;
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 3;
@@ -577,8 +577,8 @@ namespace PTGApplication.Controllers
                         uzima.UzimaInventories.Remove(entryToEdit);
                         await uzima.SaveChangesAsync();
 
-                        entryToEdit.FutureLocationId = model.FutureLocationId;
-                        entryToEdit.CurrentLocationId = (int)model.FutureLocationId;
+                        entryToEdit.FutureLocationId = userhomelocation;
+                        entryToEdit.CurrentLocationId = userhomelocation;
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 4;

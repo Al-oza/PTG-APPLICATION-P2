@@ -8,11 +8,8 @@
 
 <h2>Destroy an Item</h2>
 
-@using (Html.BeginForm("DestroyItem", "Order", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal" id="destroyform">
+<form id="destroyform">
+    <div class="form-horizontal">
 
         <div class="form-group">
             <label class="control-label col-md-2">Drug</label>
@@ -32,29 +29,30 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                <input id="btnSubmit" type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
 
     </div>
-}
+</form>
 
 <script>
     let maxQuantity = @(ViewBag.Quantity)
 
-        $('#btnSubmit').click(() => {
-            let inputVal = $('#txtQty').val()
-            if (inputVal > maxQuantity) {
-                $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
-            } else {
-                let dname = $('#drugname').val()
-                let tQty = $('#txtQty').val()
-                $.ajax({
-                    type: 'POST',
-                    url: `/Order/DestroyItem/${dname}?txtQty=${tQty}`,
-                    data: $('#destroyform').serialize()
-                })
-            }
+    $('#destroyform').submit(event => {
+        event.preventDefault()
+        let inputVal = $('#txtQty').val()
+        if (inputVal > maxQuantity) {
+            $('#msgWarning').text('Must be less than or equal to ' + maxQuantity)
+        } else {
+            $('#btnSubmit').attr('disabled', true)
+            $.ajax({
+                type: 'POST',
+                url: `/Order/DestroyItem/`,
+                data: $('#destroyform').serialize(),
+                success: () => location.href='/Order/SelectDestroyOrder'
+            })
+        }
         })
 </script>
 
