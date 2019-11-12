@@ -245,12 +245,12 @@ namespace PTGApplication.Controllers
                 user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
                 homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
                 var query =
-                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, " +
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, " +
                     "[UzimaLocation].LocationName AS 'Send To', [UzimaInventory].ExpirationDate AS 'Expiration Date' FROM UzimaInventory " +
                     "LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     "LEFT JOIN [UzimaLocation] ON [UzimaInventory].FutureLocationId=[UzimaLocation].Id " +
                     $"WHERE [UzimaInventory].StatusId=1 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} " +
-                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaLocation].LocationName, [UzimaInventory].ExpirationDate";
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaLocation].LocationName, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
                     ViewBag.Columns = dataSet.Tables[0].Columns;
