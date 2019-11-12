@@ -78,7 +78,7 @@ namespace PTGApplication.Controllers
                     $"LocationName as 'Location', ExpirationDate as 'Expiration Date' " +
                     $"From UzimaDrug Join UzimaInventory on UzimaDrug.Id = DrugId Join " +
                     $"UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id WHERE CurrentLocationId=" +
-                    $"{userId} Group by LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
+                    $"{userId} AND statusId = 0 Group by LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
                 {
                     ViewBag.Columns = dataSet.Tables[0].Columns;

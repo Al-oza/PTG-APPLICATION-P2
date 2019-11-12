@@ -45,7 +45,7 @@
                             <li>@Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report")</li>
                             <li>@Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report")</li>
                             <li role="separator" class="divider"></li>
-                            @if (User.IsInRole("PharmaAdmin") || User.IsInRole("CareSiteStaff"))
+                            @if (User.IsInRole("PharmaAdmin") || User.IsInRole("CareSiteManager"))
                             {
                                 <li class="dropdown-header">Dispensed/Destroyed Drug Reports</li>
                                 <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report")</li>
