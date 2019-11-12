@@ -444,10 +444,13 @@ namespace PTGApplication.Controllers
                     for (int i = 0; i < Convert.ToInt32(txtQty); i++)
                     {
 
-                        id =
+                        id = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
                             (from drug in uzima.UzimaInventories
-                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
-                             select drug.Id).FirstOrDefault();
+                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName
+                             select drug.Id).FirstOrDefault()
+                        : (from drug in uzima.UzimaInventories
+                           where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
+                           select drug.Id).FirstOrDefault();
 
 
                         var entryToEdit = uzima.UzimaInventories.Find(id);
@@ -568,10 +571,13 @@ namespace PTGApplication.Controllers
                     for (int i = 0; i < Convert.ToInt32(txtQty); i++)
                     {
 
-                        id =
-                            (from drug in uzima.UzimaInventories
-                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
-                             select drug.Id).FirstOrDefault();
+                        id = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                           (from drug in uzima.UzimaInventories
+                            where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName
+                            select drug.Id).FirstOrDefault()
+                       : (from drug in uzima.UzimaInventories
+                          where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
+                          select drug.Id).FirstOrDefault();
 
 
                         var entryToEdit = uzima.UzimaInventories.Find(id);
