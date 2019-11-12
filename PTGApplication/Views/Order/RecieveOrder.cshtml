@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.Label("Quantity *", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="text" id="txtQty" name="txtQty" class="form-control" placeholder="@ViewBag.Quantity" required>
+                <input type="text" id="txtQty" name="txtQty" class="form-control" placeholder="Quantity Receivable: @ViewBag.Quantity" required>
                 <label id="msgWarning"></label>
                 @Html.ValidationMessage("", new { @class = "text-danger" })
             </div>
