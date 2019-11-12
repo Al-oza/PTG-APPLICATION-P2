@@ -124,14 +124,14 @@ namespace PTGApplication.Controllers
                       select l).Single();
 
                 var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
-                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     "WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].FutureLocationId IS NULL " +
-                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate" :
-                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate" :
+                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homeSupplier.Id} AND [UzimaInventory].FutureLocationId IS NULL " +
-                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaInventory].ExpirationDate";
+                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
                     ViewBag.Columns = dataSet.Tables[0].Columns;
