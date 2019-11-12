@@ -1,12 +1,7 @@
 ﻿using PTGApplication.Models;
 using PTGApplication.Providers;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace PTGApplication.Controllers
 {
@@ -15,6 +10,8 @@ namespace PTGApplication.Controllers
         // GET: Report
         public ActionResult Index()
         {
+            TempData["UserRoleAdmin"] = User.IsInRole(Properties.UserRoles.PharmacyManager);
+            TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
             return View();
         }
 

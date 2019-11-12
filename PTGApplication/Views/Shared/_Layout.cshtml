@@ -35,16 +35,22 @@
                            aria-expanded="false">Reports <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">Order &amp; Inventory Reports</li>
-                            <li>@Html.ActionLink("Pending Orders", "PendingOrders", "Report")</li>
+                            @if (User.IsInRole("PharmaAdmin"))
+                            {
+                                <li>@Html.ActionLink("Pending Orders", "PendingOrders", "Report")</li>
+                            }
                             <li>@Html.ActionLink("Inventory by Location", "Inventory", "Report")</li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Expired/Expiring Drug Reports</li>
                             <li>@Html.ActionLink("Expired Drugs", "ExpiredDrugs", "Report")</li>
                             <li>@Html.ActionLink("Expiring Drugs", "ExpiringDrugs", "Report")</li>
                             <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Dispensed/Destroyed Drug Reports</li>
-                            <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report")</li>
-                            <li>@Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report")</li>
+                            @if (User.IsInRole("PharmaAdmin") || User.IsInRole("CareSiteStaff"))
+                            {
+                                <li class="dropdown-header">Dispensed/Destroyed Drug Reports</li>
+                                <li>@Html.ActionLink("Dispensed Drugs", "DispensedDrugs", "Report")</li>
+                                <li>@Html.ActionLink("Destroyed Drugs", "DestroyedDrugs", "Report")</li>
+                            }
                         </ul>
 
                     </li>
