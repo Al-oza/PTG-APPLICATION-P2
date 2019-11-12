@@ -375,6 +375,51 @@ namespace PTGApplication.Controllers
                 return View("Index");
             }
         }
+        // GET: Pharmacy/ModifyDrugFromDrugList/5
+        public ActionResult ModifyDrugFromList(int id)
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                return View(uzima.UzimaDrugs.SingleOrDefault(inv => inv.Id == id));
+            }
+        }
+
+        // POST: Pharmacy/ModifyDrug
+        [HttpPost]
+        public async Task<ActionResult> ModifyDrugFromList(int id, UzimaDrug model)
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                try
+                {
+                    var drug = (from dr in uzima.UzimaDrugs
+                                where dr.Id == id
+                                select dr).SingleOrDefault();
+                    uzima.UzimaDrugs.Remove(drug);
+                    await uzima.SaveChangesAsync();
+
+                    model.Id = id;
+                    uzima.UzimaDrugs.Add(model);
+
+                    await uzima.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException is null)
+                    {
+                        ViewBag.errorMessage = ex.Message;
+                    }
+                    else
+                    {
+                        ViewBag.errorMessage = "Something went wrong internally";
+                    }
+
+                    return View("Error");
+                }
+
+                return View("Index");
+            }
+        }
 
 
         // GET: Select Drug
