@@ -17,21 +17,35 @@ namespace PTGApplication.Controllers
             return View();
         }
 
+
         // GET: Pharmacy/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Pharmacy/AddInventory
-        public ActionResult AddInventory()
+        public ActionResult SelectAddInventory()
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var drugs = uzima.UzimaDrugs.ToList();
+                return View(uzima.UzimaDrugs.ToList());
+            }
+        }
+
+
+
+        // GET: Pharmacy/AddInventory
+        public ActionResult AddInventory(int id)
+        {
+            using (var uzima = new UzimaRxEntities())
+            {
+                var drugs = (from drug in uzima.UzimaDrugs
+                             where drug.Id == id
+                             select drug).ToList();
+
                 if (!(drugs is null))
                 {
-                    ViewBag.drugs = drugs;
+                    ViewBag.Drug = new SelectList(drugs, "Id", "DrugName");
                 }
 
                 var suppliers =

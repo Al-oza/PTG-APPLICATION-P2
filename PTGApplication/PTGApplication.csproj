@@ -530,6 +530,7 @@
     <Content Include="Views\Order\SelectRecieveOrder.cshtml" />
     <Content Include="Views\Order\SelectDestroyOrder.cshtml" />
     <Content Include="Views\Order\SelectDispenseOrder.cshtml" />
+    <Content Include="Views\Inventory\SelectAddInventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<PTGApplication.Models.UzimaDrug>
+
+@{
+    ViewBag.Title = "Add Inventory";
+}
+
+<h2>Select Drug to Add to Inventory</h2>
+
+
+<table id="tblAddInventory" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Drug Name
+            </th>
+            <th>
+                Barcode
+            </th>
+            <th>
+                Brand Name
+            </th>
+            <th>
+                Application Number
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Manufacturer Location
+            </th>
+            <th>
+                Approval Number
+            </th>
+            <th>
+                Schedule
+            </th>
+            <th>
+                License
+            </th>
+            <th>
+                Ingredients
+            </th>
+            <th>
+                Pack Size
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrugName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufacturerLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.License)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingredients)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackSize)
+            </td>
+            <td>
+                @Html.ActionLink("Add", "AddInventory", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $('#tblAddInventory').DataTable()
+    })
+</script>
