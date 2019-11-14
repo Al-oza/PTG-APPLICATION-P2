@@ -209,7 +209,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return View();
+                return RedirectToAction("SelectDrug");
             }
         }
 
@@ -417,7 +417,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return View("Index");
+                return RedirectToAction("Index","Inventory");
             }
         }
 
