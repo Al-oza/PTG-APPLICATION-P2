@@ -209,7 +209,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction("Index");
+                return View();
             }
         }
 
