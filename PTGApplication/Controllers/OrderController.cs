@@ -483,7 +483,7 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("DispenseItem");
+            return RedirectToAction("SelectDispenseOrder");
         }
 
         // GET: Order/SelectDispenseOrder
@@ -610,7 +610,7 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("DestroyItem");
+            return RedirectToAction("SelectDestroyOrder");
         }
 
         // GET: Order/SelectDestroyOrder

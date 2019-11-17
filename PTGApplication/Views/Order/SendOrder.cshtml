@@ -58,7 +58,7 @@
                 url: `/Order/SendOrder/`,
                 data: $('#sendform').serialize(),
                 dataType: 'html',
-                success: () => location.href = "/Order/SelectSendOrder"
+                success: () => window.location = window.location.protocol + "//" + window.location.host + "/Order/SelectSendOrder"
             })
         }
     })

@@ -48,7 +48,7 @@
                 type: 'POST',
                 url: `/Order/DispenseItem/`,
                 data: $('#dispenseform').serialize(),
-                success: () => location.href='/Order/SelectDispenseOrder'
+                success: () => window.location = window.location.protocol + "//" + window.location.host + "/Order/SelectDispenseOrder"
             })
         }
     })
