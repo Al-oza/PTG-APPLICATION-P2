@@ -53,6 +53,20 @@ namespace PTGApplication.Providers
             }
         }
 
+        public static void ExecuteProcedure(String spname, int id)
+        {
+            using (var connection = GetConnectionPool())
+            using (var cmd = new SqlCommand())
+            {
+                cmd.Connection = connection.DatabaseConnection;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = spname;
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                cmd.ExecuteScalar();
+            }
+        }
+
         public String ConnectionString { get { return _connectionString; } }
         public SqlConnection DatabaseConnection { get; private set; }
 
