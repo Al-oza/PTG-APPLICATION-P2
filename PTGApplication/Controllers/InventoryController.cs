@@ -1,4 +1,5 @@
 ﻿using PTGApplication.Models;
+using PTGApplication.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -230,10 +231,7 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    var inventory = (from inv in uzima.UzimaInventories
-                                     where inv.Id == id
-                                     select inv).SingleOrDefault();
-                    uzima.UzimaInventories.Remove(inventory);
+                    ConnectionPool.ExecuteProcedure("sp_Inventory", model.Id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -352,10 +350,7 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    var drug = (from dr in uzima.UzimaDrugs
-                                where dr.Id == id
-                                select dr).SingleOrDefault();
-                    uzima.UzimaDrugs.Remove(drug);
+                    ConnectionPool.ExecuteProcedure("sp_Drug", id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -417,7 +412,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction("Index","Inventory");
+                return RedirectToAction("Index", "Inventory");
             }
         }
 

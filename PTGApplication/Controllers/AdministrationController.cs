@@ -241,7 +241,7 @@ namespace PTGApplication.Controllers
 
         // POST: Administration/Remove/5
         [HttpPost]
-        public async Task<ActionResult> Remove(string id, ApplicationUser model)
+        public async Task<ActionResult> Remove(string id, AspNetUser model)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -249,9 +249,15 @@ namespace PTGApplication.Controllers
             }
             try
             {
-                var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = await UserManager.FindByIdAsync(id);
-                await UserManager.DeleteAsync(user);
+                using (var uzima = new UzimaRxEntities())
+                {
+                    var UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    var user = await UserManager.FindByIdAsync(id);
+                    await UserManager.DeleteAsync(user);
+                    model.IsActive = false;
+                    uzima.AspNetUsers.Add(model);
+                }
+
             }
             catch
             {
