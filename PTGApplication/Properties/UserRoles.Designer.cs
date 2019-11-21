@@ -86,5 +86,14 @@ namespace PTGApplication.Properties {
                 return ResourceManager.GetString("PharmacyManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SysAdmin.
+        /// </summary>
+        internal static string SystemAdmin {
+            get {
+                return ResourceManager.GetString("SystemAdmin", resourceCulture);
+            }
+        }
     }
 }

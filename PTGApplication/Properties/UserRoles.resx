@@ -126,4 +126,7 @@
   <data name="PharmacyManager" xml:space="preserve">
     <value>PharmaAdmin</value>
   </data>
+  <data name="SystemAdmin" xml:space="preserve">
+    <value>SysAdmin</value>
+  </data>
 </root>

@@ -28,7 +28,7 @@ namespace PTGApplication.Controllers
         // GET: Administration
         public ActionResult Index()
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
@@ -39,16 +39,32 @@ namespace PTGApplication.Controllers
         // GET: Administration/Create
         public ActionResult AddUser()
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             using (var uzima = new UzimaRxEntities())
             {
-                var locations =
-                    (from location in uzima.UzimaLocations
-                     join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
-                     select location).ToList();
+                System.Collections.Generic.List<UzimaLocation> locations;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    locations =
+                        (from location in uzima.UzimaLocations
+                         join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                         select location).ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    locations = (from location in uzima.UzimaLocations
+                                 join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                                 where type.LocationId == hp.Id || type.Supplier == hp.Id
+                                 select location).ToList();
+                }
+
 
                 var roles = uzima.AspNetRoles.ToList();
 
@@ -70,7 +86,7 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUser(string ddlRoles, string ddlLocations, RegisterViewModel model)
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
@@ -145,15 +161,31 @@ namespace PTGApplication.Controllers
         // GET: Administration/Modify/5
         public ActionResult Modify(string id)
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
             using (var uzima = new UzimaRxEntities())
             {
-                var locations = (from sites in uzima.UzimaLocations
-                                 join types in uzima.UzimaLocationTypes on sites.Id equals types.LocationId
-                                 select sites).ToList();
+                System.Collections.Generic.List<UzimaLocation> locations;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    locations =
+                        (from location in uzima.UzimaLocations
+                         join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                         select location).ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    locations = (from location in uzima.UzimaLocations
+                                 join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                                 where type.LocationId == hp.Id || type.Supplier == hp.Id
+                                 select location).ToList();
+                }
 
                 var roles = uzima.AspNetRoles.ToList();
 
@@ -185,7 +217,7 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> Modify(string ddlRoles, string id, AspNetUser model)
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
@@ -227,7 +259,7 @@ namespace PTGApplication.Controllers
         // GET: Administration/Remove/5
         public ActionResult Remove(string id)
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
@@ -243,7 +275,7 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> Remove(string id, AspNetUser model)
         {
-            if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
+            if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
             {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
@@ -282,7 +314,30 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                return View(uzima.AspNetUsers.ToList());
+                if (!User.IsInRole(Properties.UserRoles.PharmacyManager) && !User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                }
+
+                System.Collections.Generic.List<AspNetUser> users;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    users = uzima.AspNetUsers.ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    users = (from user in uzima.AspNetUsers
+                             join l in uzima.UzimaLocations on user.HomePharmacy equals l.LocationName
+                             join type in uzima.UzimaLocationTypes on l.Id equals type.LocationId
+                             where user.HomePharmacy == hp.LocationName || type.Supplier == hp.Id
+                             select user).ToList();
+                }
+
+                return View(users);
             }
         }
     }
