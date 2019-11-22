@@ -248,7 +248,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return View("Index");
+                return RedirectToAction("SelectInventory");
             }
         }
 
@@ -367,7 +367,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return View("Index");
+                return RedirectToAction("SelectDrug");
             }
         }
         // GET: Pharmacy/ModifyDrugFromDrugList/5
