@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Request Location";
+}
+
+<h2>Request Location</h2>
+
+<form action="/Location/RequestLocation" method="post">
+    <div class="form-group">
+        <label class="control-label" for="name">Location Name *</label>
+        <input class="form-control" id="name" name="name" type="text" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="address">Location Address *</label>
+        <input class="form-control" id="address" name="address" type="text" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="phone">Location Phone *</label>
+        <input class="form-control" id="phone" name="phone" type="text" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="name">Location Type *</label><br />
+        <label class="checkbox-inline"><input class="radio" id="rbnClinic" name="type" type="radio" value="Clinic" />Clinic</label>
+        <label class="checkbox-inline"><input class="radio" id="rbnHospital" name="type" type="radio" value="Hospital" />Hospital</label>
+        <label class="checkbox-inline"><input class="radio" id="rbnSupplier" name="type" type="radio" value="Supplier" />Supplier</label>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="supplier">Supplier</label>
+        <input class="form-control" id="supplier" name="supplier" type="text" />
+    </div>
+    <div class="form-group">
+        <input class="btn btn-success" type="submit" />
+    </div>
+</form>
+
+<script>
+    $(document).ready(() => {
+        if ($('#rbnSupplier').prop('checked')) {
+            alert('checked')
+            $('#supplier').attr('disabled', true)
+        } else {
+            $('#supplier').removeAttr('disabled')
+        }
+    })
+</script>

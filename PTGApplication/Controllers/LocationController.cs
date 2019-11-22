@@ -1,6 +1,10 @@
-﻿using PTGApplication.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PTGApplication.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
@@ -183,6 +187,31 @@ namespace PTGApplication.Controllers
         public ActionResult LocationAdded()
         {
             return View();
+        }
+        // GET: RequestLocation
+        public ActionResult RequestLocation()
+        {
+            return View();
+        }
+
+        // POST
+        [HttpPost]
+        public async Task<ActionResult> RequestLocation(string name, string address, string phone, string type, string supplier)
+        {
+            var msg = new IdentityMessage
+            {
+                Destination = Properties.SharedResources.Email;
+                Body = $"Dear SysAdmin,<br /><br />" +
+                $"A request for a new {type} location has been submitted:<br />" +
+                $"Please add a new {type} location with the details that follow.<br />" +
+                $"<pre> Name: {name}" +
+                $" Address: {address}" +
+                $" Phone: {phone}" +
+                $" Supplier: {((supplier == "supplier") ? "NULL" : supplier)}</pre>",
+                Subject = "New Location Requested"
+            };
+            await new EmailService().SendAsync(msg);
+            return RedirectToAction("Index","Home");
         }
     }
 }

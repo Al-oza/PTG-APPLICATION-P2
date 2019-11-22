@@ -532,6 +532,7 @@
     <Content Include="Views\Order\SelectDispenseOrder.cshtml" />
     <Content Include="Views\Inventory\SelectAddInventory.cshtml" />
     <Content Include="Views\Inventory\ModifyDrugFromList.cshtml" />
+    <Content Include="Views\Location\RequestLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
