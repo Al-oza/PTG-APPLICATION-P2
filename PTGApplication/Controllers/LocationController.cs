@@ -200,7 +200,7 @@ namespace PTGApplication.Controllers
         {
             var msg = new IdentityMessage
             {
-                Destination = Properties.SharedResources.Email;
+                Destination = Properties.SharedResources.Email,
                 Body = $"Dear SysAdmin,<br /><br />" +
                 $"A request for a new {type} location has been submitted:<br />" +
                 $"Please add a new {type} location with the details that follow.<br />" +
