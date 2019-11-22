@@ -33,13 +33,22 @@ namespace PTGApplication.Controllers
                 var users = uzima.AspNetUsers.ToList();
                 if (!(locations is null))
                 {
-
-                    var userhomelocation = (User.IsInRole(Properties.UserRoles.PharmacyManager)) ?
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    var userhomelocation = (User.IsInRole(Properties.UserRoles.SystemAdmin)) ?
                         (from location in locations select location) :
+                        (User.IsInRole(Properties.UserRoles.CareSiteInventoryManager)) ?
                        (from location in locations
                         join user in users on location.LocationName equals user.HomePharmacy
                         where user.Username == User.Identity.Name
-                        select location);
+                        select location) :
+                        (from location in uzima.UzimaLocations
+                         join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                         where type.LocationId == hp.Id || type.Supplier == hp.Id
+                         select location).ToList();
+                    ;
 
                     ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
                 }
@@ -102,7 +111,7 @@ namespace PTGApplication.Controllers
                 return View("Error");
             }
 
-            return RedirectToAction("OrderPlaced");
+            return RedirectToAction("SelectPlaceOrder");
         }
 
         // GET: Order/SelectPlaceOrder

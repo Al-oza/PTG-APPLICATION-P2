@@ -20,17 +20,29 @@ namespace PTGApplication.Controllers
         }
 
 
-        // GET: Pharmacy/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         public ActionResult SelectAddInventory()
         {
             using (var uzima = new UzimaRxEntities())
             {
-                return View(uzima.UzimaDrugs.ToList());
+                System.Collections.Generic.List<UzimaInventory> drugs;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    drugs =
+                        (from inventory in uzima.UzimaInventories
+                         select inventory).ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    drugs = (from inventory in uzima.UzimaInventories
+                                 join type in uzima.UzimaLocationTypes on inventory.CurrentLocationId equals type.LocationId
+                                 where inventory.CurrentLocationId == hp.Id || type.Supplier == hp.Id
+                                 select inventory).ToList();
+                }
+                return View(drugs);
             }
         }
 
@@ -50,11 +62,26 @@ namespace PTGApplication.Controllers
                     ViewBag.Drug = new SelectList(drugs, "Id", "DrugName");
                 }
 
-                var suppliers =
-                    (from location in uzima.UzimaLocations
-                     join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
-                     where type.Supplier == null
-                     select location).ToList();
+                System.Collections.Generic.List<UzimaLocation> suppliers;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    suppliers =
+                        (from location in uzima.UzimaLocations
+                         join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                         where type.Supplier == null
+                         select location).ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    suppliers = (from location in uzima.UzimaLocations
+                                 join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                                 where type.Supplier == null && type.LocationId == hp.Id
+                                 select location).ToList();
+                }
 
                 if (!(suppliers is null))
                 {
@@ -127,34 +154,36 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                var currentInventory = (from inventory in uzima.UzimaInventories
-                                        where inventory.Id == id
-                                        select inventory).SingleOrDefault();
+                var currentInventory = (from inventory in uzima.UzimaInventories where inventory.Id == id select inventory).Single();
+                var currentDrug = (from drug in uzima.UzimaDrugs where drug.Id == currentInventory.DrugId select drug).Single();
 
-                var drugs = uzima.UzimaDrugs.ToList();
-                if (!(drugs is null))
-                {
-                    var currentDrug = drugs.Where(drug => drug.Id == id);
-                    ViewBag.Drugs = new SelectList(drugs, "Id", "DrugName", currentDrug);
-                }
-
-                var users = uzima.AspNetUsers.ToList();
-                if (!(users is null))
-                {
-                    var currentUser = users.Where(user => user.Username == currentInventory.LastModifiedBy).SingleOrDefault();
-                    ViewBag.Users = new SelectList(users, "Id", "Username", currentUser);
-                }
+                ViewBag.Drugs = new SelectList(new[] { currentDrug }, "Id", "DrugName");
 
                 var statuses = uzima.UzimaStatus.ToList();
                 if (!(statuses is null))
                 {
-                    var currentStatus = (from status in uzima.UzimaStatus
-                                         where status.Id == currentInventory.StatusId
-                                         select status.Status).SingleOrDefault();
-                    ViewBag.Statuses = new SelectList(statuses, "Id", "Status", currentStatus);
+                    ViewBag.Statuses = new SelectList(statuses, "Id", "Status", currentInventory.StatusId);
                 }
 
-                var locations = uzima.UzimaLocations.ToList();
+                System.Collections.Generic.List<UzimaLocation> locations;
+                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
+                {
+                    locations =
+                        (from location in uzima.UzimaLocations
+                         join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                         select location).ToList();
+                }
+                else
+                {
+                    var hp = (from location in uzima.UzimaLocations
+                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                              where user.Username == User.Identity.Name
+                              select location).Single();
+                    locations = (from location in uzima.UzimaLocations
+                                 join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                                 where type.LocationId == hp.Id || type.Supplier == hp.Id
+                                 select location).ToList();
+                }
                 if (!(locations is null))
                 {
                     ViewBag.Locations = locations;
@@ -188,10 +217,14 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
+                    var userid = (from user in uzima.AspNetUsers
+                                  where user.Username == User.Identity.Name
+                                  select user.Id).Single();
                     uzima.UzimaInventories.Remove(
                         (from inventory in uzima.UzimaInventories
                          where inventory.Id == model.Id
                          select inventory).SingleOrDefault());
+                    model.LastModifiedBy = userid;
                     uzima.UzimaInventories.Add(model);
 
                     await uzima.SaveChangesAsync();
@@ -249,7 +282,11 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
+<<<<<<< HEAD
                 return RedirectToAction("SelectInventory");
+=======
+                return RedirectToAction("Index");
+>>>>>>> INVENTORY IS DONE
             }
         }
 
@@ -368,7 +405,11 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
+<<<<<<< HEAD
                 return RedirectToAction("SelectDrug");
+=======
+                return RedirectToAction("Index");
+>>>>>>> INVENTORY IS DONE
             }
         }
         // GET: Pharmacy/ModifyDrugFromDrugList/5
