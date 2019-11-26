@@ -2,24 +2,26 @@
     ViewBag.Title = "Order";
     ViewBag.UserRoleAdmin = TempData["UserRoleAdmin"];
     ViewBag.CSManager = TempData["UserRoleSiteManager"];
+    ViewBag.SysAdmin = TempData["UserRoleSysAdmin"];
+    
 }
 
 <div class="panel-info" style="clear: both;">
     <h3>Order User Guide</h3>
     <br>
-    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager)
+    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager || ViewBag.SysAdmin)
     {
         <p><b><a href="~/Order/SelectPlaceOrder">Place an Order</a></b></p>
         <p style="margin-left:4em;"> Drugs from warehouse inventory for users location.</p>
         <br>
     }
-    @if (ViewBag.UserRoleAdmin)
+    @if (ViewBag.UserRoleAdmin|| ViewBag.SysAdmin)
     {
         <p><b><a href="~/Order/SelectSendOrder">Send an Order</a></b></p>
         <p style="margin-left:4em;"> Submit form for each order that has been sent to requested location.</p>
         <br>
     }
-    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager)
+    @if (ViewBag.UserRoleAdmin || ViewBag.CSManager || ViewBag.SysAdmin)
     {
         <p><b><a href="~/Order/SelectRecieveOrder">Receive an Order</a></b></p>
         <p style="margin-left:4em;">Once ordered drugs arrive at pharmacy or clinic, user should input on form to add to their locations inventory.</p>

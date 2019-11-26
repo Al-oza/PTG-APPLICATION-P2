@@ -17,6 +17,7 @@ namespace PTGApplication.Controllers
         {
             TempData["UserRoleAdmin"] = User.IsInRole(Properties.UserRoles.PharmacyManager);
             TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
+            TempData["UserRoleSysAdmin"] = User.IsInRole(Properties.UserRoles.SystemAdmin);
             return View();
         }
 
