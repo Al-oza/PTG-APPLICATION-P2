@@ -247,28 +247,47 @@ namespace PTGApplication.Controllers
         // GET: Order/SelectSendOrder
         public ActionResult SelectSendOrder()
         {
-            AspNetUser user;
-            UzimaLocationType homePharmacy;
+            System.Collections.Generic.List<UzimaLocation> locationId;
+            string query;
+            string locationIds = "(";
             using (var uzima = new UzimaRxEntities())
             {
-                var userId = User.Identity.GetUserId();
-                user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
-                homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
-                var query =
-                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, " +
-                    "[UzimaLocation].LocationName AS 'Send To', [UzimaInventory].ExpirationDate AS 'Expiration Date' FROM UzimaInventory " +
-                    "LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    "LEFT JOIN [UzimaLocation] ON [UzimaInventory].FutureLocationId=[UzimaLocation].Id " +
-                    $"WHERE [UzimaInventory].StatusId=1 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} " +
-                    "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaLocation].LocationName, [UzimaInventory].ExpirationDate";
-                using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
+                var hp = (from location in uzima.UzimaLocations
+                          join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                          where user.Username == User.Identity.Name
+                          select location).Single();
+                locationId = (from location in uzima.UzimaLocations
+                              join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
+                              where type.LocationId == hp.Id || type.Supplier == hp.Id
+                              select location).ToList();
+
+                for (int i = 0; i < locationId.Count(); i++)
                 {
-                    ViewBag.Columns = dataSet.Tables[0].Columns;
-                    ViewBag.Data = dataSet.Tables[0].Rows;
-                    return View();
+                    if (i == locationId.Count() - 1)
+                    {
+                        locationIds += locationId[i].Id + ")";
+                    }
+                    else
+                    {
+                        locationIds += locationId[i].Id + ", ";
+                    }
                 }
+                query =
+                "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, " +
+                "[UzimaLocation].LocationName AS 'Send To', [UzimaInventory].ExpirationDate AS 'Expiration Date' FROM UzimaInventory " +
+                "LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
+                "LEFT JOIN [UzimaLocation] ON [UzimaInventory].FutureLocationId=[UzimaLocation].Id " +
+                $"WHERE [UzimaInventory].StatusId=1 AND [UzimaInventory].FutureLocationId in {locationIds} " +
+                "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaLocation].LocationName, [UzimaInventory].ExpirationDate";
+            }
+            using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
+            {
+                ViewBag.Columns = dataSet.Tables[0].Columns;
+                ViewBag.Data = dataSet.Tables[0].Rows;
+                return View();
             }
         }
+
 
         // GET: OrderSent
         public ActionResult OrderSent()
