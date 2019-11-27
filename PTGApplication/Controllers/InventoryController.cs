@@ -24,24 +24,8 @@ namespace PTGApplication.Controllers
         {
             using (var uzima = new UzimaRxEntities())
             {
-                System.Collections.Generic.List<UzimaInventory> drugs;
-                if (User.IsInRole(Properties.UserRoles.SystemAdmin))
-                {
-                    drugs =
-                        (from inventory in uzima.UzimaInventories
-                         select inventory).ToList();
-                }
-                else
-                {
-                    var hp = (from location in uzima.UzimaLocations
-                              join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
-                              where user.Username == User.Identity.Name
-                              select location).Single();
-                    drugs = (from inventory in uzima.UzimaInventories
-                                 join type in uzima.UzimaLocationTypes on inventory.CurrentLocationId equals type.LocationId
-                                 where inventory.CurrentLocationId == hp.Id || type.Supplier == hp.Id
-                                 select inventory).ToList();
-                }
+                System.Collections.Generic.List<UzimaDrug> drugs;
+                drugs = uzima.UzimaDrugs.ToList();
                 return View(drugs);
             }
         }

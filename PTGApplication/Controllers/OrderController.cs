@@ -131,9 +131,9 @@ namespace PTGApplication.Controllers
                    : (from l in uzima.UzimaLocations
                       join lt in uzima.UzimaLocationTypes on l.Id equals lt.LocationId
                       where lt.LocationId == homePharmacy.Supplier
-                      select l).Single();
+                      select l).SingleOrDefault();
 
-                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
+                var query = User.IsInRole(Properties.UserRoles.PharmacyManager) || homeSupplier is null ?
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     "WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].FutureLocationId IS NULL " +
