@@ -266,11 +266,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-<<<<<<< HEAD
                 return RedirectToAction("SelectInventory");
-=======
-                return RedirectToAction("Index");
->>>>>>> INVENTORY IS DONE
             }
         }
 
@@ -389,11 +385,8 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-<<<<<<< HEAD
+
                 return RedirectToAction("SelectDrug");
-=======
-                return RedirectToAction("Index");
->>>>>>> INVENTORY IS DONE
             }
         }
         // GET: Pharmacy/ModifyDrugFromDrugList/5
