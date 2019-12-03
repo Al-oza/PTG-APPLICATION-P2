@@ -73,7 +73,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Barcode" Type="nvarchar(max)" />
           <Property Name="DrugName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BrandName" Type="nvarchar(max)" />
@@ -90,10 +90,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DateOrdered" Type="datetime" Nullable="false" />
           <Property Name="LastModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="DrugId" Type="int" Nullable="false" />
+          <Property Name="DrugId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="CurrentLocationId" Type="int" Nullable="false" />
           <Property Name="FutureLocationId" Type="int" />
@@ -103,7 +103,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="LocationName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
@@ -112,8 +112,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LocationId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="LocationType" Type="nvarchar(max)" />
           <Property Name="Supplier" Type="int" />
         </EntityType>
