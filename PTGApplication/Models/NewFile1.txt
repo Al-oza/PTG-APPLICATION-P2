@@ -5,6 +5,8 @@ TODO:
 --Location Error
 --Remove 
 strings with ''
-Place Order (expiration on all table)
-converting ids to string in queries
+Place Order (expiration on all table) -NICK
+Inventory report query off (need to convert) -CARLI
+converting ids to string in queries -CARLI
+Remove User doesn't work 
 
