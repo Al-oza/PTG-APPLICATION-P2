@@ -123,7 +123,7 @@ namespace PTGApplication.Controllers
                 user = (from u in uzima.AspNetUsers where u.Id == userId select u).Single();
                 homePharmacy = (from lt in uzima.UzimaLocationTypes join l in uzima.UzimaLocations on lt.LocationId equals l.Id where l.LocationName == user.HomePharmacy select lt).Single();
                 homeSupplier = User.IsInRole(Properties.UserRoles.PharmacyManager) ?
-                    (from l in uzima.UzimaLocations where l.Id == homePharmacy.Id select l).Single()
+                    (from l in uzima.UzimaLocations where l.Id == homePharmacy.Id select l).SingleOrDefault()
                    : (from l in uzima.UzimaLocations
                       join lt in uzima.UzimaLocationTypes on l.Id equals lt.LocationId
                       where lt.LocationId == homePharmacy.Supplier
@@ -136,7 +136,9 @@ namespace PTGApplication.Controllers
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate" :
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homeSupplier.Id} AND [UzimaInventory].FutureLocationId IS NULL " +
+                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId=" +
+                    "'" + $"{homeSupplier.Id}" + "' " +
+                    "AND [UzimaInventory].FutureLocationId IS NULL " +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
@@ -156,7 +158,7 @@ namespace PTGApplication.Controllers
 
 
         // GET: Order/SendOrder
-        public ActionResult SendOrder(Guid id, int qty, string futureLocation)
+        public ActionResult SendOrder(Guid id, int qty, string futureLocation, string expiration)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -169,6 +171,7 @@ namespace PTGApplication.Controllers
                 var location = (from l in uzima.UzimaLocations where l.LocationName == futureLocation select l).Single();
                 var inventory = (from i in uzima.UzimaInventories where i.DrugId == id && i.FutureLocationId == location.Id select i).FirstOrDefault();
                 ViewBag.Drug = inventory.UzimaDrug;
+                ViewBag.ExpirationDate = expiration;
 
                 var locations = uzima.UzimaLocations.ToList();
                 var users = uzima.AspNetUsers.ToList();
@@ -183,10 +186,11 @@ namespace PTGApplication.Controllers
 
         // POST: Order/SendOrder
         [HttpPost]
-        public async Task<ActionResult> SendOrder(String drugname, String txtQty, string futureLocation, UzimaInventory model)
+        public async Task<ActionResult> SendOrder(String drugname, String txtQty, string futureLocation, string txtExpiration, UzimaInventory model)
         {
             Guid id;
             string userid;
+            var expiration = DateTime.Parse(txtExpiration);
 
             try
             {
@@ -203,10 +207,8 @@ namespace PTGApplication.Controllers
                         id =
                             (from drug in uzima.UzimaInventories
                              join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
-                             where location.Supplier == null && drug.StatusId == 1 && drugname == drug.UzimaDrug.DrugName
+                             where location.Supplier == null && drug.StatusId == 1 && drugname == drug.UzimaDrug.DrugName && expiration == drug.ExpirationDate
                              select drug.Id).FirstOrDefault();
-
-
 
                         var entryToEdit = uzima.UzimaInventories.Find(id);
                         uzima.UzimaInventories.Remove(entryToEdit);
@@ -216,7 +218,6 @@ namespace PTGApplication.Controllers
                         entryToEdit.DateOrdered = DateTime.Now;
                         entryToEdit.LastModifiedBy = userid;
                         entryToEdit.StatusId = 2;
-
 
                         uzima.UzimaInventories.Add(entryToEdit);
                         await uzima.SaveChangesAsync();
@@ -260,11 +261,11 @@ namespace PTGApplication.Controllers
                 {
                     if (i == locationId.Count() - 1)
                     {
-                        locationIds += locationId[i].Id + ")";
+                        locationIds += ("'" + locationId[i].Id + "')");
                     }
                     else
                     {
-                        locationIds += locationId[i].Id + ", ";
+                        locationIds += ("'" + locationId[i].Id + "', ");
                     }
                 }
                 query =
@@ -291,13 +292,14 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Order/RecieveOrder
-        public ActionResult RecieveOrder(Guid id, int qty)
+        public ActionResult RecieveOrder(Guid id, int qty, string expiration)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 ViewBag.Quantity = qty;
                 var inventory = (from i in uzima.UzimaDrugs where i.Id == id select i).Single();
                 ViewBag.Drug = inventory;
+                ViewBag.ExpirationDate = expiration;
 
                 var locations = uzima.UzimaLocations.ToList();
                 var users = uzima.AspNetUsers.ToList();
@@ -321,10 +323,11 @@ namespace PTGApplication.Controllers
 
         // POST: Order/RecieveOrder
         [HttpPost]
-        public async Task<ActionResult> RecieveOrder(String drugname, String txtQty, UzimaInventory model)
+        public async Task<ActionResult> RecieveOrder(String drugname, String txtQty, String txtExpiration, UzimaInventory model)
         {
             Guid id;
             string userid;
+            var expiration = DateTime.Parse(txtExpiration);
 
             try
             {
@@ -346,9 +349,8 @@ namespace PTGApplication.Controllers
                         id =
                             (from drug in uzima.UzimaInventories
                              join location in uzima.UzimaLocationTypes on drug.CurrentLocationId equals location.LocationId
-                             where drug.StatusId == 2 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
+                             where drug.StatusId == 2 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation && drug.ExpirationDate == expiration
                              select drug.Id).FirstOrDefault();
-
 
                         var entryToEdit = uzima.UzimaInventories.Find(id);
                         uzima.UzimaInventories.Remove(entryToEdit);
@@ -401,7 +403,7 @@ namespace PTGApplication.Controllers
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate" :
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    $"WHERE [UzimaInventory].StatusId=2 AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
+                    $"WHERE [UzimaInventory].StatusId=2 AND [UzimaInventory].FutureLocationId=" +
                     "'" + $"{homePharmacy.LocationId}" + "' " +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))

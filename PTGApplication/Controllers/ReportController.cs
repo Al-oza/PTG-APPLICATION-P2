@@ -42,11 +42,11 @@ namespace PTGApplication.Controllers
                 {
                     if (i == locationId.Count() - 1)
                     {
-                        locationIds += locationId[i].Id + ")";
+                        locationIds += ("'" + locationId[i].Id + "')");
                     }
                     else
                     {
-                        locationIds += locationId[i].Id + ", ";
+                        locationIds += ("'" + locationId[i].Id + "', ");
                     }
                 }
                 query = "select UzimaDrug.DrugName AS 'Drug', COUNT(*) AS 'Quantity', " +
@@ -101,11 +101,11 @@ namespace PTGApplication.Controllers
                     {
                         if (i == locationId.Count() - 1)
                         {
-                            locationIds += locationId[i].Id + ")";
+                            locationIds += ("'" + locationId[i].Id + "')");
                         }
                         else
                         {
-                            locationIds += locationId[i].Id + ", ";
+                            locationIds += ("'" + locationId[i].Id + "', ");
                         }
                     }
                     query = $"Select DrugName as 'Drug',Count(DrugId) as 'Quantity', LocationName as 'Current Location',ExpirationDate as 'Expired " +
@@ -160,11 +160,11 @@ namespace PTGApplication.Controllers
                     {
                         if (i == locationId.Count() - 1)
                         {
-                            locationIds += locationId[i].Id + ")";
+                            locationIds += ("'" + locationId[i].Id + "')");
                         }
                         else
                         {
-                            locationIds += locationId[i].Id + ", ";
+                            locationIds += ("'" + locationId[i].Id + "', ");
                         }
                     }
                     query = "Select DrugName as 'Drug', Count(DrugId) as 'Quantity', " +
@@ -221,14 +221,14 @@ namespace PTGApplication.Controllers
                     {
                         if (i == locationId.Count() - 1)
                         {
-                            locationIds += locationId[i].Id + ")";
+                            locationIds += ("'" + locationId[i].Id + "')");
                         }
                         else
                         {
-                            locationIds += locationId[i].Id + ", ";
+                            locationIds += ("'" + locationId[i].Id + "', ");
                         }
                     }
-                    query = $"Select DrugName as 'Drug', Count(DrugId) as 'Quantity', LocationName as 'Current Location',ExpirationDate as 'Expiring On' from UzimaInventory " +
+                    query = "Select DrugName as 'Drug', Count(DrugId) as 'Quantity', LocationName as 'Current Location',ExpirationDate as 'Expiring On' from UzimaInventory " +
                        "join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                        "where ExpirationDate <= dateadd(dd, 120, getdate()) and ExpirationDate > CURRENT_TIMESTAMP and StatusId IN(0, 1, 2) " +
                        $"and CurrentLocationId IN {locationIds}" +
@@ -279,18 +279,18 @@ namespace PTGApplication.Controllers
                     {
                         if (i == locationId.Count() - 1)
                         {
-                            locationIds += locationId[i].Id + ")";
+                            locationIds += ("'" + locationId[i].Id + "')");
                         }
                         else
                         {
-                            locationIds += locationId[i].Id + ", ";
+                            locationIds += ("'" + locationId[i].Id + "', ");
                         }
                     }
                     query = $"Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
-                    $"from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    "from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     $"where StatusId = 3 and CurrentLocationId IN {locationIds}" +
-                    $"Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
-                    $" ORDER BY  'Dispensed On', DrugName, LocationName";
+                    "Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    " ORDER BY  'Dispensed On', DrugName, LocationName";
                 }
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))
                 {
@@ -337,18 +337,18 @@ namespace PTGApplication.Controllers
                     {
                         if (i == locationId.Count() - 1)
                         {
-                            locationIds += locationId[i].Id + ")";
+                            locationIds += ("'" + locationId[i].Id + "')");
                         }
                         else
                         {
-                            locationIds += locationId[i].Id + ", ";
+                            locationIds += ("'" + locationId[i].Id + "', ");
                         }
                     }
-                    query = $"Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
-                    $"from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                    query = "Select DrugName as 'Drug', COUNT(DrugId) as 'Quantity', LocationName as 'Current Location',CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime) as 'Dispensed On' " +
+                    "from UzimaInventory join UzimaDrug on UzimaDrug.Id = UzimaInventory.DrugId join UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
                     $"where StatusId = 4 and CurrentLocationId IN {locationIds}" +
-                    $"Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
-                    $" ORDER BY  'Dispensed On', DrugName, LocationName";
+                    "Group by LocationName, CAST(FLOOR(CAST(DateOrdered AS float)) AS datetime),  DrugName" +
+                    " ORDER BY  'Dispensed On', DrugName, LocationName";
                 }
 
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory", "UzimaLocation", "AspNetUsers"))

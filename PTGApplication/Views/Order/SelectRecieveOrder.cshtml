@@ -13,16 +13,16 @@
     <tbody>
         @foreach (var row in ViewBag.Data)
         {
-            <tr>
-                @for (var j = 1; j < row.ItemArray.Length; j++)
+        <tr>
+            @for (var j = 1; j < row.ItemArray.Length; j++)
                 {
                     var column = row[j];
-                    <td>@column</td>
+            <td>@column</td>
                 }
-                <td>
-                    @Html.ActionLink("Receive Order", "RecieveOrder", new { id = row[0], qty = row[3] })
-                </td>
-            </tr>
+            <td>
+                @Html.ActionLink("Receive Order", "RecieveOrder", new { id = row[0], qty = row[3], expiration = row[4] })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

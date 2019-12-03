@@ -329,7 +329,7 @@ namespace PTGApplication.Controllers
                     var hp = (from location in uzima.UzimaLocations
                               join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
                               where user.Username == User.Identity.Name
-                              select location).Single();
+                              select location).SingleOrDefault();
                     users = (from user in uzima.AspNetUsers
                              join l in uzima.UzimaLocations on user.HomePharmacy equals l.LocationName
                              join type in uzima.UzimaLocationTypes on l.Id equals type.LocationId

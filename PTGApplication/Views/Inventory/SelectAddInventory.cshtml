@@ -10,6 +10,7 @@
 <table id="tblAddInventory" class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th></th>
             <th>
                 Drug Name
             </th>
@@ -43,13 +44,15 @@
             <th>
                 Pack Size
             </th>
-            <th></th>
         </tr>
     </thead>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.ActionLink("Add", "AddInventory", new { id = item.Id })
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DrugName)
             </td>
@@ -82,9 +85,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PackSize)
-            </td>
-            <td>
-                @Html.ActionLink("Add", "AddInventory", new { id = item.Id })
             </td>
         </tr>
     }
