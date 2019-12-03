@@ -1,0 +1,10 @@
+TODO:
+--Login error
+--Dispense (expiration date)
+--Destroy (expiration date)
+--Location Error
+--Remove 
+strings with ''
+Place Order (expiration on all table)
+converting ids to string in queries
+

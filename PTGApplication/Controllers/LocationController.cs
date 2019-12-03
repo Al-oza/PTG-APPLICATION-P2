@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using PTGApplication.Models;
 using System;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace PTGApplication.Controllers
             {
                 var suppliers =
                     (from location in uzima.UzimaLocations
-                     join types in uzima.UzimaLocationTypes on location.Id equals types.Id
+                     join types in uzima.UzimaLocationTypes on location.Id equals types.LocationId
                      where types.Supplier == null
                      select location).ToList();
 
@@ -39,7 +38,7 @@ namespace PTGApplication.Controllers
 
         // POST: Location/AddHospitalLocation
         [HttpPost]
-        public ActionResult AddHospitalLocation(UzimaLocation model, UzimaLocationType model2)
+        public ActionResult AddHospitalLocation(UzimaLocation model)
         {
             using (var cs = new UzimaRxEntities())
             {
@@ -59,7 +58,7 @@ namespace PTGApplication.Controllers
                         Id = Guid.NewGuid(),
                         LocationType = "Hospital",
                         LocationId = location.Id,
-                        //Supplier = model2.supplier,
+                        Supplier = Guid.Parse(Request.Form["Supplier"])
                     };
 
                     cs.UzimaLocations.Add(location);
@@ -84,7 +83,7 @@ namespace PTGApplication.Controllers
             {
                 var suppliers =
                     (from location in uzima.UzimaLocations
-                     join types in uzima.UzimaLocationTypes on location.Id equals types.Id
+                     join types in uzima.UzimaLocationTypes on location.Id equals types.LocationId
                      where types.Supplier == null || types.LocationType == "hospital"
                      select location).ToList();
 
@@ -119,7 +118,7 @@ namespace PTGApplication.Controllers
                         Id = Guid.NewGuid(),
                         LocationType = "Clinic",
                         LocationId = location.Id,
-                        //Supplier = Convert.ToInt32(Request.Form["Supplier"])
+                        Supplier = Guid.Parse(Request.Form["Supplier"])
                     };
 
                     cs.UzimaLocations.Add(location);
@@ -211,7 +210,7 @@ namespace PTGApplication.Controllers
                 Subject = "New Location Requested"
             };
             await new EmailService().SendAsync(msg);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

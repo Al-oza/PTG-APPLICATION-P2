@@ -135,8 +135,8 @@ namespace PTGApplication.Controllers
                         "Select DrugName as 'Drug', Count(DrugId) as 'Quantity', " +
                         "LocationName as 'Location', ExpirationDate as 'Expiration Date' " +
                         "From UzimaDrug Join UzimaInventory on UzimaDrug.Id = DrugId Join " +
-                        "UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id Group by " +
-                        "LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
+                        "UzimaLocation on UzimaInventory.CurrentLocationId = UzimaLocation.Id " +
+                        "WHERE StatusId=0 Group by LocationName,ExpirationDate,DrugName Order by LocationName, ExpirationDate";
                 }
                 else
                 {

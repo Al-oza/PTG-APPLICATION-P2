@@ -1,5 +1,4 @@
-﻿using PTGApplication.Models;
-using PTGApplication.Providers;
+﻿ using PTGApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,7 +125,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction("Index", "Inventory");
+                return RedirectToAction("SelectInventory", "Inventory");
             }
         }
 
@@ -246,8 +245,8 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-
-                    //uzima.UzimaInventories.Remove(id);
+                    var entity = uzima.UzimaInventories.Where(e => e.Id == id).SingleOrDefault();
+                    uzima.UzimaInventories.Remove(entity);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -366,7 +365,8 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    //uzima.UzimaDrugs.Remove(id);
+                    var entity = uzima.UzimaDrugs.Where(e => e.Id == id).SingleOrDefault();
+                    uzima.UzimaDrugs.Remove(entity);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)

@@ -27,6 +27,15 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("ExpirationDate", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="txtExpiration" name="txtExpiration" class="form-control" value="@ViewBag.ExpirationDate" readonly>
+                <label id="msgWarning"></label>
+                @Html.ValidationMessage("", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.FutureLocationId, "Location Needed", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.FutureLocationId, ViewBag.LocationNeeded as SelectList, new { @class = "form-control" })
