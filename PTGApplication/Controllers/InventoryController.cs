@@ -126,7 +126,7 @@ namespace PTGApplication.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Inventory");
             }
         }
 
