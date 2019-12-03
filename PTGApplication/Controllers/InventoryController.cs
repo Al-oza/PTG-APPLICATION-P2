@@ -30,7 +30,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Pharmacy/AddInventory
-        public ActionResult AddInventory(int id)
+        public ActionResult AddInventory(Guid id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -97,7 +97,7 @@ namespace PTGApplication.Controllers
                         DateOrdered = model.DateOrdered,
                         ExpirationDate = model.ExpirationDate,
                         FutureLocationId = null,
-                        Id = uzima.UzimaInventories.Count(),
+                        Id = Guid.NewGuid(),
                         StatusId = model.StatusId,
                         LastModifiedBy = user.Id
                     };
@@ -106,7 +106,7 @@ namespace PTGApplication.Controllers
                     for (int i = 0; i < Convert.ToInt32(txtQuantity); i++)
                     {
                         uzima.UzimaInventories.Add(inventory);
-                        inventory.Id++;
+                        inventory.Id = Guid.NewGuid();
                         await uzima.SaveChangesAsync();
                     }
 
@@ -131,7 +131,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Pharmacy/ModifyInventory
-        public ActionResult ModifyInventory(int id)
+        public ActionResult ModifyInventory(Guid id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -230,7 +230,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Pharmacy/RemoveInventory/5
-        public ActionResult RemoveInventory(int id)
+        public ActionResult RemoveInventory(Guid id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -240,14 +240,14 @@ namespace PTGApplication.Controllers
 
         // POST: Pharmacy/RemoveInventory
         [HttpPost]
-        public async Task<ActionResult> RemoveInventory(int id, UzimaInventory model)
+        public async Task<ActionResult> RemoveInventory(Guid id, UzimaInventory model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
 
-                    uzima.UzimaInventory.Remove(id);
+                    //uzima.UzimaInventories.Remove(id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -317,7 +317,7 @@ namespace PTGApplication.Controllers
                 {
                     cs.UzimaDrugs.Add(new UzimaDrug()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         Barcode = model.Barcode,
                         DrugName = model.DrugName,
                         BrandName = model.BrandName,
@@ -350,7 +350,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Pharmacy/RemoveDrugFromDrugList/5
-        public ActionResult RemoveDrugFromList(int id)
+        public ActionResult RemoveDrugFromList(Guid id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -360,13 +360,13 @@ namespace PTGApplication.Controllers
 
         // POST: Pharmacy/RemoveDrug
         [HttpPost]
-        public async Task<ActionResult> RemoveDrugFromList(int id, UzimaDrug model)
+        public async Task<ActionResult> RemoveDrugFromList(Guid id, UzimaDrug model)
         {
             using (var uzima = new UzimaRxEntities())
             {
                 try
                 {
-                    uzima.UzimaDrug.Remove(id);
+                    //uzima.UzimaDrugs.Remove(id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -388,7 +388,7 @@ namespace PTGApplication.Controllers
             }
         }
         // GET: Pharmacy/ModifyDrugFromDrugList/5
-        public ActionResult ModifyDrugFromList(int id)
+        public ActionResult ModifyDrugFromList(Guid id)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -398,7 +398,7 @@ namespace PTGApplication.Controllers
 
         // POST: Pharmacy/ModifyDrug
         [HttpPost]
-        public async Task<ActionResult> ModifyDrugFromList(int id, UzimaDrug model)
+        public async Task<ActionResult> ModifyDrugFromList(Guid id, UzimaDrug model)
         {
             using (var uzima = new UzimaRxEntities())
             {

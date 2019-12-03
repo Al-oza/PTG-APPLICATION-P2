@@ -22,6 +22,7 @@ namespace PTGApplication.Models
         public string ProviderKey { get; set; }
         [Key][Column(Order = 3)]
         public string UserId { get; set; }
+    
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -471,7 +471,7 @@ namespace PTGApplication.Controllers
                              where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName
                              select drug.Id).FirstOrDefault()
                         : (from drug in uzima.UzimaInventories
-                           where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
+                           where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName
                            select drug.Id).FirstOrDefault();
 
 
@@ -526,7 +526,8 @@ namespace PTGApplication.Controllers
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate" :
                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
+                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId=" +
+                    "'" + $"{homePharmacy.LocationId}" + "' "  +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {
@@ -596,7 +597,7 @@ namespace PTGApplication.Controllers
                             where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName
                             select drug.Id).FirstOrDefault()
                        : (from drug in uzima.UzimaInventories
-                          where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName && drug.FutureLocationId == userhomelocation
+                          where drug.StatusId == 0 && drugname == drug.UzimaDrug.DrugName 
                           select drug.Id).FirstOrDefault();
 
 
@@ -649,9 +650,10 @@ namespace PTGApplication.Controllers
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
                     "WHERE [UzimaInventory].StatusId=0 " +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate" :
-                    "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
+                     "SELECT [UzimaDrug].Id, [UzimaDrug].DrugName AS 'Drug Name', [UzimaDrug].Barcode, COUNT(*) AS Quantity, [UzimaInventory].ExpirationDate AS 'Expiration Date' " +
                     "FROM UzimaInventory LEFT JOIN [UzimaDrug] ON [UzimaDrug].Id=[UzimaInventory].DrugId " +
-                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId={homePharmacy.Id} AND [UzimaInventory].FutureLocationId={homePharmacy.Id} " +
+                    $"WHERE [UzimaInventory].StatusId=0 AND [UzimaInventory].CurrentLocationId=" +
+                    "'" + $"{homePharmacy.LocationId}" + "' " +
                     "GROUP BY [UzimaDrug].Id, [UzimaDrug].DrugName, [UzimaDrug].Barcode, [UzimaInventory].ExpirationDate";
                 using (var dataSet = ConnectionPool.Query(query, "UzimaDrug", "UzimaInventory"))
                 {

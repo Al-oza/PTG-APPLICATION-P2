@@ -14,13 +14,13 @@ namespace PTGApplication.Models
     
     public partial class UzimaInventory
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public System.DateTime DateOrdered { get; set; }
         public string LastModifiedBy { get; set; }
-        public int DrugId { get; set; }
+        public System.Guid DrugId { get; set; }
         public int StatusId { get; set; }
-        public int CurrentLocationId { get; set; }
-        public Nullable<int> FutureLocationId { get; set; }
+        public System.Guid CurrentLocationId { get; set; }
+        public Nullable<System.Guid> FutureLocationId { get; set; }
         public System.DateTime ExpirationDate { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

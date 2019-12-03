@@ -39,7 +39,7 @@ namespace PTGApplication.Controllers
 
         // POST: Location/AddHospitalLocation
         [HttpPost]
-        public ActionResult AddHospitalLocation(UzimaLocation model)
+        public ActionResult AddHospitalLocation(UzimaLocation model, UzimaLocationType model2)
         {
             using (var cs = new UzimaRxEntities())
             {
@@ -48,7 +48,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -56,10 +56,10 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationType = "Hospital",
                         LocationId = location.Id,
-                        Supplier = Convert.ToInt32(Request.Form["Supplier"])
+                        //Supplier = model2.supplier,
                     };
 
                     cs.UzimaLocations.Add(location);
@@ -108,7 +108,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -116,10 +116,10 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationType = "Clinic",
                         LocationId = location.Id,
-                        Supplier = Convert.ToInt32(Request.Form["Supplier"])
+                        //Supplier = Convert.ToInt32(Request.Form["Supplier"])
                     };
 
                     cs.UzimaLocations.Add(location);
@@ -154,7 +154,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -162,7 +162,7 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid(),
                         LocationType = "Supplier",
                         LocationId = location.Id,
                         Supplier = null

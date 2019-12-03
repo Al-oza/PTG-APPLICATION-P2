@@ -14,10 +14,10 @@ namespace PTGApplication.Models
     
     public partial class UzimaLocationType
     {
-        public int Id { get; set; }
-        public int LocationId { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid LocationId { get; set; }
         public string LocationType { get; set; }
-        public Nullable<int> Supplier { get; set; }
+        public Nullable<System.Guid> Supplier { get; set; }
     
         public virtual UzimaLocation UzimaLocation { get; set; }
         public virtual UzimaLocation UzimaLocation1 { get; set; }

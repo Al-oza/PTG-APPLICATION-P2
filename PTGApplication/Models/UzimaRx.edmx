@@ -95,8 +95,8 @@
           <Property Name="LastModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DrugId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="CurrentLocationId" Type="int" Nullable="false" />
-          <Property Name="FutureLocationId" Type="int" />
+          <Property Name="CurrentLocationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FutureLocationId" Type="uniqueidentifier" />
           <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UzimaLocation">
@@ -115,7 +115,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="LocationId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="LocationType" Type="nvarchar(max)" />
-          <Property Name="Supplier" Type="int" />
+          <Property Name="Supplier" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="UzimaStatus">
           <Key>
@@ -401,7 +401,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DrugName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BrandName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -419,13 +419,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="DateOrdered" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DrugId" Type="Int32" Nullable="false" />
+          <Property Name="DrugId" Type="Guid" Nullable="false" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="CurrentLocationId" Type="Int32" Nullable="false" />
-          <Property Name="FutureLocationId" Type="Int32" />
+          <Property Name="CurrentLocationId" Type="Guid" Nullable="false" />
+          <Property Name="FutureLocationId" Type="Guid" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_UzimaInventory_dbo_AspNetUser_UserId" FromRole="UzimaInventory" ToRole="AspNetUsers" />
           <NavigationProperty Name="UzimaDrug" Relationship="Self.FK_dbo_UzimaOrder_dbo_UzimaDrugBrand_BarcodeId" FromRole="UzimaInventory" ToRole="UzimaDrug" />
@@ -437,7 +437,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="LocationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -450,10 +450,10 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="LocationId" Type="Guid" Nullable="false" />
           <Property Name="LocationType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Supplier" Type="Int32" />
+          <Property Name="Supplier" Type="Guid" />
           <NavigationProperty Name="UzimaLocation" Relationship="Self.FK_dbo_UzimaLocationType" FromRole="UzimaLocationType" ToRole="UzimaLocation" />
           <NavigationProperty Name="UzimaLocation1" Relationship="Self.FK_dbo_UzimaLocationType_Supplier" FromRole="UzimaLocationType" ToRole="UzimaLocation" />
         </EntityType>

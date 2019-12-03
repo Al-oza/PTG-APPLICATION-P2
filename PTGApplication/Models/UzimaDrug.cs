@@ -20,7 +20,7 @@ namespace PTGApplication.Models
             this.UzimaInventories = new HashSet<UzimaInventory>();
         }
     
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public string Barcode { get; set; }
         public string DrugName { get; set; }
         public string BrandName { get; set; }
