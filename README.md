@@ -13,7 +13,7 @@ Preform the following steps to setup your environment for development:
 * Ensure ASP.NET and .NET Framework 4.7.2 are installed on your machine :godmode:
 
 # Deployment 
-TBD :wink:
+https://uzimarx.com :wink:
 
 # Built With
 * ASP.NET MVC   
