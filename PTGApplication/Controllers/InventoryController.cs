@@ -18,8 +18,7 @@ namespace PTGApplication.Controllers
             TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
             return View();
         }
-
-
+        
         public ActionResult SelectAddInventory()
         {
             using (var uzima = new UzimaRxEntities())
@@ -29,8 +28,6 @@ namespace PTGApplication.Controllers
                 return View(drugs);
             }
         }
-
-
 
         // GET: Pharmacy/AddInventory
         public ActionResult AddInventory(int id)
@@ -249,7 +246,8 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    ConnectionPool.ExecuteProcedure("sp_Inventory", model.Id);
+
+                    uzima.UzimaInventory.Remove(id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)
@@ -319,7 +317,7 @@ namespace PTGApplication.Controllers
                 {
                     cs.UzimaDrugs.Add(new UzimaDrug()
                     {
-                        Id = cs.UzimaDrugs.Count() + 1,
+                        Id = Guid.NewGuid().ToString(),
                         Barcode = model.Barcode,
                         DrugName = model.DrugName,
                         BrandName = model.BrandName,
@@ -368,7 +366,7 @@ namespace PTGApplication.Controllers
             {
                 try
                 {
-                    ConnectionPool.ExecuteProcedure("sp_Drug", id);
+                    uzima.UzimaDrug.Remove(id);
                     await uzima.SaveChangesAsync();
                 }
                 catch (Exception ex)

@@ -185,7 +185,6 @@ namespace PTGApplication.Controllers
         }
 
         public ActionResult ExpiringDrugs()
-
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -247,7 +246,6 @@ namespace PTGApplication.Controllers
         }
 
         public ActionResult DispensedDrugs()
-
         {
             using (var uzima = new UzimaRxEntities())
             {

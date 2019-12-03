@@ -22,7 +22,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Order/PlaceOrder
-        public ActionResult PlaceOrder(int id, int qty)
+        public ActionResult PlaceOrder(Guid id, int qty)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -49,7 +49,6 @@ namespace PTGApplication.Controllers
                          join type in uzima.UzimaLocationTypes on location.Id equals type.LocationId
                          where type.LocationId == hp.Id || type.Supplier == hp.Id
                          select location).ToList();
-                    ;
 
                     ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
                 }
@@ -61,8 +60,7 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> PlaceOrder(String drugname, String txtQty, UzimaInventory model)
         {
-
-            int id;
+            Guid id;
             string userid;
 
             try
@@ -160,7 +158,7 @@ namespace PTGApplication.Controllers
 
 
         // GET: Order/SendOrder
-        public ActionResult SendOrder(int id, int qty, string futureLocation)
+        public ActionResult SendOrder(Guid id, int qty, string futureLocation)
         {
             if (!User.IsInRole(Properties.UserRoles.PharmacyManager))
             {
@@ -189,8 +187,7 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> SendOrder(String drugname, String txtQty, string futureLocation, UzimaInventory model)
         {
-
-            int id;
+            Guid id;
             string userid;
 
             try
@@ -296,7 +293,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Order/RecieveOrder
-        public ActionResult RecieveOrder(int id, int qty)
+        public ActionResult RecieveOrder(Guid id, int qty)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -328,15 +325,13 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> RecieveOrder(String drugname, String txtQty, UzimaInventory model)
         {
-
-            int id;
+            Guid id;
             string userid;
 
             try
             {
                 using (var uzima = new UzimaRxEntities())
                 {
-
                     var userhomelocation =
                     (from location in uzima.UzimaLocations
                      join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
@@ -420,7 +415,7 @@ namespace PTGApplication.Controllers
         }
 
         // GET: Order/DispenseItem
-        public ActionResult DispenseItem(int id, int qty)
+        public ActionResult DispenseItem(Guid id, int qty)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -451,15 +446,13 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> DispenseItem(String drugname, String txtQty, UzimaInventory model)
         {
-
-            int id;
+            Guid id;
             string userid;
 
             try
             {
                 using (var uzima = new UzimaRxEntities())
                 {
-
                     var userhomelocation =
                     (from location in uzima.UzimaLocations
                      join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
@@ -546,7 +539,7 @@ namespace PTGApplication.Controllers
 
 
         // GET: Order/DestroyItem
-        public ActionResult DestroyItem(int id, int qty)
+        public ActionResult DestroyItem(Guid id, int qty)
         {
             using (var uzima = new UzimaRxEntities())
             {
@@ -578,20 +571,18 @@ namespace PTGApplication.Controllers
         [HttpPost]
         public async Task<ActionResult> DestroyItem(String drugname, String txtQty, UzimaInventory model)
         {
-
-            int id;
+            Guid id;
             string userid;
 
             try
             {
                 using (var uzima = new UzimaRxEntities())
                 {
-
                     var userhomelocation =
-                    (from location in uzima.UzimaLocations
-                     join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
-                     where user.Username == User.Identity.Name
-                     select location.Id).SingleOrDefault();
+                       (from location in uzima.UzimaLocations
+                        join user in uzima.AspNetUsers on location.LocationName equals user.HomePharmacy
+                        where user.Username == User.Identity.Name
+                        select location.Id).SingleOrDefault();
 
                     userid =
                         (from user in uzima.AspNetUsers

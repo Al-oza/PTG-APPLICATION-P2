@@ -48,7 +48,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = cs.UzimaLocations.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -56,7 +56,7 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = cs.UzimaLocationTypes.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationType = "Hospital",
                         LocationId = location.Id,
                         Supplier = Convert.ToInt32(Request.Form["Supplier"])
@@ -108,7 +108,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = cs.UzimaLocations.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -116,7 +116,7 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = cs.UzimaLocationTypes.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationType = "Clinic",
                         LocationId = location.Id,
                         Supplier = Convert.ToInt32(Request.Form["Supplier"])
@@ -154,7 +154,7 @@ namespace PTGApplication.Controllers
                     var location = new UzimaLocation()
                     {
 
-                        Id = cs.UzimaLocations.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationName = model.LocationName,
                         Address = model.Address,
                         Phone = model.Phone
@@ -162,7 +162,7 @@ namespace PTGApplication.Controllers
 
                     var type = new UzimaLocationType()
                     {
-                        Id = cs.UzimaLocationTypes.Count(),
+                        Id = Guid.NewGuid().ToString(),
                         LocationType = "Supplier",
                         LocationId = location.Id,
                         Supplier = null
