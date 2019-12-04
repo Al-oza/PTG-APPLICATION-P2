@@ -6,29 +6,34 @@
 }
 
 
-<div class="panel-info" style="clear: both;">
-    <h3>Inventory User Guide</h3>
-    <br>
-    @if (ViewBag.UserRoleAdmin || ViewBag.SysAdmin)
-    {
-        <p><b><a href="~/Inventory/SelectAddInventory">Add Inventory</a></b></p>
-        <p style="margin-left:4em;">Input new inventory that will be on shelf in warehouse with the ability for hospitals and clinics to order.</p>
+    <div class="panel-info" style="clear: both;">
+        <h3>Inventory User Guide</h3>
         <br>
-        <p><b><a href="~/Inventory/AddtoDrugList">Add Drug to Drug List</a></b> </p>
-        <p style="margin-left:4em;">Add new drugs that become available over time. </p>
-        <br>
-        <p><b><a href="~/Inventory/SelectDrug">Modify/Remove from Drug List</a></b> </p>
-        <p style="margin-left:4em;">Modify drug details or delete drugs if no longer offered.</p>
-        <br>
-    }
+        @if (ViewBag.UserRoleAdmin || ViewBag.SysAdmin || ViewBag.CSManager)
+        {
+            <p><b><a href="~/Inventory/SelectAddInventory">Add Inventory</a></b></p>
+            <p style="margin-left:4em;">Input new inventory that will be on shelf in warehouse with the ability for hospitals and clinics to order.</p>
+            <br>
+        }
 
-    @if (ViewBag.SysAdmin)
-    {
-        <p><b><a href="~/Inventory/SelectInventory">Modify Inventory</a></b></p>
-        <p style="margin-left:4em;">Allows for changes to inventory table.</p>
-        <br>
+        @if (ViewBag.UserRoleAdmin || ViewBag.SysAdmin)
+        {
+            <p><b><a href="~/Inventory/AddtoDrugList">Add Drug to Drug List</a></b> </p>
+            <p style="margin-left:4em;">Add new drugs that become available over time. </p>
+            <br>
+            <p><b><a href="~/Inventory/SelectDrug">Modify/Remove from Drug List</a></b> </p>
+            <p style="margin-left:4em;">Modify drug details or delete drugs if no longer offered.</p>
+            <br>
+        }
+        
 
-    }
-</div>
+        @if (ViewBag.SysAdmin)
+        {
+            <p><b><a href="~/Inventory/SelectInventory">Modify Inventory</a></b></p>
+            <p style="margin-left:4em;">Allows for changes to inventory table.</p>
+            <br>
+
+        }
+    </div>
 
 
