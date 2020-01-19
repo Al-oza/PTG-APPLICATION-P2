@@ -13,8 +13,17 @@ using System.Web.Security;
 
 namespace PTGApplication.Controllers
 {
+    /// <summary>
+    /// Account Manager class for Admins
+    /// </summary>
     public class AdministrationController : Controller
     {
+        /// <summary>
+        /// Get account details on a specific user.
+        /// </summary>
+        /// <param name="id">The id of the requested user</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Web Page with Account Details of Specified User</returns>
         // GET: Administration/Details
         public ActionResult Details(string id, AspNetUser model)
         {
@@ -25,6 +34,11 @@ namespace PTGApplication.Controllers
                              select user).SingleOrDefault());
             }
         }
+        /// <summary>
+        /// Get the Account Management Options for Administrator.
+        /// Only Accessible by Admins.
+        /// </summary>
+        /// <returns>Web Page with Admin Options</returns>
         // GET: Administration
         public ActionResult Index()
         {
@@ -35,7 +49,10 @@ namespace PTGApplication.Controllers
 
             return View();
         }
-
+        /// <summary>
+        /// As an admin, Add new user account
+        /// </summary>
+        /// <returns>Web page for user account creation</returns>
         // GET: Administration/Create
         public ActionResult AddUser()
         {
@@ -81,7 +98,13 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Applies user creation data to database tables.
+        /// </summary>
+        /// <param name="ddlRoles">User role level information from previous page</param>
+        /// <param name="ddlLocations">User pharmacy location information from previous page</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Account Created Page</returns>
         // POST: Administration/AddUser
         [HttpPost]
         public async Task<ActionResult> AddUser(string ddlRoles, string ddlLocations, RegisterViewModel model)
@@ -151,13 +174,20 @@ namespace PTGApplication.Controllers
             ViewBag.errorMessage = "Something went wrong";
             return View("Error");
         }
-
+        /// <summary>
+        /// User Created Confirmation Page
+        /// </summary>
+        /// <returns>Confirmation Page</returns>
         //GET: UserAdded
         public ActionResult UserAdded()
         {
             return View();
         }
-
+        /// <summary>
+        /// Modify User Account Details
+        /// </summary>
+        /// <param name="id">ID of user account to modify</param>
+        /// <returns>Account Modification Page</returns>
         // GET: Administration/Modify/5
         public ActionResult Modify(string id)
         {
@@ -212,7 +242,13 @@ namespace PTGApplication.Controllers
                              select user).SingleOrDefault());
             }
         }
-
+        /// <summary>
+        /// Make user account modifications to db
+        /// </summary>
+        /// <param name="ddlRoles">New Role Level for User</param>
+        /// <param name="id">ID for user account to modify</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>User Modified Confirmation Page</returns>
         // POST: Administration/Modify/5
         [HttpPost]
         public async Task<ActionResult> Modify(string ddlRoles, string id, AspNetUser model)
@@ -255,7 +291,11 @@ namespace PTGApplication.Controllers
             }
             return RedirectToAction("SelectUser");
         }
-
+        /// <summary>
+        /// Remove a user account
+        /// </summary>
+        /// <param name="id">ID of user to remove</param>
+        /// <returns>Account Removal Page</returns>
         // GET: Administration/Remove/5
         public ActionResult Remove(string id)
         {
@@ -270,7 +310,12 @@ namespace PTGApplication.Controllers
                              select user).SingleOrDefault());
             }
         }
-
+        /// <summary>
+        /// Remove user from database
+        /// </summary>
+        /// <param name="id">ID of the user to remove</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Account Removal Confirmation</returns>
         // POST: Administration/Remove/5
         [HttpPost]
         public async Task<ActionResult> Remove(string id, AspNetUser model)
@@ -308,7 +353,10 @@ namespace PTGApplication.Controllers
 
             return callback;
         }
-
+        /// <summary>
+        /// Get List of User Accounts from Database
+        /// </summary>
+        /// <returns>A list of User Accounts from database</returns>
         // GET: Administration/SelectUser
         public ActionResult SelectUser()
         {

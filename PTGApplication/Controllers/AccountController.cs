@@ -168,7 +168,7 @@ namespace PTGApplication.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        [Obsolete("Email Rapula")]
+        [Obsolete("Email Rapula - See Administration/AddUser")]
         public ActionResult Register()
         {
             return View();
@@ -178,7 +178,7 @@ namespace PTGApplication.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        [Obsolete("Email Rapula")]
+        [Obsolete("Email Rapula - See Administration/AddUser- See Administration/AddUser")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
