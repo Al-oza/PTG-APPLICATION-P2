@@ -8,14 +8,24 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
+    /// <summary>
+    /// Controller for Uzima Location Management
+    /// </summary>
     public class LocationController : Controller
     {
+        /// <summary>
+        /// If user is not a System Admin, Request a New Location
+        /// </summary>
+        /// <returns>Location Request Page</returns>
         // GET: Location
         public ActionResult Index()
         {
             return View();
         }
-
+        /// <summary>
+        /// Add a New Hospital Location
+        /// </summary>
+        /// <returns>Hospital Location Add Page</returns>
         // GET: Location/AddHospitalLocation
         public ActionResult AddHospitalLocation()
         {
@@ -35,7 +45,11 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Add Hospital Location to Database
+        /// </summary>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Hospital Added Confirmation</returns>
         // POST: Location/AddHospitalLocation
         [HttpPost]
         public ActionResult AddHospitalLocation(UzimaLocation model)
@@ -75,7 +89,10 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("LocationAdded");
             }
         }
-
+        /// <summary>
+        /// Add a New Clinic Location
+        /// </summary>
+        /// <returns>Clinic Location Add Page</returns>
         // GET: Location/AddClinicLocation
         public ActionResult AddClinicLocation()
         {
@@ -95,7 +112,11 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Add a Clinic Location to the Database
+        /// </summary>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Clinic Add Confirmation Page</returns>
         // POST: Location/AddClinicLocation
         [HttpPost]
         public ActionResult AddClinicLocation(UzimaLocation model)
@@ -135,13 +156,20 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("LocationAdded");
             }
         }
-
+        /// <summary>
+        /// Add Supplier Location
+        /// </summary>
+        /// <returns>Add Supplier Page</returns>
         // GET: Location/AddSupplierLocation
         public ActionResult AddSupplierLocation()
         {
             return View();
         }
-
+        /// <summary>
+        /// Add a Supplier to the Database
+        /// </summary>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Supplier Added Confirmation</returns>
         // POST: Location/AddSupplierLocation
         [HttpPost]
         public ActionResult AddSupplierLocation(UzimaLocation model)
@@ -181,18 +209,33 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("LocationAdded");
             }
         }
-
+        /// <summary>
+        /// Location Added to Database
+        /// </summary>
+        /// <returns>Confirmation Page</returns>
         // GET: LocationAdded
         public ActionResult LocationAdded()
         {
             return View();
         }
+        /// <summary>
+        /// Request a New Location
+        /// </summary>
+        /// <returns>Add Location Page</returns>
         // GET: RequestLocation
         public ActionResult RequestLocation()
         {
             return View();
         }
-
+        /// <summary>
+        /// Send Email to Request New Location 
+        /// </summary>
+        /// <param name="name">Name of the Location</param>
+        /// <param name="address">Address of the Location</param>
+        /// <param name="phone">Phone Number of the Location</param>
+        /// <param name="type">Type of the Location</param>
+        /// <param name="supplier">Supplier of the Location</param>
+        /// <returns>Email Sent Confirmation</returns>
         // POST
         [HttpPost]
         public async Task<ActionResult> RequestLocation(string name, string address, string phone, string type, string supplier)
