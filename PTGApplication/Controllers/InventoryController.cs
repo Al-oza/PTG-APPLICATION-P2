@@ -1,4 +1,4 @@
-﻿ using PTGApplication.Models;
+﻿using PTGApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,15 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
+    /// <summary>
+    /// Controller for Inventory Management
+    /// </summary>
     public class InventoryController : Controller
     {
+        /// <summary>
+        /// Get list of Inventory Management Actions
+        /// </summary>
+        /// <returns>A list of inventory actions</returns>
         // GET: Pharmacy
         public ActionResult Index()
         {
@@ -17,7 +24,10 @@ namespace PTGApplication.Controllers
             TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
             return View();
         }
-        
+        /// <summary>
+        /// Get Drug List
+        /// </summary>
+        /// <returns>A table of drugs available</returns>
         public ActionResult SelectAddInventory()
         {
             using (var uzima = new UzimaRxEntities())
@@ -27,7 +37,11 @@ namespace PTGApplication.Controllers
                 return View(drugs);
             }
         }
-
+        /// <summary>
+        /// Order a given item
+        /// </summary>
+        /// <param name="id">ID of inventory item to order</param>
+        /// <returns>An order page for the inventory item</returns>
         // GET: Pharmacy/AddInventory
         public ActionResult AddInventory(Guid id)
         {
@@ -77,7 +91,12 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Order an inventory item
+        /// </summary>
+        /// <param name="txtQuantity">Quantity of Items to Order</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Item Order Confirmation</returns>
         // POST: Pharmacy/AddInventory
         [HttpPost]
         public async Task<ActionResult> AddInventory(string txtQuantity, UzimaInventory model)
@@ -128,7 +147,11 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("SelectAddInventory", "Inventory");
             }
         }
-
+        /// <summary>
+        /// Modify Information about an Inventory Item
+        /// </summary>
+        /// <param name="id">ID of Inventory Item to Modify</param>
+        /// <returns>Item Modified Confirmation</returns>
         // GET: Pharmacy/ModifyInventory
         public ActionResult ModifyInventory(Guid id)
         {
@@ -188,7 +211,11 @@ namespace PTGApplication.Controllers
                 return View(uzima.UzimaInventories.SingleOrDefault(model => model.Id == id));
             }
         }
-
+        /// <summary>
+        /// Modify Inventory Item on Database
+        /// </summary>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Item Modified in Database</returns>
         // POST: Pharmacy/ModifyInventory
         [HttpPost]
         public async Task<ActionResult> ModifyInventory(UzimaInventory model)
@@ -227,7 +254,11 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("SelectDrug");
             }
         }
-
+        /// <summary>
+        /// Remove an Item from the Database
+        /// </summary>
+        /// <param name="id">ID of Inventory Item to Remove</param>
+        /// <returns>Confirmation Page</returns>
         // GET: Pharmacy/RemoveInventory/5
         public ActionResult RemoveInventory(Guid id)
         {
@@ -236,7 +267,12 @@ namespace PTGApplication.Controllers
                 return View(uzima.UzimaInventories.SingleOrDefault(inv => inv.Id == id));
             }
         }
-
+        /// <summary>
+        /// Remove Inventory Item from Database
+        /// </summary>
+        /// <param name="id">ID of Inventory Item to Remove</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Inventory Item Removed from Database</returns>
         // POST: Pharmacy/RemoveInventory
         [HttpPost]
         public async Task<ActionResult> RemoveInventory(Guid id, UzimaInventory model)
@@ -266,7 +302,10 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("SelectInventory");
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         // GET: Pharmacy/Select
         public ActionResult SelectInventory()
         {
@@ -301,12 +340,19 @@ namespace PTGApplication.Controllers
                 return View(inventories);
             }
         }
-
+        /// <summary>
+        /// Add a New Inventory Item to the Drug List
+        /// </summary>
+        /// <returns>Drug Information Page</returns>
         public ActionResult AddtoDrugList()
         {
             return View();
         }
-
+        /// <summary>
+        /// Add New Inventory Item to Database
+        /// </summary>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Confirmation Page</returns>
         [HttpPost]
         public ActionResult AddtoDrugList(UzimaDrug model)
         {
@@ -341,13 +387,20 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("DrugAdded");
             }
         }
-
+        /// <summary>
+        /// Drug Added Confirmation
+        /// </summary>
+        /// <returns>Confirmation Page</returns>
         // GET: DrugAdded
         public ActionResult DrugAdded()
         {
             return View();
         }
-
+        /// <summary>
+        /// Remove an Inventory Item from the Drug List
+        /// </summary>
+        /// <param name="id">ID of Inventory Item to Remove</param>
+        /// <returns>Confirm Remove Item Page</returns>
         // GET: Pharmacy/RemoveDrugFromDrugList/5
         public ActionResult RemoveDrugFromList(Guid id)
         {
@@ -356,7 +409,12 @@ namespace PTGApplication.Controllers
                 return View(uzima.UzimaDrugs.SingleOrDefault(inv => inv.Id == id));
             }
         }
-
+        /// <summary>
+        /// Remove Drug List Item from Database
+        /// </summary>
+        /// <param name="id">ID of Drug List Item to Remove</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Item Removed Confirmation</returns>
         // POST: Pharmacy/RemoveDrug
         [HttpPost]
         public async Task<ActionResult> RemoveDrugFromList(Guid id, UzimaDrug model)
@@ -387,6 +445,11 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("SelectDrug");
             }
         }
+        /// <summary>
+        /// Modify Drug List Item Details
+        /// </summary>
+        /// <param name="id">ID of the Drug List Item to Modify</param>
+        /// <returns>Modification Page</returns>
         // GET: Pharmacy/ModifyDrugFromDrugList/5
         public ActionResult ModifyDrugFromList(Guid id)
         {
@@ -395,7 +458,12 @@ namespace PTGApplication.Controllers
                 return View(uzima.UzimaDrugs.SingleOrDefault(inv => inv.Id == id));
             }
         }
-
+        /// <summary>
+        /// Modify Drug List Item Details in Database
+        /// </summary>
+        /// <param name="id">ID of Drug List Item to Modify</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Drug List Item Modified Confirmation</returns>
         // POST: Pharmacy/ModifyDrug
         [HttpPost]
         public async Task<ActionResult> ModifyDrugFromList(Guid id, UzimaDrug model)
@@ -432,8 +500,11 @@ namespace PTGApplication.Controllers
                 return RedirectToAction("Index", "Inventory");
             }
         }
-
-
+        /// <summary>
+        /// Search for Item in Drug List
+        /// </summary>
+        /// <param name="searchString">Search Input from User</param>
+        /// <returns>Matched Items</returns>
         // GET: Select Drug
         public ActionResult SelectDrug(String searchString)
         {
@@ -455,7 +526,10 @@ namespace PTGApplication.Controllers
                 return View(model);
             }
         }
-
+        /// <summary>
+        /// Drug List Item Removed Confirmation
+        /// </summary>
+        /// <returns>Drug List Item Removed Confirmation Page</returns>
         // GET: DrugRemoved
         public ActionResult DrugRemoved()
         {
