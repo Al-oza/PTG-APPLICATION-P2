@@ -5,8 +5,15 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
+    /// <summary>
+    /// Controller for Reports
+    /// </summary>
     public class ReportController : Controller
     {
+        /// <summary>
+        /// Home Page for Reports
+        /// </summary>
+        /// <returns>Report Options</returns>
         // GET: Report
         public ActionResult Index()
         {
@@ -14,7 +21,10 @@ namespace PTGApplication.Controllers
             TempData["UserRoleSiteManager"] = User.IsInRole(Properties.UserRoles.CareSiteInventoryManager);
             return View();
         }
-
+        /// <summary>
+        /// Get a Report of Currently Pending Orders
+        /// </summary>
+        /// <returns>A list of Pending Orders</returns>
         public ActionResult PendingOrders()
         {
 
@@ -67,6 +77,10 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// Get a Report on Expired Drugs
+        /// </summary>
+        /// <returns>A list of expired drugs</returns>
         public ActionResult ExpiredDrugs()
         {
             using (var uzima = new UzimaRxEntities())
@@ -123,7 +137,10 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Get Current Inventory by Location
+        /// </summary>
+        /// <returns>A List of Current Inventory in User's Location</returns>
         public ActionResult Inventory()
         {
             using (var uzima = new UzimaRxEntities())
@@ -183,7 +200,10 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Get a List of Expiring Drugs within 4 Months
+        /// </summary>
+        /// <returns>A list of Expiring Drugs</returns>
         public ActionResult ExpiringDrugs()
         {
             using (var uzima = new UzimaRxEntities())
@@ -244,7 +264,10 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Get a List of Dispensed Drugs
+        /// </summary>
+        /// <returns>List of Dispensed Drugs</returns>
         public ActionResult DispensedDrugs()
         {
             using (var uzima = new UzimaRxEntities())
@@ -301,7 +324,10 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Get a List of Destroyed Drugs
+        /// </summary>
+        /// <returns>List of Destroyed Drugs</returns>
         public ActionResult DestroyedDrugs()
 
         {

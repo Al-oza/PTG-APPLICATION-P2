@@ -2,10 +2,10 @@
 
 namespace PTGApplication.Controllers
 {
-    [Authorize]
     /// <summary>
     /// Controller for Main/Home Page
     /// </summary>
+    [Authorize]
     public class HomeController : Controller
     { 
         /// <summary>

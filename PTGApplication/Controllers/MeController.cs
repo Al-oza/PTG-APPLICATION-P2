@@ -6,11 +6,11 @@ using System.Web.Http;
 
 namespace PTGApplication.Controllers
 {
-    [Authorize]
     /// <summary>
     /// This class is generated. It is used to manage user sign ins and handles login cookies.
     /// </summary>
     /// <remarks cref="https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/controllers-and-routing/aspnet-mvc-controllers-overview-cs" />
+    [Authorize]
     public class MeController : ApiController
     {
         private ApplicationUserManager _userManager;
