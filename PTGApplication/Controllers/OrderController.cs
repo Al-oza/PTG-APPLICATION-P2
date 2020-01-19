@@ -10,8 +10,15 @@ using System.Web.Mvc;
 
 namespace PTGApplication.Controllers
 {
+    /// <summary>
+    /// Controller for Order Placement and Management
+    /// </summary>
     public class OrderController : Controller
     {
+        /// <summary>
+        /// Home Page for Order Management
+        /// </summary>
+        /// <returns>Order Related Options</returns>
         // GET: Order
         public ActionResult Index()
         {
@@ -20,6 +27,13 @@ namespace PTGApplication.Controllers
             TempData["UserRoleSysAdmin"] = User.IsInRole(Properties.UserRoles.SystemAdmin);
             return View();
         }
+        /// <summary>
+        /// Place a New Order
+        /// </summary>
+        /// <param name="id">ID of Item to Order</param>
+        /// <param name="qty">Quantity of Items to Order</param>
+        /// <param name="expiration">Expiration Date of Item to Order</param>
+        /// <returns>Order Details Page</returns>
         // GET: Order/PlaceOrder
         public ActionResult PlaceOrder(Guid id, int qty, string expiration)
         {
@@ -56,6 +70,14 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// Write Order to Database
+        /// </summary>
+        /// <param name="drugname">Name of Item to Order</param>
+        /// <param name="txtQty">Number of Items to Order</param>
+        /// <param name="txtExpiration">Expiration Date of Item to Order</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Order Placement Confirmation</returns>
         // POST: Order/PlaceOrder
         [HttpPost]
         public async Task<ActionResult> PlaceOrder(String drugname, String txtQty, string txtExpiration, UzimaInventory model)
@@ -110,7 +132,10 @@ namespace PTGApplication.Controllers
 
             return RedirectToAction("SelectPlaceOrder");
         }
-
+        /// <summary>
+        /// Pick an Inventory Item to Order
+        /// </summary>
+        /// <returns>List of Inventory Items Available</returns>
         // GET: Order/SelectPlaceOrder
         public ActionResult SelectPlaceOrder()
         {
@@ -148,15 +173,23 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Order Placement Confirmation
+        /// </summary>
+        /// <returns>Confirmation Page</returns>
         //GET: Order/OrderPlaced
         public ActionResult OrderPlaced()
         {
             return View();
         }
-
-
-
+        /// <summary>
+        /// Mark an Order as Sent to Orderee
+        /// </summary>
+        /// <param name="id">ID of Order Shipped</param>
+        /// <param name="qty">Number of Items Shipped</param>
+        /// <param name="futureLocation">Location of Items Shipped To</param>
+        /// <param name="expiration">Expiration of Items Shipped</param>
+        /// <returns>Order Sent Confirmation</returns>
         // GET: Order/SendOrder
         public ActionResult SendOrder(Guid id, int qty, string futureLocation, string expiration)
         {
@@ -183,7 +216,15 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Mark Order as Shipped in Database
+        /// </summary>
+        /// <param name="drugname">Name of Item Shipped</param>
+        /// <param name="txtQty">Number of Items Shipped</param>
+        /// <param name="futureLocation">Location of Items Shipped to</param>
+        /// <param name="txtExpiration">Expiration Date of Items Shipped</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Order Sent Confirmation</returns>
         // POST: Order/SendOrder
         [HttpPost]
         public async Task<ActionResult> SendOrder(String drugname, String txtQty, string futureLocation, string txtExpiration, UzimaInventory model)
@@ -240,6 +281,10 @@ namespace PTGApplication.Controllers
 
             return RedirectToAction("OrderSent");
         }
+        /// <summary>
+        /// List of Shipable Orders
+        /// </summary>
+        /// <returns>List of Placed Orders</returns>
         // GET: Order/SelectSendOrder
         public ActionResult SelectSendOrder()
         {
@@ -283,14 +328,22 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
-
+        /// <summary>
+        /// Order Sent Confirmation
+        /// </summary>
+        /// <returns>Confirmation Page</returns>
         // GET: OrderSent
         public ActionResult OrderSent()
         {
             return View();
         }
-
+        /// <summary>
+        /// Receive an Order
+        /// </summary>
+        /// <param name="id">ID of Items Received</param>
+        /// <param name="qty">Number of Items Received</param>
+        /// <param name="expiration">Expiration Date of Items</param>
+        /// <returns>Order Received Confirmation</returns>
         // GET: Order/RecieveOrder
         public ActionResult RecieveOrder(Guid id, int qty, string expiration)
         {
@@ -319,8 +372,14 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
-
+        /// <summary>
+        /// Mark Order as Received in Database
+        /// </summary>
+        /// <param name="drugname">Name of Item Received</param>
+        /// <param name="txtQty">Quantity of Items Received</param>
+        /// <param name="txtExpiration">Expiration Date of Items Received</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Order Received Confirmation Page</returns>
         // POST: Order/RecieveOrder
         [HttpPost]
         public async Task<ActionResult> RecieveOrder(String drugname, String txtQty, String txtExpiration, UzimaInventory model)
@@ -384,7 +443,10 @@ namespace PTGApplication.Controllers
 
             return RedirectToAction("SelectRecieveOrder");
         }
-
+        /// <summary>
+        /// List Receivable Items
+        /// </summary>
+        /// <returns>A list of Receivable Items</returns>
         // GET: Order/SelectRecieveOrder
         public ActionResult SelectRecieveOrder()
         {
@@ -414,7 +476,13 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// Mark an Item as Dispensed
+        /// </summary>
+        /// <param name="id">ID of Item Dispensed</param>
+        /// <param name="qty">Quantity of Items Dispensed</param>
+        /// <param name="expiration">Expiration Date of Items Dispensed</param>
+        /// <returns>Item Dispensed Confirmation</returns>
         // GET: Order/DispenseItem
         public ActionResult DispenseItem(Guid id, int qty, string expiration)
         {
@@ -439,11 +507,17 @@ namespace PTGApplication.Controllers
 
                     ViewBag.LocationNeeded = new SelectList(userhomelocation, "Id", "LocationName");
                 }
-
                 return View();
             }
         }
-
+        /// <summary>
+        /// Mark Items as Dispensed in the Database
+        /// </summary>
+        /// <param name="drugname">Name of Item Dispensed</param>
+        /// <param name="txtQty">Quantity of Items Dispensed</param>
+        /// <param name="txtExpiration">Expiration Date of Items Dispensed</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Item Dispensed Confirmation</returns>
         // POST: Order/DispenseItem
         [HttpPost]
         public async Task<ActionResult> DispenseItem(String drugname, String txtQty, String txtExpiration, UzimaInventory model)
@@ -510,7 +584,10 @@ namespace PTGApplication.Controllers
 
             return RedirectToAction("SelectDispenseOrder");
         }
-
+        /// <summary>
+        /// Select Items to Dispense
+        /// </summary>
+        /// <returns>List of Dispensible Items</returns>
         // GET: Order/SelectDispenseOrder
         public ActionResult SelectDispenseOrder()
         {
@@ -540,8 +617,13 @@ namespace PTGApplication.Controllers
                 }
             }
         }
-
-
+        /// <summary>
+        /// Destroy an Item
+        /// </summary>
+        /// <param name="id">ID of Item to Destroy</param>
+        /// <param name="qty">Quantity of Items to Destroy</param>
+        /// <param name="expiration">Expiration Date of Items to Destroy</param>
+        /// <returns>Item Destroyed Confirmation</returns>
         // GET: Order/DestroyItem
         public ActionResult DestroyItem(Guid id, int qty, string expiration)
         {
@@ -569,8 +651,14 @@ namespace PTGApplication.Controllers
                 return View();
             }
         }
-
-
+        /// <summary>
+        /// Mark an Item as Destroyed in the Database
+        /// </summary>
+        /// <param name="drugname">Name of Item to Destroy</param>
+        /// <param name="txtQty">Quantity of Items to Destroy</param>
+        /// <param name="txtExpiration">Expiration Date of Item to Destroy</param>
+        /// <param name="model">Information carried over from previous page - handled internally</param>
+        /// <returns>Item Destroyed Confirmation</returns>
         // POST: Order/DestroyOrder
         [HttpPost]
         public async Task<ActionResult> DestroyItem(String drugname, String txtQty, String txtExpiration, UzimaInventory model)
@@ -637,7 +725,10 @@ namespace PTGApplication.Controllers
 
             return RedirectToAction("SelectDispenseOrder");
         }
-
+        /// <summary>
+        /// List Destroyable Items
+        /// </summary>
+        /// <returns>A List of Items that can be Destroyed</returns>
         // GET: Order/SelectDestroyOrder
         public ActionResult SelectDestroyOrder()
         {
